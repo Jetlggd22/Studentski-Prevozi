@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Študentski Prevozi - Prijava</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="Styles/Style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  <style>
+    /* Simplified Login Styles */
+    
+  </style>
+</head>
+<body>
+  <!-- Loader -->
+  <div class="loader" id="loader">
+    <div class="loader-content">
+      <div class="loader-spinner"></div>
+      <div class="loader-logo">Študentski Prevozi</div>
+    </div>
+  </div>
+  
+  <!-- Header -->
+   <header class="header" id="header">
+    <div class="container header-container">
+      <a href="#" class="logo">
+        <i class="ri-focus-3-line logo-icon"></i>
+        <span class="logo-text">Študentski Prevozi<span>
+      </a>
+      
+      <ul class="nav-menu" id="nav-menu">
+        <li class="nav-item">
+          <a href="Index.html" class="nav-link">
+            <i class="ri-home-4-line nav-icon"></i> Domov
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="Relacije.html" class="nav-link">
+            <i class="ri-map-pin-line nav-icon"></i> Relacije
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="Vozniki.html" class="nav-link">
+            <i class="ri-award-line nav-icon"></i> Vozniki
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="Storitve.html" class="nav-link">
+            <i class="ri-information-line nav-icon"></i> Storitve
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="ONas.html" class="nav-link">
+            <i class="ri-customer-service-2-line nav-icon"></i> O Nas
+          </a>
+        </li>
+         
+      </ul>
+      
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+  
+  <div class="overlay" id="overlay"></div>
+  
+  <!-- Login Section -->
+  <section class="login-page">
+    <!-- Simple floating dots background -->
+    <div class="floating-dots" id="floating-dots"></div>
+    
+    <div class="container">
+      <div class="login-container">
+        <div class="login-header">
+          <h1 class="login-title">Prijava</h1>
+          <p class="login-subtitle">Vstopi v svoj študentski račun</p>
+        </div>
+        
+        <form class="login-form">
+          <div class="input-group">
+            <i class="ri-mail-line"></i>
+            <input type="email" placeholder="Študentski e-poštni naslov" required>
+          </div>
+          
+          <div class="input-group">
+            <i class="ri-lock-2-line"></i>
+            <input type="password" placeholder="Geslo" required>
+          </div>
+          
+          <button type="submit" class="login-btn">
+            <i class="ri-login-box-line"></i> Prijavi se
+          </button>
+          
+          <div class="login-footer">
+            <p>Še nimaš računa? <a href="Register.html">Registriraj se</a> </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Scripts -->
+  <script>
+    // Loader
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loader').style.opacity = '0';
+        setTimeout(() => {
+          document.getElementById('loader').style.display = 'none';
+        }, 500);
+      }, 1000);
+    });
+    
+    // Mobile Navigation
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    const overlay = document.getElementById('overlay');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navMenu.classList.toggle('active');
+      overlay.classList.toggle('active');
+      document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
+    });
+    
+    overlay.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      navMenu.classList.remove('active');
+      overlay.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    });
+    
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+        overlay.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      });
+    });
+    
+    // Header scroll effect
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Simple floating dots animation
+    const floatingDots = document.getElementById('floating-dots');
+    const dotCount = 20;
+    
+    for (let i = 0; i < dotCount; i++) {
+      const dot = document.createElement('div');
+      dot.classList.add('dot');
+      dot.style.left = `${Math.random() * 100}%`;
+      dot.style.animationDuration = `${10 + Math.random() * 20}s`;
+      dot.style.animationDelay = `${Math.random() * 5}s`;
+      floatingDots.appendChild(dot);
+    }
+  </script>
+</body>
+</html>

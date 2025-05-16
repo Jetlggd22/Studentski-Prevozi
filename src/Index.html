@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Študentski Prevozi - Dobrodošli</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel = "stylesheet" href = "Styles/Style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/10.0.4/swiper-bundle.css" />
+   <style>
+    
+    /* Hero Section Because Conflict If Placed In External CSS File*/
+    .hero {
+      padding-top: 120px;
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+      background: radial-gradient(ellipse at top right, rgba(255, 215, 0, 0.2), transparent 70%),
+                radial-gradient(ellipse at bottom left, rgba(255, 215, 0, 0.1), transparent 70%);
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80') no-repeat center/cover;
+      opacity: 0.1;
+      filter: grayscale(100%);
+      z-index: -1;
+    }
+    
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 40px;
+      height: calc(100vh - 120px);
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+    
+    .hero-section {
+  position: relative;
+  }
+
+
+    .hero-subtitle {
+      color: var(--gold);
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .hero-subtitle::before {
+      content: '';
+      width: 50px;
+      height: 1px;
+      background: var(--gold);
+      margin-right: 15px;
+      display: inline-block;
+    }
+    
+    .hero-title {
+      font-size: 54px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 25px;
+      color: var(--white);
+    }
+    
+    .hero-title span {
+      color: var(--gold);
+      position: relative;
+    }
+    
+    .hero-title span::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 10px;
+      bottom: 5px;
+      left: 0;
+      background: var(--gold);
+      opacity: 0.2;
+      z-index: -1;
+    }
+    
+    .hero-description {
+      font-size: 16px;
+      line-height: 1.8;
+      margin-bottom: 40px;
+      max-width: 550px;
+      color: rgba(255, 255, 255, 0.8);
+    }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 15px 35px;
+      background: var(--gold);
+      color: var(--dark);
+      font-weight: 700;
+      font-size: 16px;
+      border-radius: 5px;
+      text-decoration: none;
+      letter-spacing: 1px;
+      transition: var(--transition);
+      border: none;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%;
+      background: var(--white);
+      transition: var(--transition);
+      z-index: -1;
+    }
+    
+    .btn:hover::before {
+      width: 100%;
+    }
+    
+    .btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+    }
+    
+    .btn-icon {
+      margin-right: 10px;
+      font-size: 18px;
+    }
+    
+    .hero-image {
+      position: relative;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .hero-image-container {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 75%;
+      overflow: hidden;
+      border-radius: 20px;
+      box-shadow: 0 20px 80px rgba(0, 0, 0, 0.3);
+      
+    }
+    
+    .swiper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+    }
+    
+    .swiper-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+      transition: transform 0.7s;
+    }
+    
+    .swiper-pagination-bullet {
+      background: var(--gold);
+      opacity: 0.5;
+    }
+    
+    .swiper-pagination-bullet-active {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+    @media screen and (max-width: 768px) {
+   .swiper {
+     
+    display: none !important
+  }
+    }
+
+    .hero-floating-icons {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 10; 
+}
+
+.floating-icon {
+  position: absolute;
+  
+}
+    </style>
+</head> 
+<body>
+  <!-- Loader -->
+  <div class="loader" id="loader">
+    <div class="loader-content">
+      <div class="loader-spinner"></div>
+      <div class="loader-logo">Študentski Prevozi</div>
+    </div>
+  </div>
+  
+  <!-- Header -->
+  <header class="header" id="header">
+    <div class="container header-container">
+      <a href="#" class="logo">
+        <i class="ri-focus-3-line logo-icon"></i>
+        <span class="logo-text">Študentski Prevozi<span>
+      </a>
+      
+      <ul class="nav-menu" id="nav-menu">
+        <li class="nav-item">
+          <a href="Index.html" class="nav-link">
+            <i class="ri-home-4-line nav-icon"></i> Domov
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="Relacije.html" class="nav-link">
+            <i class="ri-map-pin-line nav-icon"></i> Relacije
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="Vozniki.html" class="nav-link">
+            <i class="ri-award-line nav-icon"></i> Vozniki
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="Storitve.html" class="nav-link">
+            <i class="ri-information-line nav-icon"></i> Storitve
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="ONas.html" class="nav-link">
+            <i class="ri-customer-service-2-line nav-icon"></i> O Nas
+          </a>
+        </li>
+         
+      </ul>
+      
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+  
+  <div class="overlay" id="overlay"></div>
+  
+  <!-- Hero Section -->
+ <section class="hero" id="home" style="position: relative;cursor: crosshair;">
+  <div class="container">
+    
+    <!-- Floating icons inside hero -->
+    <div class="hero-floating-icons">
+      <span class="floating-icon" style="top: 10%; left: 15%; animation-delay: 0s;"><i class="fa"></i></span>
+      <span class="floating-icon" style="top: 25%; left: 60%; animation-delay: 1.2s;"><i class="fa "></i></span>
+      <span class="floating-icon" style="top: 70%; left: 20%; animation-delay: 2.4s;"><i class="fa"></i></span>
+      <span class="floating-icon" style="top: 60%; left: 80%; animation-delay: 1.8s;"><i class="fa"></i></span>
+      <span class="floating-icon" style="top: 40%; left: 40%; animation-delay: 0.7s;"><i class="fa"></i></span>
+      <span class="floating-icon" style="top: 80%; left: 55%; animation-delay: 2.9s;"><i class="fa"></i></span>
+    </div>
+     <div class="hero-grid">
+        <div class="hero-content" data-aos="fade-right" data-aos-duration="1000">
+          <h3 class="hero-subtitle">Povezujemo Študente</h3>
+          <h1 class="hero-title">Potuj <span>Hitro</span>.<br>Potuj <span>Skupaj</span>.</h1>
+          <p class="hero-description">Ujemi prevoz od doma do faksa s soštudenti iz vse Slovenije. Ceneje, bolj udobno in bolj eko.
+    </p></p>
+          <a href="#destinations" class="btn">
+            <i class="ri-flashlight-line btn-icon"></i> Oglej si Relacije
+          </a>
+        </div>
+
+        
+        <div class="hero-image" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+          <div class="hero-image-container">
+            <div class="swiper hero-swiper" >
+              <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                  <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80" alt="Scenic Beach">
+                </div>
+                <div class="swiper-slide">
+                  <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=900&q=80" alt="Mountain Range">
+                </div>
+                <div class="swiper-slide">
+                  <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=900&q=80" alt="City View">
+                </div>
+              </div>
+              <div class="swiper-pagination"></div>
+              
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </section></div>
+  
+  <!-- Features Section -->
+  <section class="features" id="features">
+  <div class="container">
+    <div class="section-heading" data-aos="fade-up">
+      <span class="section-subtitle">Kako Deluje</span>
+      <h2 class="section-title">Preprosto. Povezano. Študentsko.</h2>
+      <p class="section-description">Platforma, kjer študentje iz različnih krajev Slovenije najdejo ali ponudijo prevoz do svojih fakultet. Skupaj do faksa – hitreje, ceneje in okolju prijazno.</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="feature-icon-wrapper">
+          <i class="ri-road-map-line feature-icon"></i>
+        </div>
+        <h3 class="feature-title">Najdi Prevoz</h3>
+        <p class="feature-description">Vpiši kraj odhoda in fakulteto, izberi termin in se pridruži vožnji s soštudenti. Udobno, varno in zanesljivo.</p>
+      </div>
+
+      <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="feature-icon-wrapper">
+          <i class="ri-steering-line feature-icon"></i>
+        </div>
+        <h3 class="feature-title">Ponudi Sedež</h3>
+        <p class="feature-description">Imaš prazne sedeže v avtu? Objavi svojo vožnjo in pomagaj drugim študentom priti na faks – pa še stroške si razdeliš.</p>
+      </div>
+
+      <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="feature-icon-wrapper">
+          <i class="ri-group-line feature-icon"></i>
+        </div>
+        <h3 class="feature-title">Študentska Skupnost</h3>
+        <p class="feature-description">Vozimo se skupaj, gradimo skupnost. Oceni voznika, deli izkušnjo in bodi del vesoljske ekipe, ki verjame v pomoč in sodelovanje.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+  
+  <!-- Destinations Section -->
+ <section class="destinations" id="destinations" data-aos="fade-up" data-aos-delay="300">
+  <div class="container">
+    <div class="section-heading" data-aos="fade-up">
+      <span class="section-subtitle">Najpogostejše Povezave</span>
+      <h2 class="section-title">Povezujemo Slovenijo</h2>
+      <p class="section-description">Odkrij najbolj priljubljene študentske poti – iz mest do fakultet po Sloveniji. Skupaj do faksa, brez prevelikih stroškov in z vesoljskim prihrankom časa.</p>
+    </div>
+
+      
+     <div class="destinations-container">
+          <div class="destinations-slider">
+            <!-- Destination cards will be duplicated by JavaScript for infinite effect -->
+            <div class="destination-card">
+              <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="destination-img" alt="Paris">
+              <h3 class="destination-title">Izola - Koper - Famnit</h3>
+              <p class="small">The city of lights from a new perspective</p>
+              <div class="destination-price">€4+</div>
+              <button class="btn btn-retro btn-sm mt-2">Rezerviraj</button>
+            </div>
+            <div class="destination-card">
+              <img src="https://images.unsplash.com/photo-1533929736458-ca588d08c8be?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="destination-img" alt="Prague">
+              <h3 class="destination-title">Kamnik - Ljubljana - FRI</h3>
+              <p class="small">Medieval charm meets cosmic nightlife</p>
+              <div class="destination-price">€9+</div>
+              <button class="btn btn-retro btn-sm mt-2">Rezerviraj</button>
+            </div>
+            <div class="destination-card">
+              <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="destination-img" alt="Berlin">
+              <h3 class="destination-title">Celje - Maribor - FERI</h3>
+              <p class="small">The creative capital of the galaxy</p>
+              <div class="destination-price">€10+</div>
+              <button class="btn btn-retro btn-sm mt-2">Book Flight</button>
+            </div>
+           
+            <div class="destination-card">
+              <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="destination-img" alt="Berlin">
+              <h3 class="destination-title">Trebnje - Novo Mesto - FEI</h3>
+              <p class="small">The creative capital of the galaxy</p>
+              <div class="destination-price">€5+</div>
+              <button class="btn btn-retro btn-sm mt-2">Book Flight</button>
+            </div>
+            <div class="destination-card">
+              <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="destination-img" alt="Budapest">
+              <h3 class="destination-title">Kranj - Ljubljana - UL MF</h3>
+              <p class="small">Thermal baths and stellar ruin bars</p>
+              <div class="destination-price">€8+</div>
+              <button class="btn btn-retro btn-sm mt-2">Book Flight</button>
+            </div>
+            <div class="destination-card">
+              <img src="https://images.unsplash.com/photo-1534351590666-13e3e96b5017?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="destination-img" alt="Amsterdam">
+              <h3 class="destination-title">AMSTERDAM QUADRANT</h3>
+              <p class="small">Canals, bikes and cosmic relaxation</p>
+              <div class="destination-price">€59+</div>
+              <button class="btn btn-retro btn-sm mt-2">Book Flight</button>
+            </div>
+            <div class="destination-card">
+              <img src="https://images.unsplash.com/photo-1534351590666-13e3e96b5017?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="destination-img" alt="Amsterdam">
+              <h3 class="destination-title">AMSTERDAM QUADRANT</h3>
+              <p class="small">Canals, bikes and cosmic relaxation</p>
+              <div class="destination-price">€59+</div>
+              <button class="btn btn-retro btn-sm mt-2">Book Flight</button>
+            </div>
+            <div class="destination-card">
+              <img src="https://images.unsplash.com/photo-1534351590666-13e3e96b5017?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="destination-img" alt="Amsterdam">
+              <h3 class="destination-title">AMSTERDAM QUADRANT</h3>
+              <p class="small">Canals, bikes and cosmic relaxation</p>
+              <div class="destination-price">€59+</div>
+              <button class="btn btn-retro btn-sm mt-2">Book Flight</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Why Choose Us Section -->
+  <section class="why-us" id="about">
+  <div class="container">
+    <div class="why-us-grid">
+      <div class="why-us-image" data-aos="fade-right">
+        <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=900&q=80" alt="Carpool z razgledom">
+      </div>
+
+      <div class="why-us-content" data-aos="fade-left">
+        <span class="section-subtitle">Zakaj SkupajDoFaksa?</span>
+        <h2 class="section-title">Ker je vožnja boljša v družbi</h2>
+        <p>SkupajDoFaksa je preprost način, kako si študenti pomagamo do faksa – ceneje, hitreje in z manj stresa. Povezujemo lokalne poti v skupno študentsko mrežo prevozov.</p>
+
+        <div class="why-us-points">
+          <div class="why-us-point">
+            <div class="why-us-point-icon">
+              <i class="ri-shield-check-line"></i>
+            </div>
+            <div class="why-us-point-content">
+              <h4>Varnost in zaupanje</h4>
+              <p>Profili uporabnikov, ocene po vožnji in jasna komunikacija – vse za tvoje udobje in občutek varnosti.</p>
+            </div>
+          </div>
+
+          <div class="why-us-point">
+            <div class="why-us-point-icon">
+              <i class="ri-money-euro-circle-line"></i>
+            </div>
+            <div class="why-us-point-content">
+              <h4>Dostopno za vsak žep</h4>
+              <p>Razdeli stroške goriva z ostalimi. Brez provizij, brez skritih stroškov – samo preprosto dogovorjena vožnja.</p>
+            </div>
+          </div>
+
+          <div class="why-us-point">
+            <div class="why-us-point-icon">
+              <i class="ri-community-line"></i>
+            </div>
+            <div class="why-us-point-content">
+              <h4>Skupnost študentov</h4>
+              <p>Ustvari povezave, spoznaj nove kolege in bodi del skupnosti, ki si medsebojno pomaga do izobrazbe – pa še okolju pomagaš.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+  
+  <!-- CTA Section -->
+   <!-- For the two buttons, different href if user logged in or not -->
+ <section class="cta">
+  <div class="cta-container">
+    <span class="cta-subtitle" data-aos="fade-up">Pripravljen na skupno vožnjo?</span>
+    <h2 class="cta-title" data-aos="fade-up" data-aos-delay="100">Poveži se z drugimi študenti že danes</h2>
+    <p class="cta-description" data-aos="fade-up" data-aos-delay="200">SkupajDoFaksa povezuje študente po vsej Sloveniji. Ponudi prevoz ali si ga rezerviraj – hitro, enostavno in okolju prijazno.</p>
+    <div class="cta-buttons" data-aos="fade-up" data-aos-delay="300">
+      <a href="Relacije.html" class="btn">
+        <i class="ri-search-line btn-icon"></i> Najdi prevoz
+      </a>
+      <a href="Login.html" class="btn btn-outline">
+        <i class="ri-steering-line btn-icon"></i> Ponudi prevoz
+      </a>
+    </div>
+  </div>
+</section>
+
+  
+  <!-- Footer -->
+  <footer class="footer" id="contact">
+  <div class="container">
+    <div class="footer-grid">
+
+      <div class="footer-col footer-about">
+        <a href="#" class="logo">
+          <i class="ri-focus-3-line logo-icon"></i>
+          <span class="logo-text">GoldEdge Travels</span>
+        </a>
+        <p>GoldEdge Travels je vodilna študentska potovalna agencija, ki združuje luksuzna doživetja z ugodnimi cenami za nepozabne dogodivščine sodobnih raziskovalcev.</p>
+        <div class="footer-social">
+          <a href="#" class="social-link"><i class="ri-instagram-line"></i></a>
+          <a href="#" class="social-link"><i class="ri-twitter-x-line"></i></a>
+          <a href="#" class="social-link"><i class="ri-facebook-circle-line"></i></a>
+          <a href="#" class="social-link"><i class="ri-linkedin-box-line"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-col footer-links">
+        <h4>Podjetje</h4>
+        <ul>
+          <li><a href="#"><i class="ri-arrow-right-s-line"></i> O nas</a></li>
+          <li><a href="#"><i class="ri-arrow-right-s-line"></i> Naša ekipa</a></li>
+          <li><a href="#"><i class="ri-arrow-right-s-line"></i> Zaposlitve</a></li>
+          <li><a href="#"><i class="ri-arrow-right-s-line"></i> Blog</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-links">
+        <h4>Podpora</h4>
+        <ul>
+          <li><a href="#"><i class="ri-arrow-right-s-line"></i> Pogosta vprašanja</a></li>
+          <li><a href="#"><i class="ri-arrow-right-s-line"></i> Kontaktiraj nas</a></li>
+          <li><a href="#"><i class="ri-arrow-right-s-line"></i> Politika zasebnosti</a></li>
+          <li><a href="#"><i class="ri-arrow-right-s-line"></i> Pogoji uporabe</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-subscribe">
+        <h4>Naroči se</h4>
+        <p>Naroči se na naš novičnik in bodi obveščen o novih destinacijah ter ekskluzivnih ponudbah.</p>
+        <form>
+          <input type="email" placeholder="Vnesi svoj e-naslov">
+          <button type="submit"><i class="ri-send-plane-line"></i></button>
+        </form>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2025 <span>GoldEdge Travels</span>. Vse pravice pridržane.</p>
+    </div>
+  </div>
+</footer>
+
+  
+  <!-- Back to Top -->
+  <div class="back-to-top" id="back-to-top">
+    <i class="ri-arrow-up-line"></i>
+  </div>
+  
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/10.0.4/swiper-bundle.min.js"></script>
+  <script>
+    // Loader
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loader').style.opacity = '0';
+        setTimeout(() => {
+          document.getElementById('loader').style.display = 'none';
+        }, 500);
+      }, 1000);
+    });
+    
+    // Initilization of AOS (Animate On Scroll )
+    AOS.init({
+      duration: 800,
+      easing: 'ease-in-out',
+      once: true,
+      mirror: false
+    });
+    
+    // Initialization of Swiper Slider For Carousel
+    const heroSwiper = new Swiper('.hero-swiper', {
+      loop: true,
+      effect: 'fade',
+      autoplay: {
+        delay: 4000,
+        disableOnInteraction: false,
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+    });
+    
+    // Header Scroll
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+    
+    // Back to Top
+    const backToTop = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTop.classList.add('show');
+      } else {
+        backToTop.classList.remove('show');
+      }
+    });
+    
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+    
+    // Mobile Navigation
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    const overlay = document.getElementById('overlay');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navMenu.classList.toggle('active');
+      overlay.classList.toggle('active');
+      document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
+    });
+    
+    overlay.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      navMenu.classList.remove('active');
+      overlay.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    });
+    
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+        overlay.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      });
+    });
+    
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          const headerHeight = document.getElementById('header').offsetHeight;
+          const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+          
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+/* Floating Icons */
+    document.addEventListener('DOMContentLoaded', function() {
+      const floatingIcons = document.querySelector('.floating-icons');
+      const icons = ['fa-passport', 'fa-camera', 'fa-mountain', 'fa-umbrella-beach', 'fa-map', 'fa-train', 'fa-bicycle', 'fa-music'];
+      
+      for (let i = 0; i < 12; i++) {
+        const icon = document.createElement('i');
+        icon.className = `fa-solid ${icons[Math.floor(Math.random() * icons.length)]} floating-icon`;
+        icon.style.fontSize = `${Math.random() * 2 + 1.5}rem`;
+        icon.style.top = `${Math.random() * 80 + 10}%`;
+        icon.style.left = `${Math.random() * 80 + 10}%`;
+        icon.style.animationDelay = `${Math.random() * 2}s`;
+        floatingIcons.appendChild(icon);
+      }
+    });
+  </script>
+</body>
+</html>

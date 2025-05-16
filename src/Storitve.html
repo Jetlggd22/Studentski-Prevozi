@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Študentski Prevozi - Dobrodošli</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel = "stylesheet" href = "Styles/Style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/10.0.4/swiper-bundle.css" />
+</head>
+<body>
+  <!-- Loader -->
+  <div class="loader" id="loader">
+    <div class="loader-content">
+      <div class="loader-spinner"></div>
+      <div class="loader-logo">Študentski Prevozi</div>
+    </div>
+  </div>
+  
+  <!-- Header -->
+   <header class="header" id="header">
+    <div class="container header-container">
+      <a href="#" class="logo">
+        <i class="ri-focus-3-line logo-icon"></i>
+        <span class="logo-text">Študentski Prevozi<span>
+      </a>
+      
+      <ul class="nav-menu" id="nav-menu">
+        <li class="nav-item">
+          <a href="Index.html" class="nav-link">
+            <i class="ri-home-4-line nav-icon"></i> Domov
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="Relacije.html" class="nav-link">
+            <i class="ri-map-pin-line nav-icon"></i> Relacije
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="Vozniki.html" class="nav-link">
+            <i class="ri-award-line nav-icon"></i> Vozniki
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="Storitve.html" class="nav-link">
+            <i class="ri-information-line nav-icon"></i> Storitve
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="ONas.html" class="nav-link">
+            <i class="ri-customer-service-2-line nav-icon"></i> O Nas
+          </a>
+        </li>
+         
+      </ul>
+      
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+  
+  <div class="overlay" id="overlay"></div>
+  
+  <!-- Hero Section -->
+  <section class="services-hero">
+    <div class="container">
+      <h1 data-aos="fade-up">Naše storitve</h1>
+      <p data-aos="fade-up" data-aos-delay="100">Preproste rešitve za vaše študentske poti po Sloveniji</p>
+    </div>
+  </section>
+  
+  <!-- Services Intro -->
+  <section class="services-intro">
+    <div class="container">
+      <div class="section-heading" data-aos="fade-up">
+        <span class="section-subtitle">Kaj ponujamo</span>
+        <h2 class="section-title">Povezovanje študentov na enem mestu</h2>
+        <p class="section-description">Naša platforma ponuja vse, kar potrebujete za organizirane in ugodne skupne prevoze med študenti po vsej Sloveniji.</p>
+      </div>
+      
+      <div class="services-grid">
+        <div class="service-card" data-aos="fade-up">
+          <i class="ri-search-line service-icon"></i>
+          <h3 class="service-title">Iskanje prevozov</h3>
+          <p>Hitro in enostavno poišči prevoz do svoje fakultete. Filtriranje po lokaciji, času in ceni.</p>
+        </div>
+        
+        <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+          <i class="ri-steering-line service-icon"></i>
+          <h3 class="service-title">Ponudba sedežev</h3>
+          <p>Imaš prazne sedeže v avtu? Ponudi jih drugim študentom in si deli stroške poti.</p>
+        </div>
+        
+        <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+          <i class="ri-chat-check-line service-icon"></i>
+          <h3 class="service-title">Sporočilni sistem</h3>
+          <p>Komuniciraj z vozniki/potniki preko vgrajenega klepeta za hitro dogovarjanje.</p>
+        </div>
+        
+        <div class="service-card" data-aos="fade-up">
+          <i class="ri-star-line service-icon"></i>
+          <h3 class="service-title">Ocenjevanje</h3>
+          <p>Oceni svojo izkušnjo po vožnji in pomagaj graditi zaupanje v skupnosti.</p>
+        </div>
+        
+        <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+          <i class="ri-shield-check-line service-icon"></i>
+          <h3 class="service-title">Preverjeni profili</h3>
+          <p>Vsi uporabniki so preverjeni študentje z veljavnimi univerzitetnimi podatki.</p>
+        </div>
+        
+        <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+          <i class="ri-route-line service-icon"></i>
+          <h3 class="service-title">Ponavljajoče se vožnje</h3>
+          <p>Ustvari redne vožnje za svoje tedenske obiske fakultete in najdi stalne sopotnike.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Pricing Section -->
+  <section class="pricing-section">
+    <div class="container">
+      <div class="section-heading" data-aos="fade-up">
+        <span class="section-subtitle">Cenik</span>
+        <h2 class="section-title">Enostavna in pregledna cena</h2>
+        <p class="section-description">Plačujte le za tisto, kar dejansko uporabljate. Brez skritih stroškov, brez naročnin.</p>
+      </div>
+      
+      <div class="pricing-grid">
+        <div class="pricing-card" data-aos="fade-up">
+          <h3 class="pricing-title">Potnik</h3>
+          <div class="pricing-price">Brezplačno</div>
+          <ul class="pricing-features">
+            <li>Neomejeno iskanje prevozov</li>
+            <li>Komunikacija z vozniki</li>
+            <li>Ocenjevanje voženj</li>
+            <li>Osnovna podpora</li>
+          </ul>
+          <a href="#" class="btn btn-outline" style="width: 100%;">Začni zdaj</a>
+        </div>
+        
+        <div class="pricing-card popular" data-aos="fade-up" data-aos-delay="100">
+          <div class="popular-badge">Priljubljeno</div>
+          <h3 class="pricing-title">Voznik</h3>
+          <div class="pricing-price">5% provizije</div>
+          <ul class="pricing-features">
+            <li>Vse kar vključuje Potnik</li>
+            <li>Objavljanje voženj</li>
+            <li>Upravljanje s sopotniki</li>
+            <li>Prednostno iskanje</li>
+            <li>Hitrejša podpora</li>
+          </ul>
+          <button class="btn btn-retro btn-sm mt-2">Book Flight</button>
+        </div>
+        
+        <div class="pricing-card" data-aos="fade-up" data-aos-delay="200">
+          <h3 class="pricing-title">Fakulteta</h3>
+          <div class="pricing-price">Po dogovoru</div>
+          <ul class="pricing-features">
+            <li>Namenske rešitve za fakultete</li>
+            <li>Integracija s študentskimi kartami</li>
+            <li>Analitika prometnih tokov</li>
+            <li>Dedicated support</li>
+            <li>API dostop</li>
+          </ul>
+          <a href="#" class="btn btn-outline" style="width: 100%;">Kontaktirajte nas</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- How It Works Section -->
+  <section class="how-it-works">
+    <div class="container">
+      <div class="section-heading" data-aos="fade-up">
+        <span class="section-subtitle">Kako deluje</span>
+        <h2 class="section-title">4 preprosti koraki do skupne vožnje</h2>
+      </div>
+      
+      <div class="step-container" data-aos="fade-up">
+        <div class="step-number">1</div>
+        <div class="step-line"></div>
+        <div class="step-content">
+          <h3>Ustvari profil</h3>
+          <p>Registriraj se s študentskim računom in ustvari svoj profil. Dodaj podatke o svoji fakulteti in domačem kraju.</p>
+        </div>
+      </div>
+      
+      <div class="step-container" data-aos="fade-up" data-aos-delay="100">
+        <div class="step-number">2</div>
+        <div class="step-line"></div>
+        <div class="step-content">
+          <h3>Poišči ali ponudi prevoz</h3>
+          <p>Išči prevoz do svoje fakultete ali ponudi sedeže v svojem avtu. Nastavi čas odhoda in ceno.</p>
+        </div>
+      </div>
+      
+      <div class="step-container" data-aos="fade-up" data-aos-delay="200">
+        <div class="step-number">3</div>
+        <div class="step-line"></div>
+        <div class="step-content">
+          <h3>Dogovor</h3>
+          <p>Komuniciraj s sopotniki ali voznikom preko vgrajenega klepeta in se dogovori za podrobnosti.</p>
+        </div>
+      </div>
+      
+      <div class="step-container" data-aos="fade-up" data-aos-delay="300">
+        <div class="step-number">4</div>
+        <div class="step-content">
+          <h3>Potuj in oceni</h3>
+          <p>Uživaj v skupni vožnji in po končani poti oceni svojo izkušnjo za pomoč prihodnjim uporabnikom.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- CTA Section -->
+<section class="cta">
+  <div class="cta-container">
+    <span class="cta-subtitle" data-aos="fade-up">Pripravljen na skupno vožnjo?</span>
+    <h2 class="cta-title" data-aos="fade-up" data-aos-delay="100">Poveži se z drugimi študenti že danes</h2>
+    <p class="cta-description" data-aos="fade-up" data-aos-delay="200">SkupajDoFaksa povezuje študente po vsej Sloveniji. Ponudi prevoz ali si ga rezerviraj – hitro, enostavno in okolju prijazno.</p>
+    <div class="cta-buttons" data-aos="fade-up" data-aos-delay="300">
+      <a href="#find-ride" class="btn">
+        <i class="ri-search-line btn-icon"></i> Najdi prevoz
+      </a>
+      <a href="#offer-ride" class="btn btn-outline">
+        <i class="ri-steering-line btn-icon"></i> Ponudi prevoz
+      </a>
+    </div>
+  </div>
+</section>
+
+  
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col footer-about">
+          <a href="index.html" class="logo">
+            <i class="ri-focus-3-line logo-icon"></i>
+            <span class="logo-text">Študentski Prevozi</span>
+          </a>
+          <p>Platforma, ki povezuje študente po vsej Sloveniji za skupne vožnje do fakultet. Ceneje, hitreje in bolj ekološko.</p>
+          <div class="footer-social">
+            <a href="#" class="social-link"><i class="ri-instagram-line"></i></a>
+            <a href="#" class="social-link"><i class="ri-facebook-circle-line"></i></a>
+            <a href="#" class="social-link"><i class="ri-twitter-x-line"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-col footer-links">
+          <h4>Povezave</h4>
+          <ul>
+            <li><a href="index.html"><i class="ri-arrow-right-s-line"></i> Domov</a></li>
+            <li><a href="about.html"><i class="ri-arrow-right-s-line"></i> O nas</a></li>
+            <li><a href="services.html"><i class="ri-arrow-right-s-line"></i> Storitve</a></li>
+            <li><a href="index.html#destinations"><i class="ri-arrow-right-s-line"></i> Relacije</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col footer-links">
+          <h4>Podpora</h4>
+          <ul>
+            <li><a href="#"><i class="ri-arrow-right-s-line"></i> Pogosta vprašanja</a></li>
+            <li><a href="#"><i class="ri-arrow-right-s-line"></i> Kontakt</a></li>
+            <li><a href="#"><i class="ri-arrow-right-s-line"></i> Varnost</a></li>
+            <li><a href="#"><i class="ri-arrow-right-s-line"></i> Pogoji uporabe</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col footer-subscribe">
+          <h4>Novice</h4>
+          <p>Naroči se na naše novice in bodi obveščen o novih funkcijah in promocijah.</p>
+          <form>
+            <input type="email" placeholder="Vnesi svoj e-naslov">
+            <button type="submit"><i class="ri-send-plane-line"></i></button>
+          </form>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2025 <span>Študentski Prevozi</span>. Vse pravice pridržane.</p>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- Back to Top -->
+  <div class="back-to-top" id="back-to-top">
+    <i class="ri-arrow-up-line"></i>
+  </div>
+  
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    // Loader
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loader').style.opacity = '0';
+        setTimeout(() => {
+          document.getElementById('loader').style.display = 'none';
+        }, 500);
+      }, 1000);
+    });
+    
+    // Init AOS
+    AOS.init({
+      duration: 800,
+      easing: 'ease-in-out',
+      once: true
+    });
+    
+    // Mobile Navigation
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    const overlay = document.getElementById('overlay');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navMenu.classList.toggle('active');
+      overlay.classList.toggle('active');
+      document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
+    });
+    
+    overlay.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      navMenu.classList.remove('active');
+      overlay.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    });
+    
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+        overlay.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      });
+    });
+    
+    // Header scroll effect
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+    
+    // Back to top
+    const backToTop = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTop.classList.add('show');
+      } else {
+        backToTop.classList.remove('show');
+      }
+    });
+    
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+    
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          const headerHeight = document.getElementById('header').offsetHeight;
+          const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+          
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
