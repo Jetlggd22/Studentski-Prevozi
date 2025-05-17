@@ -2,8 +2,7 @@ const express = require('express');
 const mysql = require('mysql2/promise');
 const router = express.Router();
 
-// Database connection, use pools for better performance and multiple connections if necessary
-// REPLACE NAMES WHEN FINAL DECISION IS MADE 
+// Ustvari povezavo na bazo
 const pool = mysql.createPool({
   host: 'localhost',
   user: 'passione',
@@ -11,116 +10,90 @@ const pool = mysql.createPool({
   database: 'Studentski_Prevozi'
 });
 
-// Router to get user's ride history through use specific ID
+// GET: Zgodovina prevozov za uporabnika (voznik in potnik), z ocenami in komentarji
 router.get('/api/zgodovina/uporabnik/:id', async (req, res) => {
   try {
     const userId = req.params.id;
-    
-    // Get user's ride history (both as driver and passenger)
-    const [rows] = await pool.execute(`
+
+    // Pridobi vse prevoze kot potnik z ocenami
+    const [potnikRows] = await pool.execute(`
       SELECT 
-        p.IdPrevoz, 
-        p.Cas_odhoda, 
-        p.Cena, 
-        l1.Ime AS Odhod, 
+        p.IdPrevoz,
+        p.Cas_odhoda,
+        p.Cena,
+        l1.Ime AS Odhod,
         l2.Ime AS Prihod,
         r.Status,
         r.Ustvarjeno AS Datum_rezervacije,
-        'Potnik' AS Vloga
+        'Potnik' AS Vloga,
+        o.Ocena,
+        o.Komentar
       FROM Rezervacija r
       JOIN Prevoz p ON r.TK_Prevoz = p.IdPrevoz
       JOIN Lokacija l1 ON p.TK_Lokacija_Odhoda = l1.idLokacija
       JOIN Lokacija l2 ON p.TK_Lokacija_Prihoda = l2.idLokacija
+      LEFT JOIN Ocena o ON o.TK_Rezervacija = r.IdRezervacija
       WHERE r.TK_Putnik = ?
-      
-      UNION
-      
+    `, [userId]);
+
+    // Pridobi vse prevoze kot voznik z ocenami
+    const [voznikRows] = await pool.execute(`
       SELECT 
-        p.IdPrevoz, 
-        p.Cas_odhoda, 
-        p.Cena, 
-        l1.Ime AS Odhod, 
+        p.IdPrevoz,
+        p.Cas_odhoda,
+        p.Cena,
+        l1.Ime AS Odhod,
         l2.Ime AS Prihod,
         'Izveden' AS Status,
         p.Cas_odhoda AS Datum_rezervacije,
-        'Voznik' AS Vloga
+        'Voznik' AS Vloga,
+        AVG(o.Ocena) AS Ocena,
+        GROUP_CONCAT(o.Komentar SEPARATOR ' || ') AS Komentar
       FROM Prevoz p
       JOIN Lokacija l1 ON p.TK_Lokacija_Odhoda = l1.idLokacija
       JOIN Lokacija l2 ON p.TK_Lokacija_Prihoda = l2.idLokacija
+      LEFT JOIN Ocena o ON o.TK_Prevoz = p.IdPrevoz
       WHERE p.TK_Voznik = ?
-      
-      ORDER BY Cas_odhoda DESC
+      GROUP BY p.IdPrevoz
+    `, [userId]);
+
+    // Združi potnik in voznik rezultate
+    const combined = [...potnikRows, ...voznikRows].sort((a, b) =>
+      new Date(b.Cas_odhoda) - new Date(a.Cas_odhoda)
+    );
+
+    // Izračunaj povprečno oceno uporabnika (če je bil kdaj ocenjen)
+    const [avgOcenaRows] = await pool.execute(`
+      SELECT AVG(Ocena) AS Povprecna_Ocena
+      FROM Ocena o
+      JOIN Rezervacija r ON o.TK_Rezervacija = r.IdRezervacija
+      WHERE r.TK_Putnik = ?
+      UNION ALL
+      SELECT AVG(Ocena)
+      FROM Ocena o
+      JOIN Prevoz p ON o.TK_Prevoz = p.IdPrevoz
+      WHERE p.TK_Voznik = ?
     `, [userId, userId]);
-    
-    // Return all data
+
+    // Povprečje obeh vlog
+    const ocene = avgOcenaRows.map(row => row.Povprecna_Ocena).filter(Boolean);
+    const povprecnaOcena = ocene.length > 0
+      ? (ocene.reduce((a, b) => a + b, 0) / ocene.length).toFixed(2)
+      : null;
+
+    // Odgovor
     res.json({
       success: true,
-      data: rows
+      povprecna_ocena: povprecnaOcena,
+      zgodovina: combined
     });
-  } 
-  // Catch any errors and return a 500 status code
-  catch (error) {
-    console.error('Error fetching zgodovina:', error);
+  } catch (error) {
+    console.error('Napaka pri pridobivanju zgodovine:', error);
     res.status(500).json({
       success: false,
-      message: 'Error fetching zgodovina'
+      message: 'Napaka pri pridobivanju zgodovine uporabnika.'
     });
   }
 });
 
-// Get ride details with reservations and ratings
-router.get('/api/zgodovina/prevoz/:id', async (req, res) => {
-  try {
-    const prevozId = req.params.id;
-    
-    // Get ride details
-    const [prevozRows] = await pool.execute(`
-      SELECT 
-        p.*,
-        l1.Ime AS Odhod_lokacija,
-        l2.Ime AS Prihod_lokacija,
-        u.Ime AS Voznik_ime,
-        u.Priimek AS Voznik_priimek
-      FROM Prevoz p
-      JOIN Lokacija l1 ON p.TK_Lokacija_Odhoda = l1.idLokacija
-      JOIN Lokacija l2 ON p.TK_Lokacija_Prihoda = l2.idLokacija
-      JOIN Uporabnik u ON p.TK_Voznik = u.IdUporabnik
-      WHERE p.IdPrevoz = ?
-    `, [prevozId]);
-    
-    // Get reservations for this ride
-    const [rezervacijeRows] = await pool.execute(`
-      SELECT 
-        r.*,
-        u.Ime AS Potnik_ime,
-        u.Priimek AS Potnik_priimek
-      FROM Rezervacija r
-      JOIN Uporabnik u ON r.TK_Putnik = u.IdUporabnik
-      WHERE r.TK_Prevoz = ?
-    `, [prevozId]);
-    
-    // Get ratings for this ride
-    const [oceneRows] = await pool.execute(`
-      SELECT * FROM Ocena WHERE TK_Prevoz = ?
-    `, [prevozId]);
-    
-    
-    // Return ride details, reservations, and ratings
-    res.json({
-      success: true,
-      data: {
-        prevoz: prevozRows[0] || null,
-        rezervacije: rezervacijeRows,
-        ocene: oceneRows
-      }
-    });
-  } catch (error) {
-    console.error('Error fetching prevoz zgodovina:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Error fetching prevoz zgodovina'
-    });
-  }
-});
-// Export the router to use in the main app
 module.exports = router;
