@@ -3,16 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Študentski Prevozi - Prijava</title>
+  <title>Študentski Prevozi - Registracija</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="Styles/Style.css">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-  <style>
-    /* Simplified Login Styles */
-    
-  </style>
 </head>
 <body>
   <!-- Loader -->
@@ -24,7 +20,7 @@
   </div>
   
   <!-- Header -->
-   <header class="header" id="header">
+  <header class="header" id="header">
     <div class="container header-container">
       <a href="#" class="logo">
         <i class="ri-focus-3-line logo-icon"></i>
@@ -70,37 +66,62 @@
   
   <div class="overlay" id="overlay"></div>
   
-  <!-- Login Section -->
-  <section class="login-page">
-    <!-- Simple floating dots background -->
+  <!-- Registration Section -->
+  <section class="register-page">
+    <!-- Floating dots background - now positioned below navbar -->
     <div class="floating-dots" id="floating-dots"></div>
     
     <div class="container">
-      <div class="login-container">
-        <div class="login-header">
-          <h1 class="login-title">Prijava</h1>
-          <p class="login-subtitle">Vstopi v svoj študentski račun</p>
+      <div class="register-container">
+        <div class="register-header">
+          <h1 class="register-title">Registracija</h1>
+          <p class="register-subtitle">Ustvari svoj študentski račun</p>
         </div>
         
-        <form class="login-form">
-          <div class="input-group">
-            <i class="ri-mail-line"></i>
-            <input type="email" placeholder="Študentski e-poštni naslov" required>
-          </div>
-          
-          <div class="input-group">
-            <i class="ri-lock-2-line"></i>
-            <input type="password" placeholder="Geslo" required>
-          </div>
-          
-          <button type="submit" class="login-btn">
-            <i class="ri-login-box-line"></i> Prijavi se
-          </button>
-          
-          <div class="login-footer">
-            <p>Še nimaš računa? <a href="Register.html">Registriraj se</a> </p>
-          </div>
-        </form>
+<form class="register-form" id="registerForm">
+  <div class="input-group">
+    <i class="ri-user-line"></i>
+    <input type="text" placeholder="Ime" name="ime" required>
+  </div>
+
+  <div class="input-group">
+    <i class="ri-user-line"></i>
+    <input type="text" placeholder="Priimek" name="priimek" required>
+  </div>
+
+  <div class="input-group">
+    <i class="ri-user-smile-line"></i>
+    <input type="text" placeholder="Uporabniško ime" name="username" required>
+  </div>
+
+  <div class="input-group">
+    <i class="ri-phone-line"></i>
+    <input type="tel" placeholder="Telefon" name="telefon" required>
+  </div>
+
+  <div class="input-group">
+    <i class="ri-mail-line"></i>
+    <input type="email" placeholder="Študentski e-poštni naslov" name="email" required>
+  </div>
+
+  <div class="input-group">
+    <i class="ri-lock-2-line"></i>
+    <input type="password" placeholder="Geslo" name="password" required>
+  </div>
+
+  <div class="input-group">
+    <i class="ri-lock-password-line"></i>
+    <input type="password" placeholder="Ponovi geslo" name="confirmPassword" required>
+  </div>
+
+  <button type="submit" class="register-btn">
+    <i class="ri-user-add-line"></i> Ustvari račun
+  </button>
+
+  <div class="register-footer">
+    <p>Že imaš račun? <a href="Login.html">Prijavi se</a></p>
+  </div>
+</form>
       </div>
     </div>
   </section>
@@ -156,6 +177,15 @@
       }
     });
 
+    // Student type selection
+    const studentTypeBtns = document.querySelectorAll('.student-type-btn');
+    studentTypeBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        studentTypeBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+
     // Simple floating dots animation
     const floatingDots = document.getElementById('floating-dots');
     const dotCount = 20;
@@ -169,5 +199,6 @@
       floatingDots.appendChild(dot);
     }
   </script>
+  <script src="./script/register.js"></script>
 </body>
 </html>

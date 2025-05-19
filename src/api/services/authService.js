@@ -1,6 +1,7 @@
 import authRepository from '../repositories/authRepository.js';
 import https from "https"
 import dotenv from 'dotenv';
+import jwt from "jsonwebtoken"
 dotenv.config();
 
 
@@ -121,7 +122,11 @@ const login = async ({ email, geslo }) => {
   };
 
   const response = await httpsRequest(options, postData);
-  return response; 
+  const decoded = jwt.decode(response.access_token)
+  const dbResponse = await authRepository.getUserById(decoded.sub)
+  console.log(dbResponse)
+
+  return {...response, ...dbResponse}; 
 }
 
 export default { createUser, login };

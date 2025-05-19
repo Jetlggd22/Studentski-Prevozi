@@ -10,4 +10,12 @@ async function createUser({ auth0UserId, ime, priimek, telefon, username}) {
   return result;
 }
 
-export default { createUser };
+async function getUserById(id) {
+  const [rows] = await pool.execute(`
+    SELECT * FROM Uporabnik WHERE IdUporabnik = ?
+  `, [id]);
+
+  return rows[0] || null;
+}
+
+export default { createUser, getUserById };
