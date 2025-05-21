@@ -1,5 +1,4 @@
 import express from 'express';
-import 'express-async-errors';
 import dotenv from 'dotenv';
 import routes from './routes.js';
 import cors from 'cors'
