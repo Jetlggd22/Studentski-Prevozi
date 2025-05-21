@@ -5,6 +5,8 @@ import authController from './controllers/authController.js';
 import catchAsync from './utils/catchAsync.js';
 import {getUserHistory, getRideDetails} from "./controllers/historyController.js"
 import { getAllPrevozi } from './controllers/rideController.js';
+import { getAllHistories } from './controllers/adminHistoryController.js';
+
 
 const checkJwt = expressjwt({
   secret: jwksRsa.expressJwtSecret({
@@ -24,6 +26,7 @@ router.post('/users', catchAsync(authController.createUser));
 router.get('/zgodovina/uporabnik/:id', getUserHistory);
 router.get('/zgodovina/prevoz/:id', getRideDetails);
 router.get('/prevozi', getAllPrevozi);
+router.get('/admin/history', getAllHistories);
 router.post('/login', catchAsync(authController.loginUser));
 
 
