@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="icon" href = "img/sp_favicon.png" type = "image/x-icon">
 </head>
 <body>
   <!-- Loader -->
@@ -53,6 +54,11 @@
             <i class="ri-customer-service-2-line nav-icon"></i> O Nas
           </a>
         </li>
+         <li class="nav-item">
+          <a href="Login.html" class="nav-link">
+            <i class="ri-login-circle-line nav-icon"></i> Prijava
+          </a>
+        </li>
          
       </ul>
       
@@ -78,55 +84,62 @@
           <p class="register-subtitle">Ustvari svoj študentski račun</p>
         </div>
         
-<form class="register-form" id="registerForm">
-  <div class="input-group">
-    <i class="ri-user-line"></i>
-    <input type="text" placeholder="Ime" name="ime" required>
-  </div>
-
-  <div class="input-group">
-    <i class="ri-user-line"></i>
-    <input type="text" placeholder="Priimek" name="priimek" required>
-  </div>
-
-  <div class="input-group">
-    <i class="ri-user-smile-line"></i>
-    <input type="text" placeholder="Uporabniško ime" name="username" required>
-  </div>
-
-  <div class="input-group">
-    <i class="ri-phone-line"></i>
-    <input type="tel" placeholder="Telefon" name="telefon" required>
-  </div>
-
-  <div class="input-group">
-    <i class="ri-mail-line"></i>
-    <input type="email" placeholder="Študentski e-poštni naslov" name="email" required>
-  </div>
-
-  <div class="input-group">
-    <i class="ri-lock-2-line"></i>
-    <input type="password" placeholder="Geslo" name="password" required>
-  </div>
-
-  <div class="input-group">
-    <i class="ri-lock-password-line"></i>
-    <input type="password" placeholder="Ponovi geslo" name="confirmPassword" required>
-  </div>
-
-  <button type="submit" class="register-btn">
-    <i class="ri-user-add-line"></i> Ustvari račun
-  </button>
-
-  <div class="register-footer">
-    <p>Že imaš račun? <a href="Login.html">Prijavi se</a></p>
-  </div>
-</form>
+        <form class="register-form" id = "registerForm">
+         
+          
+          <div class="input-group">
+            <i class="ri-user-line"></i>
+            <input type="text" placeholder="Ime in priimek" required>
+          </div>
+          
+          <div class="input-group">
+            <i class="ri-mail-line"></i>
+            <input type="email" placeholder="Študentski e-poštni naslov" required>
+          </div>
+          
+          <div class="input-group">
+            <i class="ri-community-line"></i>
+            <input type="text" placeholder="Fakulteta/Univerza" required>
+          </div>
+          
+          <div class="input-group">
+            <i class="ri-map-pin-line"></i>
+            <input type="text" placeholder="Domači kraj" required>
+          </div>
+          
+          <div class="input-group">
+            <i class="ri-lock-2-line"></i>
+            <input type="password" placeholder="Geslo" required>
+          </div>
+          
+          <div class="input-group">
+            <i class="ri-lock-password-line"></i>
+            <input type="password" placeholder="Ponovi geslo" required>
+          </div>
+          
+          <button type="submit" class="register-btn">
+            <i class="ri-user-add-line"></i> Ustvari račun
+          </button>
+          
+          <div class="register-footer">
+            <p>Že imaš račun? <a href="Login.html">Prijavi se</a></p>
+          </div>
+        </form>
       </div>
     </div>
   </section>
   
+
+  <!-- Modern Modal for messages -->
+<div id="registerModal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="closeRegisterModal">&times;</span>
+    <h2 id="registerModalTitle"></h2>
+    <p id="registerModalMessage"></p>
+  </div>
+</div>
   <!-- Scripts -->
+   <script src = "script/register.js"></script>
   <script>
     // Loader
     window.addEventListener('load', () => {
@@ -199,6 +212,5 @@
       floatingDots.appendChild(dot);
     }
   </script>
-  <script src="./script/register.js"></script>
 </body>
 </html>

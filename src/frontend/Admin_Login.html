@@ -20,50 +20,7 @@
     </div>
   </div>
   
-  <!-- Header -->
-   <header class="header" id="header">
-    <div class="container header-container">
-      <a href="#" class="logo">
-        <i class="ri-focus-3-line logo-icon"></i>
-        <span class="logo-text">Študentski Prevozi<span>
-      </a>
-      
-      <ul class="nav-menu" id="nav-menu">
-        <li class="nav-item">
-          <a href="Index.html" class="nav-link">
-            <i class="ri-home-4-line nav-icon"></i> Domov
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="Relacije.html" class="nav-link">
-            <i class="ri-map-pin-line nav-icon"></i> Relacije
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="Vozniki.html" class="nav-link">
-            <i class="ri-award-line nav-icon"></i> Vozniki
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="Storitve.html" class="nav-link">
-            <i class="ri-information-line nav-icon"></i> Storitve
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="ONas.html" class="nav-link">
-            <i class="ri-customer-service-2-line nav-icon"></i> O Nas
-          </a>
-        </li>
-         
-      </ul>
-      
-      <div class="hamburger" id="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </div>
-  </header>
+ 
   
   <div class="overlay" id="overlay"></div>
   
@@ -75,14 +32,15 @@
     <div class="container">
       <div class="login-container">
         <div class="login-header">
+            <h1 class = "login-title"><i class="ri-spy-line"></i></h1>
           <h1 class="login-title">Prijava</h1>
-          <p class="login-subtitle">Vstopi v svoj študentski račun</p>
+          <p class="login-subtitle">Vstopi v svoj admin račun</p>
         </div>
         
         <form class="login-form">
           <div class="input-group">
             <i class="ri-mail-line"></i>
-            <input type="email" id = "email" placeholder="Študentski e-poštni naslov" required>
+            <input type="text" id = "username" placeholder="Uporabnisko Ime" required>
           </div>
           
           <div class="input-group">
@@ -94,9 +52,7 @@
             <i class="ri-login-box-line"></i> Prijavi se
           </button>
           
-          <div class="login-footer">
-            <p>Še nimaš računa? <a href="Register.html">Registriraj se</a> </p>
-          </div>
+        
         </form>
       </div>
     </div>
@@ -126,34 +82,7 @@
       }, 1000);
     });
     
-    // Mobile Navigation
-    const hamburger = document.getElementById('hamburger');
-    const navMenu = document.getElementById('nav-menu');
-    const overlay = document.getElementById('overlay');
-    const navLinks = document.querySelectorAll('.nav-link');
     
-    hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('active');
-      navMenu.classList.toggle('active');
-      overlay.classList.toggle('active');
-      document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
-    });
-    
-    overlay.addEventListener('click', () => {
-      hamburger.classList.remove('active');
-      navMenu.classList.remove('active');
-      overlay.classList.remove('active');
-      document.body.style.overflow = 'auto';
-    });
-    
-    navLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
-        overlay.classList.remove('active');
-        document.body.style.overflow = 'auto';
-      });
-    });
     
     // Header scroll effect
     const header = document.getElementById('header');
