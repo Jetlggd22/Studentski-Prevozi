@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Študentski Prevozi - Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel = "stylesheet" href = "Styles/Style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/10.0.4/swiper-bundle.css" />
+  <link rel="icon" href = "img/admin_icon.png" type = "image/x-icon">
+</head>
+<body>
+    <!-- Header -->
+    <div class="loader" id="loader">
+    <div class="loader-content">
+      <div class="loader-spinner"></div>
+      <div class="loader-logo">Študentski Prevozi - Admin</div>
+    </div>
+  </div>
+  
+  <!-- Header -->
+   <header class="header" id="header">
+    <div class="container header-container">
+      <a href="#" class="logo">
+        <i class="ri-spy-line logo-icon"></i>
+        <span class="logo-text">Študentski Prevozi - Admin<span>
+      </a>
+      
+      <ul class="nav-menu" id="nav-menu">
+        <li class="nav-item">
+          <a href="Admin_Dashboard.html" class="nav-link">
+            <i class="ri-home-4-line nav-icon"></i> Domov
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="Admin_Relacije.html" class="nav-link">
+            <i class="ri-map-pin-line nav-icon"></i> Relacije
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="Admin_Vozniki.html" class="nav-link">
+            <i class="ri-award-line nav-icon"></i> Vozniki
+          </a>
+        </li>
+        
+         <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="ri-login-circle-line nav-icon"></i> Odjava
+          </a>
+        </li>
+         
+      </ul>
+      
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+  
+  <div class="overlay" id="overlay"></div>
+
+
+    <!-- Main Admin Dashboard -->
+    <main class="container" style="padding-top: 120px; padding-bottom: 60px;">
+        <section class="section-heading">
+            <span class="section-subtitle">Nadzorna plošča</span>
+            <h1 class="section-title">Dobrodošel, Admin!</h1>
+            <p class="section-description">
+                Upravljaj platformo, spremljaj statistike, uporabnike, prevoze in ocene. Vse na enem mestu.
+            </p>
+        </section>
+        
+        <!-- Stat Cards -->
+        <div class="features-grid" style="margin-bottom: 50px;">
+            <div class="feature-card">
+                <div class="feature-icon-wrapper"><i class="ri-numbers-line feature-icon"></i></div>
+                <div class="feature-title">Št. uporabnikov</div>
+                <div class="feature-description"><span style="font-size: 28px; font-weight: 700;">1.245</span></div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon-wrapper"><i class="ri-car-line feature-icon"></i></div>
+                <div class="feature-title">Aktivni prevozi</div>
+                <div class="feature-description"><span style="font-size: 28px; font-weight: 700;">312</span></div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon-wrapper"><i class="ri-star-line feature-icon"></i></i></div>
+                <div class="feature-title">Povprečna ocena</div>
+                <div class="feature-description"><span style="font-size: 28px; font-weight: 700;">4.8/5</span></div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <section class="features" style="padding: 0;">
+            <div class="section-heading" style="margin-bottom: 30px;">
+                <span class="section-subtitle">Hitri ukrepi</span>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper"> <i class="ri-group-line feature-icon"></i></div>
+                    <div class="feature-title">Upravljaj uporabnike</div>
+                    <div class="feature-description">Preglej, uredi ali blokiraj uporabnike.</div>
+                    <a href="#" class="btn btn-outline" style="margin-top: 15px;">Pojdi</a>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper"><i class="ri-steering-line feature-icon"></i></div>
+                    <div class="feature-title">Upravljaj prevoze</div>
+                    <div class="feature-description">Preglej, potrdi ali odstrani objavljene prevoze.</div>
+                    <a href="#" class="btn btn-outline" style="margin-top: 15px;">Pojdi</a>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper"><i class="ri-chat-4-line feature-icon"></i></i></div>
+                    <div class="feature-title">Poročila & prijave</div>
+                    <div class="feature-description">Preglej prijave neprimernih vsebin ali uporabnikov.</div>
+                    <a href="#" class="btn btn-outline" style="margin-top: 15px;">Pojdi</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Latest Activity Table -->
+        <section style="margin-top: 60px;">
+            <div class="section-heading" style="margin-bottom: 20px;">
+                <span class="section-subtitle">Zadnje aktivnosti</span>
+            </div>
+            <div style="overflow-x:auto; border-radius: 12px; background: var(--dark-light); padding: 20px;">
+                <table style="width:100%; color: var(--white); border-collapse: collapse;">
+                    <thead>
+                        <tr style="border-bottom: 1px solid var(--gold);">
+                            <th style="padding: 10px;">Čas</th>
+                            <th style="padding: 10px;">Uporabnik</th>
+                            <th style="padding: 10px;">Dejanje</th>
+                            <th style="padding: 10px;">Podrobnosti</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 10px;">08:40</td>
+                            <td style="padding: 10px;">ana.kovac</td>
+                            <td style="padding: 10px;">Objavil prevoz</td>
+                            <td style="padding: 10px;">Ljubljana → Maribor</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px;">08:35</td>
+                            <td style="padding: 10px;">marko.novak</td>
+                            <td style="padding: 10px;">Rezerviral prevoz</td>
+                            <td style="padding: 10px;">Celje → Ljubljana</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px;">08:30</td>
+                            <td style="padding: 10px;">tina.zagar</td>
+                            <td style="padding: 10px;">Oddal oceno</td>
+                            <td style="padding: 10px;">5 ★ vozniku</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px;">08:25</td>
+                            <td style="padding: 10px;">admin</td>
+                            <td style="padding: 10px;">Blokiral uporabnika</td>
+                            <td style="padding: 10px;">neprimerno obnašanje</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+   <footer class="footer">
+        <div class="container footer-container">
+        <div class="footer-bottom">
+            <p>© 2025 Studentskki Prevozi, Republika Slovenija, EU. Vse pravice pridržane. | Admin nadzorna plošča</p>
+        </div>
+    </footer>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    // Loader
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loader').style.opacity = '0';
+        setTimeout(() => {
+          document.getElementById('loader').style.display = 'none';
+        }, 500);
+      }, 1000);
+    });
+    
+    // Init AOS
+    AOS.init({
+      duration: 800,
+      easing: 'ease-in-out',
+      once: true
+    });
+    
+    // Mobile Navigation
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    const overlay = document.getElementById('overlay');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navMenu.classList.toggle('active');
+      overlay.classList.toggle('active');
+      document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
+    });
+    
+    overlay.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      navMenu.classList.remove('active');
+      overlay.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    });
+    
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+        overlay.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      });
+    });
+    
+    // Header scroll effect
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+    
+    // Back to top
+    const backToTop = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTop.classList.add('show');
+      } else {
+        backToTop.classList.remove('show');
+      }
+    });
+    
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+    
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          const headerHeight = document.getElementById('header').offsetHeight;
+          const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+          
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

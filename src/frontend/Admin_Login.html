@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Študentski Prevozi - Prijava</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="Styles/Style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="icon" href = "img/sp_favicon.png" type = "image/x-icon">
+</head>
+<body>
+  <!-- Loader -->
+  <div class="loader" id="loader">
+    <div class="loader-content">
+      <div class="loader-spinner"></div>
+      <div class="loader-logo">Študentski Prevozi</div>
+    </div>
+  </div>
+  
+ 
+  
+  <div class="overlay" id="overlay"></div>
+  
+  <!-- Login Section -->
+  <section class="login-page">
+    <!-- Simple floating dots background -->
+    <div class="floating-dots" id="floating-dots"></div>
+    
+    <div class="container">
+      <div class="login-container">
+        <div class="login-header">
+            <h1 class = "login-title"><i class="ri-spy-line"></i></h1>
+          <h1 class="login-title">Prijava</h1>
+          <p class="login-subtitle">Vstopi v svoj admin račun</p>
+        </div>
+        
+        <form class="login-form">
+          <div class="input-group">
+            <i class="ri-mail-line"></i>
+            <input type="text" id = "username" placeholder="Uporabnisko Ime" required>
+          </div>
+          
+          <div class="input-group">
+            <i class="ri-lock-2-line"></i>
+            <input type="password" id = "password" placeholder="Geslo" required>
+          </div>
+          
+          <button type="submit" class="login-btn">
+            <i class="ri-login-box-line"></i> Prijavi se
+          </button>
+          
+        
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal for error messages -->
+  <div id="errorModal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="closeModal">&times;</span>
+    <h2>Napaka pri prijavi</h2>
+    <p id="modalMessage"></p>
+  </div>
+</div>
+  
+
+  <!-- Scripts -->
+   <script src="script/login.js"></script>
+  <script>
+  
+    // Loader
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loader').style.opacity = '0';
+        setTimeout(() => {
+          document.getElementById('loader').style.display = 'none';
+        }, 500);
+      }, 1000);
+    });
+    
+    
+    
+    // Header scroll effect
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Simple floating dots animation
+    const floatingDots = document.getElementById('floating-dots');
+    const dotCount = 20;
+    
+    for (let i = 0; i < dotCount; i++) {
+      const dot = document.createElement('div');
+      dot.classList.add('dot');
+      dot.style.left = `${Math.random() * 100}%`;
+      dot.style.animationDuration = `${10 + Math.random() * 20}s`;
+      dot.style.animationDelay = `${Math.random() * 5}s`;
+      floatingDots.appendChild(dot);
+    }
+  </script>
+</body>
+</html>
