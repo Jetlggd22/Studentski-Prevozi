@@ -11,6 +11,7 @@
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/10.0.4/swiper-bundle.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="icon" href = "img/admin_icon.png" type = "image/x-icon">
   <style>
     .admin-actions {
@@ -122,55 +123,9 @@
         <h2 class="section-title">Zgodovina Vseh Relacij</h2>
         <p class="section-description">Tukaj lahko zgodovino vseh prevozov.</p>
       </div>
-      <!-- Booking Section - Example Relacija 1 -->
-      <div class="container py-5">
-        <div class="booking-card fade-in">
-          <div class="booking-header">
-            <h2 class="booking-title">
-              <i class="fas fa-bus"></i> Peter Krpan
-            </h2>
-          </div>
-          <div class="booking-body">
-            <div class="route-display slide-up" style="animation-delay: 0.2s">
-              <div class="location">
-                <div class="location-name">Študentski Domovi Smetanova 57</div>
-                <div class="location-time">08:00 AM</div>
-              </div>
-              <div class="route-line" style="background-color: #312D18;"></div>
-              <div class="location">
-                <div class="location-name">UM Celje</div>
-                <div class="location-time">08:45 AM</div>
-              </div>
-            </div>
-            
-            <div class="booking-details">
-              <div class="detail-card slide-up" style="animation-delay: 0.3s">
-                <div class="detail-label">Odhod</div>
-                <div class="detail-value">Pon, 15 May</div>
-              </div>
-              <div class="detail-card slide-up" style="animation-delay: 0.4s">
-                <div class="detail-label">Trajanje</div>
-                <div class="detail-value">45 min</div>
-              </div>
-              <div class="detail-card slide-up" style="animation-delay: 0.5s">
-                <div class="detail-label">ID Vožnje</div>
-                <div class="detail-value">REL-001</div>
-              </div>
-              <div class="detail-card slide-up" style="animation-delay: 0.6s">
-                <div class="detail-label">Zasedenih Sedežev</div>
-                <div class="detail-value">3/4</div>
-              </div>
-            </div>
-            
-            <div class="price-section slide-up" style="animation-delay: 0.7s">
-              <div class="price-info">
-                <div class="price-amount">9.99€</div>
-              </div>
-            </div>
-            
-            
-          </div>
-        </div>
+      <div id="booking-container" class="booking-body">
+
+
       </div>
       
       <!-- Booking Section - Example Relacija 2 -->
@@ -380,5 +335,6 @@
       });
     });
   </script>
+  <script src="script/admin_history_generator.js"></script>
 </body>
 </html>
