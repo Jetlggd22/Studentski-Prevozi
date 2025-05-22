@@ -11,6 +11,7 @@
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/10.0.4/swiper-bundle.css" />
+  <link rel="icon" href = "img/sp_favicon.png" type = "image/x-icon">
    <body>
   <!-- Loader -->
   <div class="loader" id="loader">
@@ -53,6 +54,11 @@
             <i class="ri-customer-service-2-line nav-icon"></i> O Nas
           </a>
         </li>
+         <li class="nav-item">
+          <a href="Login.html" class="nav-link">
+            <i class="ri-login-circle-line nav-icon"></i> Prijava
+          </a>
+        </li>
          
       </ul>
       
@@ -80,20 +86,29 @@
       <span class="section-subtitle">Najpogostejše Povezave</span>
       <h2 class="section-title">Povezujemo Slovenijo</h2>
       <p class="section-description">Odkrij najbolj priljubljene študentske poti – iz mest do fakultet po Sloveniji. Skupaj do faksa, brez prevelikih stroškov in z vesoljskim prihrankom časa.</p>
-    </div>
-
+    </div></div>
+  
 <!--SEARCH CARD-->
-   <section class="search-section">
-  <div class="container">
-    <form class="search-form" autocomplete="off">
-      <input type="text" name="from" placeholder="Odhod" required />
-      <input type="text" name="to" placeholder="Destinacija" required />
-      <button type="submit" class="btn btn-outline">
-        Isci <i class="fa fa-search"></i>
+   
+<section style="max-width: 400px; margin: 40px auto; width: 100%;">
+  <div>
+    <form class="login-form d-flex flex-column align-items-center">
+      <div class="input-group w-50 mb-3">
+        <i class="ri-mail-line"></i>
+        <input type="email" placeholder="Odhod" required class="form-control">
+      </div>
+      <div class="input-group w-50 mb-3">
+        <i class="ri-lock-2-line"></i>
+        <input type="password" placeholder="Destinacija" required class="form-control">
+      </div>
+      <button type="submit" class="login-btn btn btn-primary w-50">
+        <i class="ri-menu-search-line"></i> Išči
       </button>
     </form>
   </div>
 </section>
+
+
 
 
   <!-- Booking Section -->
@@ -110,7 +125,7 @@
             <div class="location-name">Študentski Domovi Smetanova 57</div>
             <div class="location-time">08:00 AM</div>
           </div>
-          <div class="route-line"></div>
+          <div class="route-line" style = "background-color: #312D18;"></div>
           <div class="location">
             <div class="location-name">UM Celje</div>
             <div class="location-time">08:45 AM</div>
@@ -135,31 +150,135 @@
         
         <div class="price-section slide-up" style="animation-delay: 0.7s">
           <div class="price-info">
-           
-            <div class="price-amount">Cena In Vec Informacij</div>
+            <div class="price-amount">9.99€</div>
           </div>
           <button class="book-btn">
-            Tukaj<i class="fas fa-arrow-right"></i>
+            Rezervirajte Zdaj<i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+
+        <!-- Rating and Comment Section -->
+<div class="rating-comment-section slide-up" style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: 15px;
+          padding: 10px;
+          background: #222222;
+          border-radius: 8px;
+          animation-delay: 0.8s
+        ">
+          <div class="rating-stars" style="display: flex; align-items: center;">
+            <span style="margin-right: 10px; font-size: 14px;">Ocenite:</span>
+            <div class="stars" style="color: #ddd; font-size: 18px;">
+               <div class="modal-stars">
+  <img src="img/star_empty.png" data-rating="1" class="star-img" alt="1">
+  <img src="img/star_empty.png" data-rating="2" class="star-img" alt="2">
+  <img src="img/star_empty.png" data-rating="3" class="star-img" alt="3">
+  <img src="img/star_empty.png" data-rating="4" class="star-img" alt="4">
+  <img src="img/star_empty.png" data-rating="5" class="star-img" alt="5">
+</div>
+            </div>
+          </div>
+          <button class="comment-btn btn btn-primary w-50" style="
+           
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+          ">
+            <i class="fas fa-comment"></i> Komentar
           </button>
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- Comment Modal -->
+  <div id="commentModal" style="
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+  ">
+    <div style="
+      background: black;
+      padding: 20px;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 500px;
+    ">
+      <div style="
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+      ">
+        <h3 style="margin: 0;">Dodajte komentar</h3>
+        <button id="closeModal" style="
+          background: none;
+          border: none;
+          font-size: 20px;
+          cursor: pointer;
+        ">&times;</button>
+      </div>
+      
+      <div style="margin-bottom: 15px;">
+        <div style="margin-bottom: 5px;">Vaša ocena:</div>
+      
+      </div>
+      
+      <div style="margin-bottom: 15px;">
+        <div style="margin-bottom: 5px;">Komentar:</div>
+        <textarea id="commentText" style="
+          width: 100%;
+          padding: 10px;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          min-height: 50px;
+          background-color: black;
+          color:white;
+        "></textarea>
+      </div>
+      
+      <div style="display: flex; justify-content: flex-end;">
+        <button id="cancelComment" style="
+          background-color: #312D18;
+          color:white;
+          border: none;
+          padding: 8px 15px;
+          border-radius: 4px;
+          margin-right: 10px;
+          cursor: pointer;
+        " class = "cancelBtn btn btn-danger w-30">Prekliči</button>
+        <button id="saveComment" class = "login-btn btn btn-primary w-30">Shrani</button>
+      </div>
+    </div>
+  </div>
+    
   </div>
   </div>
   </section>
 
 
 <!-- Footer -->
-  <footer class="footer" id="contact">
+ <footer class="footer" id="contact">
   <div class="container">
     <div class="footer-grid">
 
       <div class="footer-col footer-about">
         <a href="#" class="logo">
           <i class="ri-focus-3-line logo-icon"></i>
-          <span class="logo-text">GoldEdge Travels</span>
+          <span class="logo-text">Študentski Prevozi</span>
         </a>
-        <p>GoldEdge Travels je vodilna študentska potovalna agencija, ki združuje luksuzna doživetja z ugodnimi cenami za nepozabne dogodivščine sodobnih raziskovalcev.</p>
+        <p>Študentski Prevozi je vodilna študentska potovalna agencija, ki združuje luksuzna doživetja z ugodnimi cenami za nepozabne dogodivščine sodobnih raziskovalcev.</p>
         <div class="footer-social">
           <a href="#" class="social-link"><i class="ri-instagram-line"></i></a>
           <a href="#" class="social-link"><i class="ri-twitter-x-line"></i></a>
@@ -171,20 +290,19 @@
       <div class="footer-col footer-links">
         <h4>Podjetje</h4>
         <ul>
-          <li><a href="#"><i class="ri-arrow-right-s-line"></i> O nas</a></li>
-          <li><a href="#"><i class="ri-arrow-right-s-line"></i> Naša ekipa</a></li>
-          <li><a href="#"><i class="ri-arrow-right-s-line"></i> Zaposlitve</a></li>
-          <li><a href="#"><i class="ri-arrow-right-s-line"></i> Blog</a></li>
+           <li><a href="Kontakt.html"><i class="ri-arrow-right-s-line"></i> Kontaktiraj nas</a></li>
+          <li><a href="NasaEkipa.html"><i class="ri-arrow-right-s-line"></i> Naša ekipa</a></li>
+          <li><a href="Blog.html"><i class="ri-arrow-right-s-line"></i> Blog</a></li>
         </ul>
       </div>
 
       <div class="footer-col footer-links">
         <h4>Podpora</h4>
         <ul>
-          <li><a href="#"><i class="ri-arrow-right-s-line"></i> Pogosta vprašanja</a></li>
-          <li><a href="#"><i class="ri-arrow-right-s-line"></i> Kontaktiraj nas</a></li>
-          <li><a href="#"><i class="ri-arrow-right-s-line"></i> Politika zasebnosti</a></li>
-          <li><a href="#"><i class="ri-arrow-right-s-line"></i> Pogoji uporabe</a></li>
+          <li><a href="FAQ.html"><i class="ri-arrow-right-s-line"></i> Pogosta vprašanja</a></li>
+         
+          <li><a href="PolitikaZasebnosti.html"><i class="ri-arrow-right-s-line"></i> Politika zasebnosti</a></li>
+          <li><a href="PogojiUporabe.html"><i class="ri-arrow-right-s-line"></i> Pogoji uporabe</a></li>
         </ul>
       </div>
 
@@ -200,7 +318,7 @@
     </div>
 
     <div class="footer-bottom">
-      <p>&copy; 2025 <span>GoldEdge Travels</span>. Vse pravice pridržane.</p>
+      <p>&copy; 2025 <span>Študentski Prevozi, Republika Slovenija, Europska Unija</span>. Vse pravice pridržane.</p>
     </div>
   </div>
 </footer>
@@ -375,7 +493,92 @@
     });
 }
      )
-     
+  
+    // Modal functionality
+    const modal = document.getElementById('commentModal');
+    const commentBtn = document.querySelector('.comment-btn');
+    const closeModal = document.getElementById('closeModal');
+    const cancelBtn = document.getElementById('cancelComment');
+    
+    commentBtn.addEventListener('click', function() {
+      modal.style.display = 'flex';
+      setRating(document.querySelector('.modal-stars'), selectedRating);
+    });
+    
+    closeModal.addEventListener('click', function() {
+      modal.style.display = 'none';
+    });
+    
+    cancelBtn.addEventListener('click', function() {
+      modal.style.display = 'none';
+    });
+    
+    // Save comment
+    document.getElementById('saveComment').addEventListener('click', function() {
+      const comment = document.getElementById('commentText').value;
+      
+      if (selectedRating === 0) {
+        alert('Prosimo, izberite oceno!');
+        return;
+      }
+      
+      // Here you would typically send the data to your server
+      console.log('Rating:', selectedRating);
+      console.log('Comment:', comment);
+      
+      // Show success message
+      alert('Hvala za vašo oceno in komentar!');
+      
+      // Reset and close
+      document.getElementById('commentText').value = '';
+      modal.style.display = 'none';
+    });
+    
+    // Close modal when clicking outside
+    window.addEventListener('click', function(event) {
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
 
+   let selectedRating = 0;
+
+function setRating(starsContainer, rating) {
+  const stars = starsContainer.querySelectorAll('.star-img');
+  stars.forEach(star => {
+    const starValue = parseInt(star.getAttribute('data-rating'));
+    if (starValue <= rating) {
+      star.src = 'img/star_fill.png'; // Use your filled star image path
+    } else {
+      star.src = 'img/star_empty.png'; // Use your empty star image path
+    }
+  });
+}
+
+// Initialize star ratings
+document.querySelectorAll('.modal-stars .star-img').forEach(star => {
+  star.addEventListener('click', function() {
+    selectedRating = parseInt(this.getAttribute('data-rating'));
+    setRating(document.querySelector('.modal-stars'), selectedRating);
+    // Now selectedRating holds the number of stars selected (1-5)
+    // You can use selectedRating when saving the comment
+  });
+
+  // Optional: hover effect
+  star.addEventListener('mouseover', function() {
+    const hoverRating = parseInt(this.getAttribute('data-rating'));
+    setRating(document.querySelector('.modal-stars'), hoverRating);
+  });
+
+  star.addEventListener('mouseout', function() {
+    setRating(document.querySelector('.modal-stars'), selectedRating);
+  });
+});
+cancelBtn.addEventListener('click', function() {
+  modal.style.display = 'none';
+  selectedRating = 0;
+  setRating(document.querySelector('.modal-stars'), 0);
+  document.getElementById('commentText').value = '';
+});
     </script>
 </body>
