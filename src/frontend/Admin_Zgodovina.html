@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Študentski Prevozi - Administracija Relacij</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel = "stylesheet" href = "Styles/Style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/10.0.4/swiper-bundle.css" />
+  <link rel="icon" href = "img/admin_icon.png" type = "image/x-icon">
+  <style>
+    .admin-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    
+    .admin-btn {
+      padding: 8px 15px;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .edit-btn {
+      background-color: #312D18;
+      color: white;
+    }
+    
+    .delete-btn {
+      background-color: #5c1a1a;
+      color: white;
+    }
+    
+    .add-relacija-btn {
+      background-color: #312D18;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      margin-bottom: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .add-relacija-btn:hover, .edit-btn:hover, .delete-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+ <div class="loader" id="loader">
+    <div class="loader-content">
+      <div class="loader-spinner"></div>
+      <div class="loader-logo">Študentski Prevozi - Admin</div>
+    </div>
+  </div>
+  
+  <!-- Header -->
+   <header class="header" id="header">
+    <div class="container header-container">
+      <a href="#" class="logo">
+        <i class="ri-spy-line logo-icon"></i>
+        <span class="logo-text">Študentski Prevozi - Admin<span>
+      </a>
+      
+      <ul class="nav-menu" id="nav-menu">
+        <li class="nav-item">
+          <a href="Admin_Dashboard.html" class="nav-link">
+            <i class="ri-home-4-line nav-icon"></i> Domov
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="Admin_Relacije.html" class="nav-link">
+            <i class="ri-map-pin-line nav-icon"></i> Relacije
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="Admin_Vozniki.html" class="nav-link">
+            <i class="ri-award-line nav-icon"></i> Vozniki
+          </a>
+        </li>
+        
+         <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="ri-login-circle-line nav-icon"></i> Odjava
+          </a>
+        </li>
+         
+      </ul>
+      
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+  
+  <div class="overlay" id="overlay"></div>
+
+
+  
+  <!-- Admin Content -->
+  <section class="destinations" id="destinations" data-aos="fade-up" data-aos-delay="300" style="margin-top:20px">
+    <div class="container">
+      <div class="section-heading" data-aos="fade-up">
+        <span class="section-subtitle">Admin Portal</span>
+        <h2 class="section-title">Zgodovina Vseh Relacij</h2>
+        <p class="section-description">Tukaj lahko zgodovino vseh prevozov.</p>
+      </div>
+      <!-- Booking Section - Example Relacija 1 -->
+      <div class="container py-5">
+        <div class="booking-card fade-in">
+          <div class="booking-header">
+            <h2 class="booking-title">
+              <i class="fas fa-bus"></i> Peter Krpan
+            </h2>
+          </div>
+          <div class="booking-body">
+            <div class="route-display slide-up" style="animation-delay: 0.2s">
+              <div class="location">
+                <div class="location-name">Študentski Domovi Smetanova 57</div>
+                <div class="location-time">08:00 AM</div>
+              </div>
+              <div class="route-line" style="background-color: #312D18;"></div>
+              <div class="location">
+                <div class="location-name">UM Celje</div>
+                <div class="location-time">08:45 AM</div>
+              </div>
+            </div>
+            
+            <div class="booking-details">
+              <div class="detail-card slide-up" style="animation-delay: 0.3s">
+                <div class="detail-label">Odhod</div>
+                <div class="detail-value">Pon, 15 May</div>
+              </div>
+              <div class="detail-card slide-up" style="animation-delay: 0.4s">
+                <div class="detail-label">Trajanje</div>
+                <div class="detail-value">45 min</div>
+              </div>
+              <div class="detail-card slide-up" style="animation-delay: 0.5s">
+                <div class="detail-label">ID Vožnje</div>
+                <div class="detail-value">REL-001</div>
+              </div>
+              <div class="detail-card slide-up" style="animation-delay: 0.6s">
+                <div class="detail-label">Zasedenih Sedežev</div>
+                <div class="detail-value">3/4</div>
+              </div>
+            </div>
+            
+            <div class="price-section slide-up" style="animation-delay: 0.7s">
+              <div class="price-info">
+                <div class="price-amount">9.99€</div>
+              </div>
+            </div>
+            
+            
+          </div>
+        </div>
+      </div>
+      
+      <!-- Booking Section - Example Relacija 2 -->
+      <div class="container py-5">
+        <div class="booking-card fade-in">
+          <div class="booking-header">
+            <h2 class="booking-title">
+              <i class="fas fa-bus"></i> Ana Novak
+            </h2>
+          </div>
+          <div class="booking-body">
+            <div class="route-display slide-up" style="animation-delay: 0.2s">
+              <div class="location">
+                <div class="location-name">FRI Ljubljana</div>
+                <div class="location-time">07:30 AM</div>
+              </div>
+              <div class="route-line" style="background-color: #312D18;"></div>
+              <div class="location">
+                <div class="location-name">FE Maribor</div>
+                <div class="location-time">09:15 AM</div>
+              </div>
+            </div>
+            
+            <div class="booking-details">
+              <div class="detail-card slide-up" style="animation-delay: 0.3s">
+                <div class="detail-label">Odhod</div>
+                <div class="detail-value">Tor, 16 May</div>
+              </div>
+              <div class="detail-card slide-up" style="animation-delay: 0.4s">
+                <div class="detail-label">Trajanje</div>
+                <div class="detail-value">1h 45min</div>
+              </div>
+              <div class="detail-card slide-up" style="animation-delay: 0.5s">
+                <div class="detail-label">ID Vožnje</div>
+                <div class="detail-value">REL-002</div>
+              </div>
+              <div class="detail-card slide-up" style="animation-delay: 0.6s">
+                <div class="detail-label">Zasedenih Sedežev</div>
+                <div class="detail-value">2/4</div>
+              </div>
+            </div>
+            
+            <div class="price-section slide-up" style="animation-delay: 0.7s">
+              <div class="price-info">
+                <div class="price-amount">14.99€</div>
+              </div>
+            </div>
+            
+            
+          </div>
+        </div>
+      </div>
+      
+      <!-- Booking Section - Example Relacija 3 -->
+      <div class="container py-5">
+        <div class="booking-card fade-in">
+          <div class="booking-header">
+            <h2 class="booking-title">
+              <i class="fas fa-bus"></i> Marko Prevc
+            </h2>
+          </div>
+          <div class="booking-body">
+            <div class="route-display slide-up" style="animation-delay: 0.2s">
+              <div class="location">
+                <div class="location-name">Študentski Domovi Rožna Dolina</div>
+                <div class="location-time">07:00 AM</div>
+              </div>
+              <div class="route-line" style="background-color: #312D18;"></div>
+              <div class="location">
+                <div class="location-name">FKKT Ljubljana</div>
+                <div class="location-time">07:25 AM</div>
+              </div>
+            </div>
+            
+            <div class="booking-details">
+              <div class="detail-card slide-up" style="animation-delay: 0.3s">
+                <div class="detail-label">Odhod</div>
+                <div class="detail-value">Sre, 17 May</div>
+              </div>
+              <div class="detail-card slide-up" style="animation-delay: 0.4s">
+                <div class="detail-label">Trajanje</div>
+                <div class="detail-value">25 min</div>
+              </div>
+              <div class="detail-card slide-up" style="animation-delay: 0.5s">
+                <div class="detail-label">ID Vožnje</div>
+                <div class="detail-value">REL-003</div>
+              </div>
+              <div class="detail-card slide-up" style="animation-delay: 0.6s">
+                <div class="detail-label">Zasedenih Sedežev</div>
+                <div class="detail-value">1/3</div>
+              </div>
+            </div>
+            
+            <div class="price-section slide-up" style="animation-delay: 0.7s">
+              <div class="price-info">
+                <div class="price-amount">5.99€</div>
+              </div>
+            </div>
+            
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+        <div class="container footer-container">
+        <div class="footer-bottom">
+            <p>© 2025 Studentskki Prevozi, Republika Slovenija, EU. Vse pravice pridržane. | Admin nadzorna plošča</p>
+        </div>
+    </footer>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    // Loader
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loader').style.opacity = '0';
+        setTimeout(() => {
+          document.getElementById('loader').style.display = 'none';
+        }, 500);
+      }, 1000);
+    });
+    
+    // Init AOS
+    AOS.init({
+      duration: 800,
+      easing: 'ease-in-out',
+      once: true
+    });
+    
+    // Mobile Navigation
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    const overlay = document.getElementById('overlay');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navMenu.classList.toggle('active');
+      overlay.classList.toggle('active');
+      document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
+    });
+    
+    overlay.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      navMenu.classList.remove('active');
+      overlay.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    });
+    
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+        overlay.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      });
+    });
+    
+    // Header scroll effect
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+    
+    // Back to top
+    const backToTop = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTop.classList.add('show');
+      } else {
+        backToTop.classList.remove('show');
+      }
+    });
+    
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+    
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          const headerHeight = document.getElementById('header').offsetHeight;
+          const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+          
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

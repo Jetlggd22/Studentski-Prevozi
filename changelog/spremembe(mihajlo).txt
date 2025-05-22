@@ -1,0 +1,21 @@
+spremeno erDIOgram {
+Prevoz.Prosta_mesta (VARCHAR -> INT)
+Uporabnik.Ocena (FLOAT -> DECIMAL)
+Prevoz.Cena (INT -> DECIMAL)
+Lokacija.Longtitude (VARCHAR -> DECIMAL)
+Lokacija.Latitude (VARCHAR -> DECIMAL)};
+
+kreiral .sql file (zame.sql) kjer imamo 20 primerov insertano za vse;
+
+posodobil historyRepository.js da tudi izpisuje oceno voznje (uporabnika pa voznika);
+
+dodal gumb Oglej Zgodovino Relacij v Admin_Relacije.html;
+
+naredo repositories/adminHistoryRepository.js, services/adminHistoryService.js pa controllers/adminHistoryController.js;
+
+naredo Admin_Zgodovina.html pa potem malo spreminjal kaj se vse izpisuje (poglej v Admin_Zgodovina.html);
+
+dodal v routes.js da se mam za zgodovinu (import { getAllHistories } from './controllers/adminHistoryController.js'; pa router.get('/admin/history', getAllHistories););
+
+fetchovanje zgodovine deluje ampak ne gre ocena voznika za uporabnika(moram jutri seenkrat spremenit bazo imakms) 
+

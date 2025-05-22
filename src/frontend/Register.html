@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="icon" href = "img/sp_favicon.png" type = "image/x-icon">
 </head>
 <body>
   <!-- Loader -->
@@ -50,9 +51,10 @@
         </li>
          <li class="nav-item">
           <a href="Login.html" class="nav-link">
-            <i class="ri-information-line nav-icon"></i> Login
+            <i class="ri-login-circle-line nav-icon"></i> Prijava
           </a>
         </li>
+         
       </ul>
       
       <div class="hamburger" id="hamburger">
@@ -77,7 +79,7 @@
           <p class="register-subtitle">Ustvari svoj študentski račun</p>
         </div>
         
-        <form class="register-form">
+        <form class="register-form" id = "registerForm">
          
           
           <div class="input-group">
@@ -122,7 +124,17 @@
     </div>
   </section>
   
+
+  <!-- Modern Modal for messages -->
+<div id="registerModal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="closeRegisterModal">&times;</span>
+    <h2 id="registerModalTitle"></h2>
+    <p id="registerModalMessage"></p>
+  </div>
+</div>
   <!-- Scripts -->
+   <script src = "script/register.js"></script>
   <script>
     // Loader
     window.addEventListener('load', () => {

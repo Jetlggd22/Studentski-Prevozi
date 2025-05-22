@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Študentski Prevozi - Administracija Relacij</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel = "stylesheet" href = "Styles/Style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/10.0.4/swiper-bundle.css" />
+  <link rel="icon" href = "img/admin_icon.png" type = "image/x-icon">
+  <style>
+    .admin-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    
+    .admin-btn {
+      padding: 8px 15px;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .edit-btn {
+      background-color: #312D18;
+      color: white;
+    }
+    
+    .delete-btn {
+      background-color: #5c1a1a;
+      color: white;
+    }
+    
+    .add-relacija-btn {
+      background-color: #312D18;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      margin-bottom: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .add-relacija-btn:hover, .edit-btn:hover, .delete-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <!-- Loader -->
+<div class="loader" id="loader">
+    <div class="loader-content">
+      <div class="loader-spinner"></div>
+      <div class="loader-logo">Študentski Prevozi - Admin</div>
+    </div>
+  </div>
+  
+  <!-- Header -->
+   <header class="header" id="header">
+    <div class="container header-container">
+      <a href="#" class="logo">
+        <i class="ri-spy-line logo-icon"></i>
+        <span class="logo-text">Študentski Prevozi - Admin<span>
+      </a>
+      
+      <ul class="nav-menu" id="nav-menu">
+        <li class="nav-item">
+          <a href="Admin_Dashboard.html" class="nav-link">
+            <i class="ri-home-4-line nav-icon"></i> Domov
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="Admin_Relacije.html" class="nav-link">
+            <i class="ri-map-pin-line nav-icon"></i> Relacije
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="Admin_Vozniki.html" class="nav-link">
+            <i class="ri-award-line nav-icon"></i> Vozniki
+          </a>
+        </li>
+        
+         <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="ri-login-circle-line nav-icon"></i> Odjava
+          </a>
+        </li>
+         
+      </ul>
+      
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+  
+  <div class="overlay" id="overlay"></div>
+
+
+  
+  <!-- Admin Content -->
+  <section class="destinations" id="destinations" data-aos="fade-up" data-aos-delay="300" style="margin-top:20px">
+    <div class="container">
+      <div class="section-heading" data-aos="fade-up">
+        <span class="section-subtitle">Admin Portal</span>
+        <h2 class="section-title">Vsi vozniki</h2>
+        <p class="section-description">Tukaj lahko upravljate vse voznike. Dodajate, urejate ali brišete voznike po potrebi.</p>
+      </div>
+
+       <section class="features">
+    <div class="container">
+      <div class="drivers-grid">
+        <!-- Top Driver -->
+        <div class="driver-card" data-aos="fade-up">
+          <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Marko Novak" class="driver-avatar">
+          <h3 class="driver-name">Marko Novak</h3>
+          <div class="driver-university">
+            <i class="ri-building-2-line"></i> Univerza v Ljubljani, FRI
+          </div>
+          <div class="driver-rating">
+            <i class="ri-star-fill"></i> 4.98 (147 ocen)
+          </div>
+          <div class="driver-stats">
+            <div class="driver-stat">
+              <div class="driver-stat-value">872</div>
+              <div class="driver-stat-label">Voženj</div>
+            </div>
+            <div class="driver-stat">
+              <div class="driver-stat-value">100%</div>
+              <div class="driver-stat-label">Zanesljivost</div>
+            </div>
+          </div>
+          <p class="driver-bio">Vozim že 3 leta za Študentske Prevoze. Moj avto je udoben VW Golf z klimo. Ponujam vodo in priložnost za polnjenje telefona.</p>
+          <div class="driver-route">
+            <i class="ri-route-line"></i> Ljubljana ↔ Kamnik ↔ Kranj
+          </div>
+           <div class="admin-actions slide-up" style="animation-delay: 0.8s">
+              <button class="admin-btn edit-btn">
+                <i class="ri-edit-line"></i> Uredi
+              </button>
+              <button class="admin-btn delete-btn">
+                <i class="ri-delete-bin-line"></i> Izbriši
+              </button>
+            </div>
+          
+        </div>
+        
+        <!-- Driver 2 -->
+        <div class="driver-card" data-aos="fade-up" data-aos-delay="100">
+          <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Ana Kovač" class="driver-avatar">
+          <h3 class="driver-name">Ana Kovač</h3>
+          <div class="driver-university">
+            <i class="ri-building-2-line"></i> Univerza v Mariboru, FERI
+          </div>
+          <div class="driver-rating">
+            <i class="ri-star-fill"></i> 4.95 (203 ocen)
+          </div>
+          <div class="driver-stats">
+            <div class="driver-stat">
+              <div class="driver-stat-value">1.2k</div>
+              <div class="driver-stat-label">Voženj</div>
+            </div>
+            <div class="driver-stat">
+              <div class="driver-stat-value">99%</div>
+              <div class="driver-stat-label">Zanesljivost</div>
+            </div>
+          </div>
+          <p class="driver-bio">Vozim vsak dan med Mariborom in Celjem. Moj avto je nov Hyundai i30 s prostornim prtljažnikom. Vedno točna in prijazna.</p>
+          <div class="driver-route">
+            <i class="ri-route-line"></i> Maribor ↔ Ptuj ↔ Celje
+          </div>
+           <div class="admin-actions slide-up" style="animation-delay: 0.8s">
+              <button class="admin-btn edit-btn">
+                <i class="ri-edit-line"></i> Uredi
+              </button>
+              <button class="admin-btn delete-btn">
+                <i class="ri-delete-bin-line"></i> Izbriši
+              </button>
+            </div>
+          
+        </div>
+        
+        <!-- Driver 3 -->
+        <div class="driver-card" data-aos="fade-up" data-aos-delay="200">
+          <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Luka Horvat" class="driver-avatar">
+          <h3 class="driver-name">Luka Horvat</h3>
+          <div class="driver-university">
+            <i class="ri-building-2-line"></i> Univerza na Primorskem, Famnit
+          </div>
+          <div class="driver-rating">
+            <i class="ri-star-fill"></i> 4.93 (89 ocen)
+          </div>
+          <div class="driver-stats">
+            <div class="driver-stat">
+              <div class="driver-stat-value">421</div>
+              <div class="driver-stat-label">Voženj</div>
+            </div>
+            <div class="driver-stat">
+              <div class="driver-stat-value">98%</div>
+              <div class="driver-stat-label">Zanesljivost</div>
+            </div>
+          </div>
+          <p class="driver-bio">Redna linija Koper-Izola-Piran. Vozim udoben avto s klimatsko napravo. Vedno prilagodljiv urniku študentov.</p>
+          <div class="driver-route">
+            <i class="ri-route-line"></i> Koper ↔ Izola ↔ Piran
+          </div>
+          <div class="admin-actions slide-up" style="animation-delay: 0.8s">
+              <button class="admin-btn edit-btn">
+                <i class="ri-edit-line"></i> Uredi
+              </button>
+              <button class="admin-btn delete-btn">
+                <i class="ri-delete-bin-line"></i> Izbriši
+              </button>
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>
+    </div>
+
+   <footer class="footer">
+        <div class="container footer-container">
+        <div class="footer-bottom">
+            <p>© 2025 Studentskki Prevozi, Republika Slovenija, EU. Vse pravice pridržane. | Admin nadzorna plošča</p>
+        </div>
+    </footer>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    // Loader
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loader').style.opacity = '0';
+        setTimeout(() => {
+          document.getElementById('loader').style.display = 'none';
+        }, 500);
+      }, 1000);
+    });
+    
+    // Init AOS
+    AOS.init({
+      duration: 800,
+      easing: 'ease-in-out',
+      once: true
+    });
+    
+    // Mobile Navigation
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    const overlay = document.getElementById('overlay');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navMenu.classList.toggle('active');
+      overlay.classList.toggle('active');
+      document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
+    });
+    
+    overlay.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      navMenu.classList.remove('active');
+      overlay.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    });
+    
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+        overlay.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      });
+    });
+    
+    // Header scroll effect
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+    
+    // Back to top
+    const backToTop = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTop.classList.add('show');
+      } else {
+        backToTop.classList.remove('show');
+      }
+    });
+    
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+    
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          const headerHeight = document.getElementById('header').offsetHeight;
+          const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+          
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
