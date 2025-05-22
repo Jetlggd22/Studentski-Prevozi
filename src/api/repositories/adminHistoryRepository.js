@@ -23,20 +23,25 @@ export async function getAllRideHistories() {
   const histories = [];
 
   for (const ride of rides) {
-    // Za vsak prevoz pridobimo seznam potnikov z ocenami in komentarji
+    // Za vsak prevoz pridobimo seznam potnikov z obema ocenama in komentarji
     const [passengers] = await pool.execute(`
       SELECT
         r.idRezervacija AS idRezervacija,
-        u.idUporabnik AS idUporabnik,
+        u.idUporabnik AS idPotnik,
         u.Ime AS Potnik_ime,
         u.Priimek AS Potnik_priimek,
-        o1.Ocena AS Ocena_za_voznika,
-        o1.Komentar AS Komentar_potnika,
-        o2.Ocena AS Ocena_voznika_za_potnika
+        o_user.Ocena AS Ocena_za_voznika,
+        o_user.Komentar AS Komentar_za_voznika,
+        o_driver.Ocena AS Ocena_voznika_za_potnika,
+        o_driver.Komentar AS Komentar_voznika_za_potnika
       FROM Rezervacija r
       JOIN Uporabnik u ON r.TK_Potnik = u.idUporabnik
-      LEFT JOIN Ocena o1 ON o1.TK_Rezervacija = r.idRezervacija
-      LEFT JOIN Ocena o2 ON o2.TK_Prevoz = r.TK_Prevoz AND o2.TK_Rezervacija IS NULL
+      LEFT JOIN Ocena o_user
+        ON o_user.TK_Prevoz = r.TK_Prevoz
+        AND o_user.TK_Rezervacija IS NULL
+      LEFT JOIN Ocena o_driver
+        ON o_driver.TK_Rezervacija = r.idRezervacija
+        AND o_driver.TK_Prevoz IS NULL
       WHERE r.TK_Prevoz = ?
     `, [ride.IdPrevoz]);
 

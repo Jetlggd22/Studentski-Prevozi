@@ -2,12 +2,14 @@ import express from 'express';
 import dotenv from 'dotenv';
 import routes from './routes.js';
 import cors from 'cors'
+import path from 'path'; 
 
 dotenv.config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.resolve(process.cwd(), 'frontend')));
 app.use('/api', routes);
 
 // basic error handler
