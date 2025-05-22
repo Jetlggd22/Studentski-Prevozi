@@ -1,12 +1,13 @@
+// src/api/routes.js
 import { Router } from 'express';
 import { expressjwt } from 'express-jwt';
 import jwksRsa from 'jwks-rsa';
 import authController from './controllers/authController.js';
 import catchAsync from './utils/catchAsync.js';
-import {getUserHistory, getRideDetails} from "./controllers/historyController.js"
-import { getAllPrevozi } from './controllers/rideController.js';
+import { getUserHistory, getRideDetails } from "./controllers/historyController.js";
+// Removed duplicate import of getAllPrevozi from here
 import { getAllHistories } from './controllers/adminHistoryController.js';
-import { getPrevoz } from './controllers/rideController.js';
+import { getAllPrevozi, getPrevoz } from './controllers/rideController.js'; // Keep this one
 
 
 const checkJwt = expressjwt({
@@ -26,10 +27,10 @@ const router = Router();
 router.post('/users', catchAsync(authController.createUser));
 router.get('/zgodovina/uporabnik/:id', getUserHistory);
 router.get('/zgodovina/prevoz/:id', getRideDetails);
-router.get('/prevozi', getAllPrevozi);
+router.get('/prevozi', getAllPrevozi); 
 router.get('/admin/history', getAllHistories);
 router.post('/login', catchAsync(authController.loginUser));
-router.get('/prevozi/:id', catchAsync(getPrevoz))
+router.get('/prevozi/:id', catchAsync(getPrevoz));
 
 
 export default router;

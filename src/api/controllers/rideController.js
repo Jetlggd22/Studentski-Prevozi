@@ -1,3 +1,4 @@
+// src/api/controllers/rideController.js
 import * as prevozService from '../services/rideService.js';
 
 export async function getPrevoz(req, res) {
@@ -12,20 +13,29 @@ export async function getPrevoz(req, res) {
 
     res.json(prevoz);
   } catch (error) {
-    console.error('Controller error:', error);
+    console.error('Controller error (getPrevoz):', error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 }
 
 export async function getAllPrevozi(req, res, next) {
   try {
-    const prevozi = await prevozService.listPrevozi();
+    // Check for search query parameters
+    const { from, to, limit } = req.query;
+
+    let prevozi;
+    if (from && to) {
+      prevozi = await prevozService.searchPrevozi(from, to);
+    } else {
+      prevozi = await prevozService.listPrevozi(limit ? parseInt(limit) : null);
+    }
+    
     res.json({
       success: true,
       data: prevozi,
     });
   } catch (error) {
-    console.error('Error in getAllPrevozi:', error);
+    console.error('Error in getAllPrevozi controller:', error);
     next(error);
   }
 }
