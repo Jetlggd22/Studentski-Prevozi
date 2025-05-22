@@ -3109,3 +3109,9 @@ admin-actions {
       opacity: 0.9;
       transform: translateY(-2px);
     }
+    .map-placeholder {
+  height: 200px;
+  background-color: #2a2a2a;
+  border-radius: 10px;
+  margin: 20px 0;
+}
