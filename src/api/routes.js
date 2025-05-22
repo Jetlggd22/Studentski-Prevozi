@@ -6,6 +6,7 @@ import catchAsync from './utils/catchAsync.js';
 import {getUserHistory, getRideDetails} from "./controllers/historyController.js"
 import { getAllPrevozi } from './controllers/rideController.js';
 import { getAllHistories } from './controllers/adminHistoryController.js';
+import { getPrevoz } from './controllers/rideController.js';
 
 
 const checkJwt = expressjwt({
@@ -28,6 +29,7 @@ router.get('/zgodovina/prevoz/:id', getRideDetails);
 router.get('/prevozi', getAllPrevozi);
 router.get('/admin/history', getAllHistories);
 router.post('/login', catchAsync(authController.loginUser));
+router.get('/prevozi/:id', catchAsync(getPrevoz))
 
 
 export default router;
