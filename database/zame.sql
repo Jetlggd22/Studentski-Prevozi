@@ -159,25 +159,25 @@ INSERT INTO Rezervacija VALUES
 (20, 'čaka', '2025-11-14 19:13:47', 14, 12);
 
 
-INSERT INTO Ocena VALUES
-(1, 3, 'Malo zamude, a sicer v redu.', 9, 6),
-(2, 5, 'Odličen voznik, vse je potekalo gladko.', 3, 11),
-(3, 3, 'Odličen voznik, vse je potekalo gladko.', 13, 19),
-(4, 4, 'Voznik je bil zelo prijazen in komunikativen.', 9, 6),
-(5, 4, 'Avto udoben, vožnja prijetna.', 6, 5),
-(6, 4, 'Malo zamude, a sicer v redu.', 11, 10),
-(7, 5, 'Malo zamude, a sicer v redu.', 1, 19),
-(8, 3, 'Voznik je bil zelo prijazen in komunikativen.', 8, 18),
-(9, 1, 'Zelo prijetna vožnja, priporočam.', 13, 17),
-(10, 3, 'Zelo prijetna vožnja, priporočam.', 10, 1),
-(11, 5, 'Odličen voznik, vse je potekalo gladko.', 2, 16),
-(12, 1, 'Odličen voznik, vse je potekalo gladko.', 20, 14),
-(13, 5, 'Voznik je bil zelo prijazen in komunikativen.', 4, 13),
-(14, 2, 'Preveč hitro vozi.', 1, 20),
-(15, 3, 'Ne bi ponovil vožnje s tem voznikom.', 16, 11),
-(16, 2, 'Vse po dogovoru, brez zapletov.', 2, 9),
-(17, 5, 'Malo zamude, a sicer v redu.', 8, 6),
-(18, 2, 'Odličen voznik, vse je potekalo gladko.', 19, 10),
-(19, 3, 'Malo zamude, a sicer v redu.', 8, 19),
-(20, 4, 'Sopotnik je bil miren in spoštljiv.', 15, 14);
+INSERT INTO Ocena (idOcena, Ocena, Komentar, TK_Rezervacija, TK_Prevoz) VALUES
+(1,  3, 'Malo zamude, a sicer v redu.',        NULL, 6),
+(2,  5, 'Odličen voznik, vse je potekalo gladko.', NULL, 11),
+(3,  3, 'Odličen voznik, vse je potekalo gladko.', NULL, 19),
+(4,  4, 'Voznik je bil zelo prijazen in komunikativen.', NULL, 6),
+(5,  4, 'Avto udoben, vožnja prijetna.',         NULL, 5),
+(6,  4, 'Malo zamude, a sicer v redu.',        NULL, 10),
+(7,  5, 'Malo zamude, a sicer v redu.',        NULL, 19),
+(8,  3, 'Voznik je bil zelo prijazen in komunikativen.', NULL, 18),
+(9,  1, 'Zelo prijetna vožnja, priporočam.',   NULL, 17),
+(10, 3, 'Zelo prijetna vožnja, priporočam.',   NULL, 1),
+(11, 5, 'Odličen voznik, vse je potekalo gladko.', NULL, 16),
+(12, 1, 'Odličen voznik, vse je potekalo gladko.', NULL, 14),
+(13, 5, 'Voznik je bil zelo prijazen in komunikativen.', NULL, 13),
+(14, 2, 'Preveč hitro vozi.',                  NULL, 20),
+(15, 3, 'Ne bi ponovil vožnje s tem voznikom.',   NULL, 11),
+(16, 2, 'Vse po dogovoru, brez zapletov.',      NULL, 9),
+(17, 5, 'Malo zamude, a sicer v redu.',        NULL, 6),
+(18, 2, 'Odličen voznik, vse je potekalo gladko.', NULL, 10),
+(19, 3, 'Malo zamude, a sicer v redu.',        NULL, 19),
+(20, 4, 'Sopotnik je bil miren in spoštljiv.',    15, NULL);
 

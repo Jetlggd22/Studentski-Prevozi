@@ -123,187 +123,18 @@
         <p class="section-description">Tukaj lahko upravljate vse študentske prevoze. Dodajate, urejate ali brišete relacije po potrebi.</p>
       </div>
       
-      <button class="add-relacija-btn">
+      <button class="add-relacija-btn" onclick="window.location.href='Admin_Zgodovina.html'">
         <i class="ri-add-line"></i> Dodaj Novo Relacijo
       </button>
 
       <button class="add-relacija-btn" onclick="window.location.href='Admin_Zgodovina.html'">
         Oglej Zgodovino Relacij
       </button>
+
+      <div id="upcoming-rides-container" style="padding-top: 20px;">
+    </div>
       
-      <!-- Booking Section - Example Relacija 1 -->
-      <div class="container py-5">
-        <div class="booking-card fade-in">
-          <div class="booking-header">
-            <h2 class="booking-title">
-              <i class="fas fa-bus"></i> Peter Krpan
-            </h2>
-          </div>
-          <div class="booking-body">
-            <div class="route-display slide-up" style="animation-delay: 0.2s">
-              <div class="location">
-                <div class="location-name">Študentski Domovi Smetanova 57</div>
-                <div class="location-time">08:00 AM</div>
-              </div>
-              <div class="route-line" style="background-color: #312D18;"></div>
-              <div class="location">
-                <div class="location-name">UM Celje</div>
-                <div class="location-time">08:45 AM</div>
-              </div>
-            </div>
-            
-            <div class="booking-details">
-              <div class="detail-card slide-up" style="animation-delay: 0.3s">
-                <div class="detail-label">Odhod</div>
-                <div class="detail-value">Pon, 15 May</div>
-              </div>
-              <div class="detail-card slide-up" style="animation-delay: 0.4s">
-                <div class="detail-label">Trajanje</div>
-                <div class="detail-value">45 min</div>
-              </div>
-              <div class="detail-card slide-up" style="animation-delay: 0.5s">
-                <div class="detail-label">ID Relacije</div>
-                <div class="detail-value">REL-001</div>
-              </div>
-              <div class="detail-card slide-up" style="animation-delay: 0.6s">
-                <div class="detail-label">Prosta Mesta</div>
-                <div class="detail-value">3/4</div>
-              </div>
-            </div>
-            
-            <div class="price-section slide-up" style="animation-delay: 0.7s">
-              <div class="price-info">
-                <div class="price-amount">9.99€</div>
-              </div>
-            </div>
-            
-            <div class="admin-actions slide-up" style="animation-delay: 0.8s">
-              <button class="admin-btn edit-btn">
-                <i class="ri-edit-line"></i> Uredi
-              </button>
-              <button class="admin-btn delete-btn">
-                <i class="ri-delete-bin-line"></i> Izbriši
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
       
-      <!-- Booking Section - Example Relacija 2 -->
-      <div class="container py-5">
-        <div class="booking-card fade-in">
-          <div class="booking-header">
-            <h2 class="booking-title">
-              <i class="fas fa-bus"></i> Ana Novak
-            </h2>
-          </div>
-          <div class="booking-body">
-            <div class="route-display slide-up" style="animation-delay: 0.2s">
-              <div class="location">
-                <div class="location-name">FRI Ljubljana</div>
-                <div class="location-time">07:30 AM</div>
-              </div>
-              <div class="route-line" style="background-color: #312D18;"></div>
-              <div class="location">
-                <div class="location-name">FE Maribor</div>
-                <div class="location-time">09:15 AM</div>
-              </div>
-            </div>
-            
-            <div class="booking-details">
-              <div class="detail-card slide-up" style="animation-delay: 0.3s">
-                <div class="detail-label">Odhod</div>
-                <div class="detail-value">Tor, 16 May</div>
-              </div>
-              <div class="detail-card slide-up" style="animation-delay: 0.4s">
-                <div class="detail-label">Trajanje</div>
-                <div class="detail-value">1h 45min</div>
-              </div>
-              <div class="detail-card slide-up" style="animation-delay: 0.5s">
-                <div class="detail-label">ID Relacije</div>
-                <div class="detail-value">REL-002</div>
-              </div>
-              <div class="detail-card slide-up" style="animation-delay: 0.6s">
-                <div class="detail-label">Prosta Mesta</div>
-                <div class="detail-value">2/4</div>
-              </div>
-            </div>
-            
-            <div class="price-section slide-up" style="animation-delay: 0.7s">
-              <div class="price-info">
-                <div class="price-amount">14.99€</div>
-              </div>
-            </div>
-            
-            <div class="admin-actions slide-up" style="animation-delay: 0.8s">
-              <button class="admin-btn edit-btn">
-                <i class="ri-edit-line"></i> Uredi
-              </button>
-              <button class="admin-btn delete-btn">
-                <i class="ri-delete-bin-line"></i> Izbriši
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Booking Section - Example Relacija 3 -->
-      <div class="container py-5">
-        <div class="booking-card fade-in">
-          <div class="booking-header">
-            <h2 class="booking-title">
-              <i class="fas fa-bus"></i> Marko Prevc
-            </h2>
-          </div>
-          <div class="booking-body">
-            <div class="route-display slide-up" style="animation-delay: 0.2s">
-              <div class="location">
-                <div class="location-name">Študentski Domovi Rožna Dolina</div>
-                <div class="location-time">07:00 AM</div>
-              </div>
-              <div class="route-line" style="background-color: #312D18;"></div>
-              <div class="location">
-                <div class="location-name">FKKT Ljubljana</div>
-                <div class="location-time">07:25 AM</div>
-              </div>
-            </div>
-            
-            <div class="booking-details">
-              <div class="detail-card slide-up" style="animation-delay: 0.3s">
-                <div class="detail-label">Odhod</div>
-                <div class="detail-value">Sre, 17 May</div>
-              </div>
-              <div class="detail-card slide-up" style="animation-delay: 0.4s">
-                <div class="detail-label">Trajanje</div>
-                <div class="detail-value">25 min</div>
-              </div>
-              <div class="detail-card slide-up" style="animation-delay: 0.5s">
-                <div class="detail-label">ID Relacije</div>
-                <div class="detail-value">REL-003</div>
-              </div>
-              <div class="detail-card slide-up" style="animation-delay: 0.6s">
-                <div class="detail-label">Prosta Mesta</div>
-                <div class="detail-value">1/3</div>
-              </div>
-            </div>
-            
-            <div class="price-section slide-up" style="animation-delay: 0.7s">
-              <div class="price-info">
-                <div class="price-amount">5.99€</div>
-              </div>
-            </div>
-            
-            <div class="admin-actions slide-up" style="animation-delay: 0.8s">
-              <button class="admin-btn edit-btn">
-                <i class="ri-edit-line"></i> Uredi
-              </button>
-              <button class="admin-btn delete-btn">
-                <i class="ri-delete-bin-line"></i> Izbriši
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -373,7 +204,8 @@
     });
     
     // Back to top
-    const backToTop = document.getElementById('back-to-top');
+     const backToTop = document.getElementById('back-to-top');
+  if (backToTop) { // Check if the element exists
     window.addEventListener('scroll', () => {
       if (window.scrollY > 300) {
         backToTop.classList.add('show');
@@ -381,13 +213,15 @@
         backToTop.classList.remove('show');
       }
     });
-    
+
     backToTop.addEventListener('click', () => {
       window.scrollTo({
         top: 0,
         behavior: 'smooth'
       });
     });
+  }
+
     
     // Smooth scrolling
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -410,5 +244,6 @@
       });
     });
   </script>
+  <script src="script/admin_upcoming_rides_generator.js"></script>
 </body>
 </html>
