@@ -6,7 +6,7 @@ dotenv.config();
 
 
 const AUTH0_DOMAIN = process.env.AUTH0_DOMAIN; 
-console.log(AUTH0_DOMAIN)
+const AUTH0_AUDIENCE = process.env.AUTH0_AUDIENCE
 const AUTH0_CLIENT_ID = process.env.AUTH0_CLIENT_ID;
 const AUTH0_CLIENT_SECRET = process.env.AUTH0_CLIENT_SECRET;
 const AUTH0_CONNECTION = 'Username-Password-Authentication';
@@ -14,6 +14,7 @@ console.log('[ENV LOADED]', {
   AUTH0_DOMAIN: process.env.AUTH0_DOMAIN,
   AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
   AUTH0_CLIENT_SECRET: !!process.env.AUTH0_CLIENT_SECRET,
+  AUTH0_AUDIENCE: process.env.AUTH0_AUDIENCE
 });
 
 
@@ -47,8 +48,7 @@ async function getAuth0Token() {
     client_secret: AUTH0_CLIENT_SECRET,
     audience: `https://${AUTH0_DOMAIN}/api/v2/`
   });
-
-  const options = {
+const options = {
     hostname: AUTH0_DOMAIN,
     path: '/oauth/token',
     method: 'POST',
@@ -106,7 +106,7 @@ const login = async ({ email, geslo }) => {
     password: geslo,
     scope: 'openid profile email',
     client_secret: AUTH0_CLIENT_SECRET,
-    audience:"https://dev-hdf6igoqvggwdaeq.eu.auth0.com/api/v2/",
+    audience:AUTH0_AUDIENCE,
     client_id: AUTH0_CLIENT_ID,
     connection: 'Username-Password-Authentication'
   });
