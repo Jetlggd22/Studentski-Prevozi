@@ -5,9 +5,9 @@ import jwksRsa from 'jwks-rsa';
 import authController from './controllers/authController.js';
 import catchAsync from './utils/catchAsync.js';
 import { getUserHistory, getRideDetails } from "./controllers/historyController.js";
-// Removed duplicate import of getAllPrevozi from here
 import { getAllHistories } from './controllers/adminHistoryController.js';
-import { getAllPrevozi, getPrevoz } from './controllers/rideController.js'; // Keep this one
+// Import deletePrevoz from rideController
+import { getAllPrevozi, getPrevoz, deletePrevoz } from './controllers/rideController.js'; 
 
 
 const checkJwt = expressjwt({
@@ -31,6 +31,9 @@ router.get('/prevozi', getAllPrevozi);
 router.get('/admin/history', getAllHistories);
 router.post('/login', catchAsync(authController.loginUser));
 router.get('/prevozi/:id', catchAsync(getPrevoz));
+
+// Add the new DELETE route
+router.delete('/prevozi/:id', catchAsync(deletePrevoz)); // We can protect this with admin middleware later
 
 
 export default router;

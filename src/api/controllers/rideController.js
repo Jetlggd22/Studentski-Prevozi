@@ -39,3 +39,18 @@ export async function getAllPrevozi(req, res, next) {
     next(error);
   }
 }
+
+export async function deletePrevoz(req, res, next) {
+  const id = req.params.id;
+  try {
+    const result = await prevozService.removePrevozById(id);
+    if (!result) {
+      return res.status(404).json({ success: false, message: 'Prevoz not found for deletion' });
+    }
+    res.status(200).json({ success: true, message: `Prevoz with ID ${id} successfully deleted.` });
+  } catch (error) {
+    console.error(`Error deleting prevoz with ID ${id}:`, error);
+    // Pass to the generic error handler
+    next(error); 
+  }
+}
