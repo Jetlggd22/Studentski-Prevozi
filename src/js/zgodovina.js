@@ -11,7 +11,7 @@ const pool = mysql.createPool({
 });
 
 // Get user's ride history
-router.get('/api/zgodovina/uporabnik/:id', async (req, res) => {
+router.get('http://localhost:3000/api/zgodovina/uporabnik/:id', async (req, res) => {
   try {
     const userId = req.params.id;
     

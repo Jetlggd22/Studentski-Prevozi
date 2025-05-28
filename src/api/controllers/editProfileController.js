@@ -1,4 +1,4 @@
-const userService = require('../services/userService');
+import * as userService from '../services/editProfileService.js';
 
 export async function updateUser(req, res) {
   try {
@@ -15,5 +15,3 @@ export async function updateUser(req, res) {
     res.status(500).json({ success: false, message: 'Napaka pri posodabljanju uporabnika.' });
   }
 }
-
-module.exports = { updateUser };

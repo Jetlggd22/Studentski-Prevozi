@@ -159,7 +159,7 @@
               <div class="profile-meta">
   <h3 class="profile-name" id="sidebar-imepriimek">Janez Novak</h3>
   <p class="profile-email"><i class="ri-mail-line"></i> <span id="sidebar-email">janez.novak@student.uni-lj.si</span></p>
-  <p class="profile-university"><i class="ri-graduation-cap-line"></i> <span id="sidebar-univerza">Univerza v Ljubljani</span></p>
+  
             </div>
             
             <div class="profile-stats">
@@ -177,7 +177,16 @@
               </div>
             </div>
             
-            
+            <nav class="profile-menu">
+              <a href="Profil.html" class="menu-item">
+                <i class="ri-user-line"></i>
+                <span>Osebni podatki</span>
+              </a>
+              <a href="#" class="menu-item">
+                <i class="ri-history-line"></i>
+                <span>Zgodovina voženj</span>
+              </a>
+            </nav>
             
             <div class="profile-actions">
               <a href="Profil.html" class="btn btn-outline"><i class="ri-arrow-left-line"></i> Nazaj na profil</a>
@@ -474,13 +483,21 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   if (user.data) user = user.data;
 
-  // サイドバーデータ
+  // Popuni sidebar
   const sidebarIme = document.getElementById('sidebar-imepriimek');
   const sidebarEmail = document.getElementById('sidebar-email');
-  const sidebarUniverza = document.getElementById('sidebar-univerza');
   if (sidebarIme) sidebarIme.textContent = (user.Ime || '') + ' ' + (user.Priimek || '');
   if (sidebarEmail) sidebarEmail.textContent = user.email || user.Eposta || user.Username || '';
-  if (sidebarUniverza) sidebarUniverza.textContent = user.Univerza || '';
+
+  // Popuni formu
+  const ime = document.getElementById('first-name');
+  const priimek = document.getElementById('last-name');
+  const email = document.getElementById('email');
+  const telefon = document.getElementById('phone');
+  if (ime) ime.value = user.Ime || '';
+  if (priimek) priimek.value = user.Priimek || '';
+  if (email) email.value = user.email || user.Eposta || user.Username || '';
+  if (telefon) telefon.value = user.Telefon || '';
 });
 
   </script>

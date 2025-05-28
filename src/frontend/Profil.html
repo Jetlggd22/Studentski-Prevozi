@@ -359,7 +359,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
   ridesGrid.innerHTML = '<p>Nalaganje voženj...</p>';
   try {
-    const res = await fetch(`/api/zgodovina/uporabnik/${userId}`);
+    const res = await fetch(`http://localhost:3000/api/zgodovina/uporabnik/${userId}`);
     const json = await res.json();
     if (json.success && Array.isArray(json.data) && json.data.length > 0) {
       ridesGrid.innerHTML = json.data.map(ride => {
