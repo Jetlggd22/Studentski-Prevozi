@@ -119,7 +119,7 @@
         <li class="nav-item"><a href="Index.html" class="nav-link"><i class="ri-home-4-line nav-icon"></i> Domov</a></li>
         <li class="nav-item"><a href="Relacije.html" class="nav-link"><i class="ri-map-pin-line nav-icon"></i> Relacije</a></li>
         <li class="nav-item"><a href="Vozniki.html" class="nav-link"><i class="ri-award-line nav-icon"></i> Vozniki</a></li>
-        <li class="nav-item"><a href="Storitve.html" class="nav-link"><i class="ri-information-line nav-icon"></i> Storitve</a></li>
+       
         <li class="nav-item"><a href="ONas.html" class="nav-link"><i class="ri-customer-service-2-line nav-icon"></i> O Nas</a></li>
       </ul>
       <div class="hamburger" id="hamburger">
@@ -150,17 +150,16 @@
           <div class="profile-card">
             <div class="profile-avatar">
               <div class="avatar-wrapper">
-                <img src="img/SP_Profile1.png" alt="Profilna slika" class="avatar-image" id="profile-image">
+                <img src="img/" alt="Profilna slika" class="avatar-image" id="profile-image">
                 <label class="avatar-edit" title="Spremeni sliko">
                   <i class="ri-camera-line"></i>
                   <input type="file" id="avatar-upload" accept="image/*" style="display:none;">
                 </label>
               </div>
               <div class="profile-meta">
-                <h3 class="profile-name">Janez Novak</h3>
-                <p class="profile-email"><i class="ri-mail-line"></i> janez.novak@student.uni-lj.si</p>
-                <p class="profile-university"><i class="ri-graduation-cap-line"></i> Univerza v Ljubljani</p>
-              </div>
+  <h3 class="profile-name" id="sidebar-imepriimek">Janez Novak</h3>
+  <p class="profile-email"><i class="ri-mail-line"></i> <span id="sidebar-email">janez.novak@student.uni-lj.si</span></p>
+  <p class="profile-university"><i class="ri-graduation-cap-line"></i> <span id="sidebar-univerza">Univerza v Ljubljani</span></p>
             </div>
             
             <div class="profile-stats">
@@ -178,16 +177,7 @@
               </div>
             </div>
             
-            <nav class="profile-menu">
-              <a href="Profil.html" class="menu-item">
-                <i class="ri-user-line"></i>
-                <span>Osebni podatki</span>
-              </a>
-              <a href="#" class="menu-item">
-                <i class="ri-history-line"></i>
-                <span>Zgodovina voženj</span>
-              </a>
-            </nav>
+            
             
             <div class="profile-actions">
               <a href="Profil.html" class="btn btn-outline"><i class="ri-arrow-left-line"></i> Nazaj na profil</a>
@@ -198,7 +188,7 @@
         
         <!-- Edit Profile Content -->
        <main class="container py-5">
-  <form id="edit-profile-form" class="form-container">
+  <form id="editForm" class="form-container">
     <!-- Personal Info Section -->
     <section class="form-section">
       <div class="section-header">
@@ -208,30 +198,21 @@
       <div class="row g-3">
         <div class="col-md-6">
           <label for="first-name" class="form-label">Ime</label>
-          <input type="text" id="first-name" class="form-control" value="Janez" required>
+          <input type="text" id="first-name" class="form-control" required>
         </div>
         <div class="col-md-6">
           <label for="last-name" class="form-label">Priimek</label>
-          <input type="text" id="last-name" class="form-control" value="Novak" required>
+          <input type="text" id="last-name" class="form-control"  required>
         </div>
         <div class="col-md-6">
           <label for="email" class="form-label">E-naslov</label>
-          <input type="email" id="email" class="form-control" value="janez.novak@student.uni-lj.si" required>
+          <input type="email" id="email" class="form-control"  required>
         </div>
         <div class="col-md-6">
           <label for="phone" class="form-label">Telefon</label>
-          <input type="tel" id="phone" class="form-control" value="+386 40 123 456" required>
+          <input type="tel" id="phone" class="form-control"  required>
         </div>
-        <div class="col-md-6">
-          <label for="university" class="form-label">Univerza</label>
-          <select id="university" class="form-select" required>
-            <option value="Univerza v Ljubljani" selected>Univerza v Ljubljani</option>
-            <option value="Univerza v Mariboru">Univerza v Mariboru</option>
-            <option value="Univerza na Primorskem">Univerza na Primorskem</option>
-            <option value="Univerza v Novi Gorici">Univerza v Novi Gorici</option>
-            <option value="Univerza v Novem mestu">Univerza v Novem mestu</option>
-          </select>
-        </div>
+        
         <div class="col-md-6">
           <label class="form-label">Član od</label>
           <p class="read-only-field">marec 2024</p>
@@ -320,6 +301,15 @@
     <i class="ri-arrow-up-line"></i>
   </div>
 
+   <div id="errorModal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="closeModal">&times;</span>
+    <h2>Napaka pri prijavi</h2>
+    <p id="modalMessage"></p>
+  </div>
+</div>
+
+</body>
   <!-- Scripts -->
   <script>
     // Loader
@@ -382,22 +372,7 @@
       }
     });
 
-    // Form handling
-    const editForm = document.getElementById('edit-profile-form');
-    const cancelBtn = document.getElementById('cancel-btn');
-    
-    editForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      // Here you would typically send the form data to the server
-      alert('Spremembe so bile uspešno shranjene!');
-      window.location.href = 'Profil.html';
-    });
-    
-    cancelBtn.addEventListener('click', function() {
-      if (confirm('Ali ste prepričani, da želite preklicati spremembe?')) {
-        window.location.href = 'Profil.html';
-      }
-    });
+   
 
     // Back to top button
     const backToTop = document.getElementById('back-to-top');
@@ -415,6 +390,99 @@
         behavior: 'smooth'
       });
     });
+    
+
+   function showModal(message, isSuccess = false) {
+  const modal = document.getElementById('errorModal');
+  const msg = document.getElementById('modalMessage');
+  msg.textContent = message;
+  modal.querySelector('h2').textContent = isSuccess ? 'Uspeh' : 'Napaka pri prijavi';
+  modal.style.display = 'flex';
+  // On success, redirect after closing
+  if (isSuccess) {
+    document.getElementById('closeModal').onclick = function() {
+      modal.style.display = 'none';
+      window.location.href = 'Profil.html';
+    };
+  } else {
+    document.getElementById('closeModal').onclick = function() {
+      modal.style.display = 'none';
+    };
+  }
+  // Optional: close modal on outside click
+  window.onclick = function(event) {
+    if (event.target === modal) {
+      modal.style.display = 'none';
+      if (isSuccess) window.location.href = 'Profil.html';
+    }
+  };
+}
+//フォームデータの編集
+document.getElementById('editForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  let user = sessionStorage.getItem('user');
+  if (!user) return;
+  try {
+    user = JSON.parse(user);
+  } catch {
+    showModal('Napaka pri branju uporabnika.');
+    return;
+  }
+  if (user.data) user = user.data;
+
+  const userId = user.idUporabnik;
+  if (!userId) {
+    showModal('Uporabniški ID ni najden.');
+    return;
+  }
+
+  const updatedData = {
+    Ime: document.getElementById('first-name').value,
+    Priimek: document.getElementById('last-name').value,
+    Username: document.getElementById('email').value,
+    Telefon: document.getElementById('phone').value,
+  };
+
+  try {
+    const res = await fetch(`/api/uporabnik/${userId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updatedData)
+    });
+    const result = await res.json();
+    if (result.success) {
+      sessionStorage.setItem('user', JSON.stringify({ success: true, data: { ...user, ...updatedData } }));
+      showModal('Spremembe so bile uspešno shranjene!', true);
+    } else {
+      showModal('Napaka pri shranjevanju: ' + (result.message || ''));
+    }
+  } catch (err) {
+    showModal('Napaka pri povezavi s strežnikom.');
+  }
+
+  
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  let user = sessionStorage.getItem('user');
+  if (!user) return;
+  try {
+    user = JSON.parse(user);
+  } catch {
+    return;
+  }
+  if (user.data) user = user.data;
+
+  // サイドバーデータ
+  const sidebarIme = document.getElementById('sidebar-imepriimek');
+  const sidebarEmail = document.getElementById('sidebar-email');
+  const sidebarUniverza = document.getElementById('sidebar-univerza');
+  if (sidebarIme) sidebarIme.textContent = (user.Ime || '') + ' ' + (user.Priimek || '');
+  if (sidebarEmail) sidebarEmail.textContent = user.email || user.Eposta || user.Username || '';
+  if (sidebarUniverza) sidebarUniverza.textContent = user.Univerza || '';
+});
+
   </script>
 </body>
 </html>

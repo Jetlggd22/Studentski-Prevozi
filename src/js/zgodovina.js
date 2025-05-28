@@ -2,16 +2,15 @@ const express = require('express');
 const mysql = require('mysql2/promise');
 const router = express.Router();
 
-// Database connection, use pools for better performance and multiple connections if necessary
-// REPLACE NAMES WHEN FINAL DECISION IS MADE 
+// Database connection
 const pool = mysql.createPool({
   host: 'localhost',
   user: 'passione',
   password: '',
-  database: 'Studentski_Prevozi'
+  database: 'studentski_prevoz' // Changed to match your SQL file
 });
 
-// Router to get user's ride history through use specific ID
+// Get user's ride history
 router.get('/api/zgodovina/uporabnik/:id', async (req, res) => {
   try {
     const userId = req.params.id;
@@ -19,7 +18,7 @@ router.get('/api/zgodovina/uporabnik/:id', async (req, res) => {
     // Get user's ride history (both as driver and passenger)
     const [rows] = await pool.execute(`
       SELECT 
-        p.IdPrevoz, 
+        p.idPrevoz, 
         p.Cas_odhoda, 
         p.Cena, 
         l1.Ime AS Odhod, 
@@ -28,15 +27,16 @@ router.get('/api/zgodovina/uporabnik/:id', async (req, res) => {
         r.Ustvarjeno AS Datum_rezervacije,
         'Potnik' AS Vloga
       FROM Rezervacija r
-      JOIN Prevoz p ON r.TK_Prevoz = p.IdPrevoz
-      JOIN Lokacija l1 ON p.TK_Lokacija_Odhoda = l1.idLokacija
-      JOIN Lokacija l2 ON p.TK_Lokacija_Prihoda = l2.idLokacija
-      WHERE r.TK_Putnik = ?
+      JOIN Prevoz p ON r.TK_Prevoz = p.idPrevoz
+      JOIN Lokacija l1 ON p.TK_Lokacija_Odhod = l1.idLokacija
+      JOIN Lokacija l2 ON p.TK_Lokacija_Prihod = l2.idLokacija
+      JOIN Uporabnik u ON r.TK_Potnik = u.idUporabnik
+      WHERE r.TK_Potnik = ?
       
       UNION
       
       SELECT 
-        p.IdPrevoz, 
+        p.idPrevoz, 
         p.Cas_odhoda, 
         p.Cena, 
         l1.Ime AS Odhod, 
@@ -45,21 +45,19 @@ router.get('/api/zgodovina/uporabnik/:id', async (req, res) => {
         p.Cas_odhoda AS Datum_rezervacije,
         'Voznik' AS Vloga
       FROM Prevoz p
-      JOIN Lokacija l1 ON p.TK_Lokacija_Odhoda = l1.idLokacija
-      JOIN Lokacija l2 ON p.TK_Lokacija_Prihoda = l2.idLokacija
+      JOIN Lokacija l1 ON p.TK_Lokacija_Odhod = l1.idLokacija
+      JOIN Lokacija l2 ON p.TK_Lokacija_Prihod = l2.idLokacija
+      JOIN Uporabnik u ON p.TK_Voznik = u.idUporabnik
       WHERE p.TK_Voznik = ?
       
       ORDER BY Cas_odhoda DESC
     `, [userId, userId]);
     
-    // Return all data
     res.json({
       success: true,
       data: rows
     });
-  } 
-  // Catch any errors and return a 500 status code
-  catch (error) {
+  } catch (error) {
     console.error('Error fetching zgodovina:', error);
     res.status(500).json({
       success: false,
@@ -82,10 +80,10 @@ router.get('/api/zgodovina/prevoz/:id', async (req, res) => {
         u.Ime AS Voznik_ime,
         u.Priimek AS Voznik_priimek
       FROM Prevoz p
-      JOIN Lokacija l1 ON p.TK_Lokacija_Odhoda = l1.idLokacija
-      JOIN Lokacija l2 ON p.TK_Lokacija_Prihoda = l2.idLokacija
-      JOIN Uporabnik u ON p.TK_Voznik = u.IdUporabnik
-      WHERE p.IdPrevoz = ?
+      JOIN Lokacija l1 ON p.TK_Lokacija_Odhod = l1.idLokacija
+      JOIN Lokacija l2 ON p.TK_Lokacija_Prihod = l2.idLokacija
+      JOIN Uporabnik u ON p.TK_Voznik = u.idUporabnik
+      WHERE p.idPrevoz = ?
     `, [prevozId]);
     
     // Get reservations for this ride
@@ -95,17 +93,22 @@ router.get('/api/zgodovina/prevoz/:id', async (req, res) => {
         u.Ime AS Potnik_ime,
         u.Priimek AS Potnik_priimek
       FROM Rezervacija r
-      JOIN Uporabnik u ON r.TK_Putnik = u.IdUporabnik
+      JOIN Uporabnik u ON r.TK_Potnik = u.idUporabnik
       WHERE r.TK_Prevoz = ?
     `, [prevozId]);
     
     // Get ratings for this ride
     const [oceneRows] = await pool.execute(`
-      SELECT * FROM Ocena WHERE TK_Prevoz = ?
+      SELECT 
+        o.*,
+        u.Ime AS Ocenjevalec_ime,
+        u.Priimek AS Ocenjevalec_priimek
+      FROM Ocena o
+      LEFT JOIN Rezervacija r ON o.TK_Rezervacija = r.idRezervacija
+      LEFT JOIN Uporabnik u ON r.TK_Potnik = u.idUporabnik
+      WHERE o.TK_Prevoz = ?
     `, [prevozId]);
     
-    
-    // Return ride details, reservations, and ratings
     res.json({
       success: true,
       data: {
@@ -122,5 +125,5 @@ router.get('/api/zgodovina/prevoz/:id', async (req, res) => {
     });
   }
 });
-// Export the router to use in the main app
+
 module.exports = router;

@@ -8,6 +8,7 @@ import { getUserHistory, getRideDetails } from "./controllers/historyController.
 import { getAllHistories } from './controllers/adminHistoryController.js';
 // Import deletePrevoz from rideController
 import { getAllPrevozi, getPrevoz, deletePrevoz } from './controllers/rideController.js'; 
+import userController from './controllers/editProfileController.js';
 
 
 const checkJwt = expressjwt({
@@ -31,6 +32,8 @@ router.get('/prevozi', getAllPrevozi);
 router.get('/admin/history', getAllHistories);
 router.post('/login', catchAsync(authController.loginUser));
 router.get('/prevozi/:id', catchAsync(getPrevoz));
+router.get('/search', catchAsync(authController.searchRoutes));
+router.put('/uporabnik/:id', userController.updateUser);
 
 // Add the new DELETE route
 router.delete('/prevozi/:id', catchAsync(deletePrevoz)); // We can protect this with admin middleware later

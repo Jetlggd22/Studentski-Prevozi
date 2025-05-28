@@ -32,7 +32,7 @@
         <span class="logo-text">Študentski Prevozi<span>
       </a>
       
-      <ul class="nav-menu" id="nav-menu">
+          <ul class="nav-menu" id="nav-menu">
         <li class="nav-item">
           <a href="Index.html" class="nav-link">
             <i class="ri-home-4-line nav-icon"></i> Domov
@@ -44,7 +44,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="Vozniki.html" class="nav-link">
+          <a href="Vozniki.html" class="nav-link" style="color:gold;">
             <i class="ri-award-line nav-icon"></i> Vozniki
           </a>
         </li>
@@ -53,13 +53,15 @@
             <i class="ri-customer-service-2-line nav-icon"></i> O Nas
           </a>
         </li>
-         <li class="nav-item">
-          <a href="Login.html" class="nav-link">
+        
+        <li class="nav-item">
+          <a href="Login.html" class="nav-link"  id="login_profil">
             <i class="ri-login-circle-line nav-icon"></i> Prijava
           </a>
         </li>
          
       </ul>
+
       <div class="hamburger" id="hamburger">
         <span></span>
         <span></span>
@@ -253,6 +255,18 @@
   <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
   <script>
+    window.addEventListener('DOMContentLoaded', function() {
+    
+    if (sessionStorage.getItem('user')) {
+        
+        var login = document.getElementById('login_profil');
+        if (login) {
+            
+            login.innerHTML = '<i class ="ri-user-fill"></i> Profil';
+            login.href = 'Profil.html';
+        }
+    }
+});
     // Loader
     window.addEventListener('load', () => {
       setTimeout(() => {
@@ -325,6 +339,8 @@
         behavior: 'smooth'
       });
     });
+
+    
   </script>
 </body>
 </html>
