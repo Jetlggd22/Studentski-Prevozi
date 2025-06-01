@@ -10,7 +10,10 @@ import { getAllHistories } from './controllers/adminHistoryController.js';
 import { getAllPrevozi, getPrevoz, deletePrevoz } from './controllers/rideController.js'; 
 import * as userController from './controllers/editProfileController.js';
 import * as usersController from './controllers/usersController.js';
-
+import { getAdminStats } from './controllers/adminStatsController.js';
+import * as searchUserController from './controllers/searchUserController.js';
+import * as createPrevozController from './controllers/createPrevozController.js';
+import * as rezervacijaController from './controllers/rezervacijaController.js'; 
 
 const checkJwt = expressjwt({
   secret: jwksRsa.expressJwtSecret({
@@ -40,7 +43,14 @@ router.get('/users/:id', usersController.getUserById);
 router.post('/users', usersController.createUser);
 router.put('/users/:id', usersController.updateUser);
 router.delete('/users/:id', usersController.deleteUser);
-
+router.get('/admin/stats', getAdminStats);
+router.get('/uporabnik/:id', userController.getUserById);
+router.get('/top-drivers', usersController.getTopDrivers);
+router.get('/search-drivers', searchUserController.searchDrivers);
+router.post('/prevozi', createPrevozController.createPrevoz);
+router.post('/rezervacije', catchAsync(rezervacijaController.createRezervacija));
+router.patch('/rezervacije/:idRezervacija/preklici', catchAsync(rezervacijaController.prekliciRezervacija));
+router.get('/rezervacije/uporabnik/:idUporabnik/prevoz/:idPrevoz', catchAsync(rezervacijaController.getUserRezervacijaForPrevoz));
 // Add the new DELETE route
 router.delete('/prevozi/:id', catchAsync(deletePrevoz)); // We can protect this with admin middleware later
 

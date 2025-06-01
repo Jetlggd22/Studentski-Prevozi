@@ -27,3 +27,9 @@ export async function deleteUser(req, res) {
   if (success) res.json({ success: true });
   else res.status(404).json({ success: false, message: 'User not found' });
 }
+
+export async function getTopDrivers(req, res) {
+  const limit = parseInt(req.query.limit) || 5;
+  const drivers = await usersService.getTopDrivers(limit);
+  res.json({ success: true, data: drivers });
+}

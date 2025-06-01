@@ -1,10 +1,10 @@
 import pool from '../db/pool.js';
 
 export async function updateUser(userId, userData) {
-  const { Ime, Priimek, Username, Telefon, Univerza } = userData;
+  const { Ime, Priimek, Username, Telefon } = userData;
   const [result] = await pool.execute(
-    `UPDATE Uporabnik SET Ime=?, Priimek=?, Username=?, Telefon=?, Univerza=? WHERE idUporabnik=?`,
-    [Ime, Priimek, Username, Telefon, Univerza, userId]
+    `UPDATE Uporabnik SET Ime=?, Priimek=?, Username=?, Telefon=? WHERE idUporabnik=?`,
+    [Ime, Priimek, Username, Telefon, userId]
   );
   return result.affectedRows === 1;
 }

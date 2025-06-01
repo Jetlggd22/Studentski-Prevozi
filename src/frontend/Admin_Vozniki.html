@@ -91,7 +91,7 @@
         </li>
         <li class="nav-item">
           <a href="Admin_Vozniki.html" class="nav-link">
-            <i class="ri-award-line nav-icon"></i> Vozniki
+            <i class="ri-award-line nav-icon"></i> Uporabniki
           </a>
         </li>
         
@@ -151,11 +151,17 @@
     <p id="modalMessage"></p>
     <div id="modalActions" style="margin-top:1.5rem; display:none; gap:1rem; justify-content:center;">
       <button id="confirmDelete" class="delete-btn">Izbriši</button>
-      <button id="cancelDelete" class="edit-btn">Prekliči</button>
+      <button id="cancelDelete" class="btn">Prekliči</button>
     </div>
   </div>
 </div>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+<div id="toast" style="display:none;position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:black;color:gold;padding:16px 32px;border-radius:8px;z-index:9999;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,0.15);transition:opacity 0.3s;">
+  Uporabnik je uspešno izbrisan.
+</div>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
   <script>
     // Loader
     window.addEventListener('load', () => {
@@ -251,32 +257,26 @@
         return;
       }
       grid.innerHTML = json.data.map(driver => `
-        <div class="driver-card" data-id="${driver.idUporabnik}">
-          <img src="https://randomuser.me/api/portraits/men/${Math.floor(Math.random()*60)}.jpg" alt="${driver.Ime || ''} ${driver.Priimek || ''}" class="driver-avatar">
-          <h3 class="driver-name">${driver.Ime || ''} ${driver.Priimek || ''}</h3>
-          <div class="driver-university">
-            <i class="ri-building-2-line"></i> ${driver.Univerza || ''}
-          </div>
-          <div class="driver-rating">
-            <i class="ri-star-fill"></i> ${driver.Ocena !== undefined ? driver.Ocena : '-'}
-          </div>
-          <div class="driver-stats">
-            <div class="driver-stat">
-              <div class="driver-stat-value">${driver.Vozenj || '-'}</div>
-              <div class="driver-stat-label">Voženj</div>
-            </div>
-            <div class="driver-stat">
-              <div class="driver-stat-value">${driver.Zanesljivost || '-'}</div>
-              <div class="driver-stat-label">Zanesljivost</div>
-            </div>
-          </div>
-          <p class="driver-bio">${driver.Avto ? 'Avto: ' + driver.Avto : ''}</p>
-          <div class="admin-actions slide-up">
-            <button class="admin-btn edit-btn"><i class="ri-edit-line"></i> Uredi</button>
-            <button class="admin-btn delete-btn"><i class="ri-delete-bin-line"></i> Izbriši</button>
-          </div>
-        </div>
-      `).join('');
+  <div class="driver-card" data-id="${driver.idUporabnik}" 
+    style="border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.08);padding:24px 24px 16px 24px;margin:0 auto;width:100%;max-width:520px;min-width:320px;display:flex;flex-direction:column;align-items:center;">
+    <img src="https://randomuser.me/api/portraits/men/${Math.floor(Math.random()*60)}.jpg" alt="${driver.Ime || ''} ${driver.Priimek || ''}" class="driver-avatar" style="width:90px;height:90px;border-radius:50%;object-fit:cover;margin-bottom:12px;">
+    <h3 class="driver-name" style="margin:0 0 8px 0;font-size:1.3rem;">${driver.Ime || ''} ${driver.Priimek || ''}</h3>
+    <div class="driver-rating" style="margin-bottom:8px;">
+      <i class="ri-star-fill"></i> ${driver.Ocena != null ? Number(driver.Ocena).toFixed(1) : '-'}
+    </div>
+    <div class="driver-stats" style="margin-bottom:8px;">
+      <div class="driver-stat">
+        <div class="driver-stat-value" style="font-weight:700;">${driver.Vozenj || '-'}</div>
+        <div class="driver-stat-label" style="font-size:0.95em;">Voženj</div>
+      </div>
+    </div>
+    <p class="driver-bio" style="margin-bottom:10px;">${driver.Avto ? 'Avto: ' + driver.Avto : ''}</p>
+    <div class="admin-actions slide-up" style="display:flex;gap:16px;width:100%;justify-content:center;flex-wrap:wrap;">
+      <button class="btn edit-btn" style="width:48%;min-width:120px;max-width:200px;margin-bottom:0;background:#312D18;color:#fff;padding:8px 0;border-radius:4px;font-weight:600;"><i class="ri-edit-line"></i> Uredi</button>
+      <button class="btn delete-btn" style="width:48%;min-width:120px;max-width:200px;margin-bottom:0;background:#5c1a1a;color:#fff;padding:8px 0;border-radius:4px;font-weight:600;"><i class="ri-delete-bin-line"></i> Izbriši</button>
+    </div>
+  </div>
+`).join('');
     } catch (err) {
       grid.innerHTML = '<div style="padding:2rem;color:red;">Napaka pri nalaganju voznikov.</div>';
     }
@@ -316,13 +316,14 @@ confirmDeleteBtn.onclick = async function () {
     const res = await fetch(`http://localhost:3000/api/users/${deleteDriverId}`, { method: 'DELETE' });
     const json = await res.json();
     if (json.success) {
-      deleteCard.remove();
-      errorModal.style.display = 'none';
-    } else {
-      modalTitle.textContent = 'Napaka';
-      modalMessage.textContent = 'Napaka pri brisanju.';
-      modalActions.style.display = 'none';
-    }
+  deleteCard.remove();
+  errorModal.style.display = 'none';
+  showToast('Uporabnik je uspešno izbrisan.');
+} else {
+  modalTitle.textContent = 'Napaka';
+  modalMessage.textContent = 'Napaka pri brisanju.';
+  modalActions.style.display = 'none';
+}
   } catch {
     modalTitle.textContent = 'Napaka';
     modalMessage.textContent = 'Napaka pri povezavi s strežnikom.';
@@ -355,6 +356,17 @@ window.onclick = function(event) {
 
   loadDrivers();
 });
+
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.style.display = 'block';
+  toast.style.opacity = '1';
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    setTimeout(() => { toast.style.display = 'none'; }, 300);
+  }, 2000);
+}
   </script>
 </body>
 </html>

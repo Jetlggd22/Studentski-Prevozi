@@ -136,10 +136,7 @@
     <label>Telefon</label>
     <p id="user-telefon"></p>
   </div>
-  <div class="info-item">
-    <label>Univerza</label>
-    <p id="user-univerza"></p>
-  </div>
+
   <div class="info-item">
     <label>Član od</label>
     <p id="user-clanod"></p>
@@ -328,7 +325,6 @@
   document.getElementById('user-priimek').textContent = user.Priimek || '';
   document.getElementById('user-email').textContent = user.email || user.Eposta || user.Username || '';
   document.getElementById('user-telefon').textContent = user.Telefon || '';
-  document.getElementById('user-univerza').textContent = user.Univerza || '';
   document.getElementById('user-clanod').textContent =
     user.Datum_registriranja
       ? new Date(user.Datum_registriranja).toLocaleDateString('sl-SI', { month: 'long', year: 'numeric' })

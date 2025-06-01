@@ -30,9 +30,49 @@ export async function updateUser(id, user) {
 }
 
 export async function deleteUser(id) {
-  
+  // 1. Obriši ocene vezane za rezervacije gde je korisnik putnik
+  await pool.execute(
+    `DELETE o FROM Ocena o
+     JOIN Rezervacija r ON o.TK_Rezervacija = r.idRezervacija
+     WHERE r.TK_Potnik = ?`,
+    [id]
+  );
+  // 2. Obriši rezervacije gde je korisnik putnik
+  await pool.execute('DELETE FROM Rezervacija WHERE TK_Potnik=?', [id]);
+
+  // 3. Obriši ocene vezane za rezervacije na prevozima gde je korisnik vozač
+  await pool.execute(
+    `DELETE o FROM Ocena o
+     JOIN Rezervacija r ON o.TK_Rezervacija = r.idRezervacija
+     JOIN Prevoz p ON r.TK_Prevoz = p.idPrevoz
+     WHERE p.TK_Voznik = ?`,
+    [id]
+  );
+  // 4. Obriši rezervacije na prevozima gde je korisnik vozač
+  await pool.execute(
+    `DELETE r FROM Rezervacija r
+     JOIN Prevoz p ON r.TK_Prevoz = p.idPrevoz
+     WHERE p.TK_Voznik = ?`,
+    [id]
+  );
+  // 5. Obriši ocene direktno vezane za prevoze gde je korisnik vozač
+  await pool.execute(
+    `DELETE o FROM Ocena o
+     JOIN Prevoz p ON o.TK_Prevoz = p.idPrevoz
+     WHERE p.TK_Voznik = ?`,
+    [id]
+  );
+  // 6. Obriši prevoze gde je korisnik vozač
   await pool.execute('DELETE FROM Prevoz WHERE TK_Voznik=?', [id]);
- 
+  // 7. Na kraju obriši korisnika
   const [result] = await pool.execute('DELETE FROM Uporabnik WHERE idUporabnik=?', [id]);
   return result.affectedRows === 1;
+}
+
+export async function getTopDrivers(limit = 5) {
+  limit = Number(limit) || 5; // sigurnost
+  const [rows] = await pool.execute(
+    `SELECT * FROM Uporabnik WHERE Ocena IS NOT NULL ORDER BY Ocena DESC LIMIT ${limit}`
+  );
+  return rows;
 }

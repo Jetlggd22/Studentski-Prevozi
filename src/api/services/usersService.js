@@ -19,3 +19,7 @@ export async function updateUser(id, user) {
 export async function deleteUser(id) {
   return await usersRepository.deleteUser(id);
 }
+
+export async function getTopDrivers(limit = 5) {
+  return await usersRepository.getTopDrivers(limit);
+}

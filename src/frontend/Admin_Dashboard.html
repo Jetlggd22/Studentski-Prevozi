@@ -43,7 +43,7 @@
         </li>
         <li class="nav-item">
           <a href="Admin_Vozniki.html" class="nav-link">
-            <i class="ri-award-line nav-icon"></i> Vozniki
+            <i class="ri-award-line nav-icon"></i> Uporabniki
           </a>
         </li>
         
@@ -77,23 +77,23 @@
         </section>
         
         <!-- Stat Cards -->
-        <div class="features-grid" style="margin-bottom: 50px;">
-            <div class="feature-card">
-                <div class="feature-icon-wrapper"><i class="ri-numbers-line feature-icon"></i></div>
-                <div class="feature-title">Št. uporabnikov</div>
-                <div class="feature-description"><span style="font-size: 28px; font-weight: 700;">1.245</span></div>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon-wrapper"><i class="ri-car-line feature-icon"></i></div>
-                <div class="feature-title">Aktivni prevozi</div>
-                <div class="feature-description"><span style="font-size: 28px; font-weight: 700;">312</span></div>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon-wrapper"><i class="ri-star-line feature-icon"></i></i></div>
-                <div class="feature-title">Povprečna ocena</div>
-                <div class="feature-description"><span style="font-size: 28px; font-weight: 700;">4.8/5</span></div>
-            </div>
-        </div>
+       <div class="features-grid" style="margin-bottom: 50px;">
+    <div class="feature-card">
+        <div class="feature-icon-wrapper"><i class="ri-numbers-line feature-icon"></i></div>
+        <div class="feature-title">Št. uporabnikov</div>
+        <div class="feature-description"><span id="stat-users" style="font-size: 28px; font-weight: 700;">...</span></div>
+    </div>
+    <div class="feature-card">
+        <div class="feature-icon-wrapper"><i class="ri-car-line feature-icon"></i></div>
+        <div class="feature-title">Aktivni prevozi</div>
+        <div class="feature-description"><span id="stat-rides" style="font-size: 28px; font-weight: 700;">...</span></div>
+    </div>
+    <div class="feature-card">
+        <div class="feature-icon-wrapper"><i class="ri-star-line feature-icon"></i></div>
+        <div class="feature-title">Povprečna ocena</div>
+        <div class="feature-description"><span id="stat-rating" style="font-size: 28px; font-weight: 700;">...</span></div>
+    </div>
+</div>
 
         <!-- Quick Actions -->
         <section class="features" style="padding: 0;">
@@ -177,6 +177,26 @@
     </footer>
      <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
   <script>
+
+    document.addEventListener('DOMContentLoaded', async function() {
+  try {
+    const res = await fetch('http://localhost:3000/api/admin/stats');
+    const json = await res.json();
+    if (json.success) {
+      document.getElementById('stat-users').textContent = json.data.userCount;
+      document.getElementById('stat-rides').textContent = json.data.rideCount;
+      document.getElementById('stat-rating').textContent = json.data.avgRating + '/5';
+    } else {
+      document.getElementById('stat-users').textContent = '-';
+      document.getElementById('stat-rides').textContent = '-';
+      document.getElementById('stat-rating').textContent = '-';
+    }
+  } catch {
+    document.getElementById('stat-users').textContent = '-';
+    document.getElementById('stat-rides').textContent = '-';
+    document.getElementById('stat-rating').textContent = '-';
+  }
+});
     // Loader
     window.addEventListener('load', () => {
       setTimeout(() => {
@@ -234,21 +254,7 @@
     });
     
     // Back to top
-    const backToTop = document.getElementById('back-to-top');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 300) {
-        backToTop.classList.add('show');
-      } else {
-        backToTop.classList.remove('show');
-      }
-    });
     
-    backToTop.addEventListener('click', () => {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    });
     
     // Smooth scrolling
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -270,6 +276,10 @@
         }
       });
     });
+
+    
+
+
   </script>
 </body>
 </html>
