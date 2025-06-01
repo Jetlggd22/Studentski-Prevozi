@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Študentski Prevozi - Registracija</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="Styles/Style.css">
@@ -140,7 +139,6 @@
   </section>
   
 
-  <!-- Modern Modal for messages -->
 <div id="registerModal" class="modal">
   <div class="modal-content">
     <span class="close" id="closeRegisterModal">&times;</span>
@@ -148,10 +146,8 @@
     <p id="registerModalMessage"></p>
   </div>
 </div>
-  <!-- Scripts -->
    <script src = "script/register.js"></script>
   <script>
-    // Loader
     window.addEventListener('load', () => {
       setTimeout(() => {
         document.getElementById('loader').style.opacity = '0';
@@ -161,7 +157,6 @@
       }, 1000);
     });
     
-    // Mobile Navigation
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('nav-menu');
     const overlay = document.getElementById('overlay');

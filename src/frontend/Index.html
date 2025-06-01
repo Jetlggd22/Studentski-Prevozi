@@ -522,6 +522,11 @@
         }
     }
 });
+    
+    const userInfo = JSON.parse(sessionStorage.getItem("user")) //malo amaterski ali vrsi poso, treba malo da se stajlira bolje
+    if(!userInfo.data.emailIsVerified){
+      alert("Prosimo, preverite e-pošto uporabnika")
+    }
 
     // Loader
     window.addEventListener('load', () => {

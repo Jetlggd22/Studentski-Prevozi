@@ -69,7 +69,7 @@ try {
   token = await getAuth0Token();
 } catch (err) {
   console.error('Failed to get Auth0 token:', err);
-  throw err; // optional: rethrow or handle gracefully
+  throw err;
 }
 
 
@@ -96,8 +96,24 @@ try {
 
   const auth0UserId = user.user_id;
 
+  sendVerificationEmail(user.user_id, token)
+
   return authRepository.createUser({ auth0UserId, ime, priimek, telefon, username });
 };
+
+async function getUserProfile(userId, managementToken) {
+  const options = {
+    hostname: AUTH0_DOMAIN,
+    path: `/api/v2/users/${encodeURIComponent(userId)}`,
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${managementToken}`
+    }
+  };
+
+  return await httpsRequest(options);
+}
+
 
 const login = async ({ email, geslo }) => {
   const postData = JSON.stringify({
@@ -121,12 +137,34 @@ const login = async ({ email, geslo }) => {
     },
   };
 
+  const managementToken = await getAuth0Token();
   const response = await httpsRequest(options, postData);
   const decoded = jwt.decode(response.access_token)
   const dbResponse = await authRepository.getUserById(decoded.sub)
+  const userProfile = await getUserProfile(decoded.sub, managementToken);
   console.log(dbResponse)
 
-  return {...response, ...dbResponse}; 
+  return {...response, ...dbResponse, emailIsVerified:userProfile.email_verified}; 
 }
+
+const sendVerificationEmail = async (auth0UserId, token) => {
+  const payload = JSON.stringify({
+    user_id: auth0UserId,
+    client_id: AUTH0_CLIENT_ID 
+  });
+
+  const options = {
+    hostname: AUTH0_DOMAIN,
+    path: '/api/v2/jobs/verification-email',
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+      'Content-Length': Buffer.byteLength(payload)
+    }
+  };
+
+  return await httpsRequest(options, payload);
+};
 
 export default { createUser, login };
