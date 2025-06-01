@@ -13,46 +13,34 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/10.0.4/swiper-bundle.css" />
   <link rel="icon" href = "img/admin_icon.png" type = "image/x-icon">
   <style>
-    .admin-actions {
+       .admin-actions {
       display: flex;
       gap: 10px;
       margin-top: 15px;
     }
     
-    .admin-btn {
-      padding: 8px 15px;
-      border-radius: 4px;
-      border: none;
-      cursor: pointer;
-      font-weight: 600;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 5px;
+    /* Styles for the ride info and passenger list containers */
+    .ride-info-details, .passenger-list-container {
+      margin-top: 1.5rem; 
+      padding: 1rem; 
+      background: var(--dark-medium); 
+      border-radius: 8px; 
+      border: 1px solid rgba(255,215,0,0.1);
     }
-    
-    .edit-btn {
-      background-color: #312D18;
-      color: white;
+
+    .passenger-list-container h5 { /* Specific heading for passenger list */
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+      font-size: 0.95em;
     }
-    
-    .delete-btn {
-      background-color: #5c1a1a;
-      color: white;
+    .passenger-list-container ul {
+      list-style: none;
+      padding-left: 0;
+      font-size: 0.9em;
+      color: rgba(255,255,255,0.8);
     }
-    
-    .add-relacija-btn {
-      background-color: #312D18;
-      color: white;
-      padding: 12px 20px;
-      border-radius: 4px;
-      border: none;
-      cursor: pointer;
-      font-weight: 600;
-      margin-bottom: 20px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+    .passenger-list-container li {
+      padding: 0.25rem 0;
     }
     
     .add-relacija-btn:hover, .edit-btn:hover, .delete-btn:hover {
@@ -69,8 +57,7 @@
     </div>
   </div>
   
-  <!-- Header -->
-   <header class="header" id="header">
+  <header class="header" id="header">
     <div class="container header-container">
       <a href="#" class="logo">
         <i class="ri-spy-line logo-icon"></i>
@@ -114,7 +101,6 @@
 
 
   
-  <!-- Admin Content -->
   <section class="destinations" id="destinations" data-aos="fade-up" data-aos-delay="300" style="margin-top:20px">
     <div class="container">
       <div class="section-heading" data-aos="fade-up">
@@ -123,20 +109,22 @@
         <p class="section-description">Tukaj lahko upravljate vse študentske prevoze. Dodajate, urejate ali brišete relacije po potrebi.</p>
       </div>
       
-      <button class="btn btn-outline" onclick="window.location.href='Admin_Zgodovina.html'">
+      <button class="btn btn-outline" onclick="window.location.href='Admin_Zgodovina.html'" style="margin-bottom: 20px;">
         <i class="ri-add-line"></i> Dodaj Novo Relacijo
       </button>
 
-      
+      <button class="btn btn-outline" onclick="window.location.href='Admin_Zgodovina.html'" style="margin-bottom: 20px;">
+          <i class="ri-history-line"></i> Oglej Zgodovino Relacij
+      </button>
+
 
       <div id="upcoming-rides-container" style="padding-top: 20px;">
-    </div>
+        </div>
       
       
     </div>
   </section>
 
-  <!-- Footer -->
   <footer class="footer">
         <div class="container footer-container">
         <div class="footer-bottom">
@@ -201,26 +189,6 @@
       }
     });
     
-    // Back to top
-     const backToTop = document.getElementById('back-to-top');
-  if (backToTop) { // Check if the element exists
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 300) {
-        backToTop.classList.add('show');
-      } else {
-        backToTop.classList.remove('show');
-      }
-    });
-
-    backToTop.addEventListener('click', () => {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    });
-  }
-
-    
     // Smooth scrolling
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
@@ -246,13 +214,13 @@
 document.addEventListener("DOMContentLoaded", () => {
   const ridesContainer = document.getElementById("upcoming-rides-container");
   if (!ridesContainer) {
-    console.error("Container for upcoming rides (#upcoming-rides-container) not found.");
+    console.error("Container for rides (#upcoming-rides-container) not found.");
     return;
   }
 
   async function fetchAndRenderRides() {
     try {
-      const res = await fetch("http://localhost:3000/api/prevozi");
+      const res = await fetch("http://localhost:3000/api/admin/history"); 
       if (!res.ok) {
         let errorData;
         try {
@@ -265,53 +233,61 @@ document.addEventListener("DOMContentLoaded", () => {
       const response = await res.json();
 
       if (!response.success || !response.data) {
-        throw new Error(response.message || "Prišlo je do napake pri nalaganju prihajajočih voženj.");
+        throw new Error(response.message || "Prišlo je do napake pri nalaganju voženj.");
       }
 
       const allRides = response.data;
-      const now = new Date();
-      const upcomingRides = allRides.filter(ride => {
-        const departureTime = new Date(ride.Cas_odhoda);
-        return departureTime > now;
-      });
-
       ridesContainer.innerHTML = '';
 
-      if (upcomingRides.length === 0) {
-        ridesContainer.innerHTML = "<p style='text-align: center; padding: 20px; color: var(--white);'>Trenutno ni na voljo prihajajočih voženj.</p>";
+      if (allRides.length === 0) {
+        ridesContainer.innerHTML = "<p style='text-align: center; padding: 20px; color: var(--white);'>Trenutno ni na voljo voženj.</p>";
         return;
       }
 
-      upcomingRides.forEach((ride) => {
+      allRides.forEach((ride) => {
         const card = document.createElement("div");
         card.className = "booking-card fade-in";
         card.setAttribute('data-ride-id', ride.IdPrevoz);
 
-        const driverName = ride.voznik || "Neznan voznik";
+        const driverName = `${ride.Voznik_ime || ''} ${ride.Voznik_priimek || ''}`.trim() || "Neznan voznik";
         const departureFullDateTime = ride.Cas_odhoda ? new Date(ride.Cas_odhoda).toLocaleString('sl-SI', { dateStyle: 'medium', timeStyle: 'short' }) : "N/A";
-        const departureLocation = ride.ime_odhod || 'Neznana';
-        const arrivalLocation = ride.ime_prihod || 'Neznana';
+        const departureLocation = ride.Lokacija_odhoda || 'Neznana';
+        const arrivalLocation = ride.Lokacija_prihoda || 'Neznana';
+        
         const rideId = ride.IdPrevoz;
-        const price = ride.Cena !== undefined ? `${ride.Cena}€` : "";
-        const freeSeats = ride.Prosta_mesta;
-        const vehicle = ride.avto;
-        const driverRating = ride.voznik_ocena;
+        const price = ride.Cena !== undefined ? `${ride.Cena}€` : "N/A";
+        
+        // These fields are now expected from the updated /api/admin/history endpoint
+        const freeSeats = ride.Prosta_mesta !== undefined ? ride.Prosta_mesta : "N/A";
+        const vehicle = ride.Voznik_avto || "Ni navedeno"; 
+        const driverRating = ride.Voznik_ocena; 
 
-        let rideDetailsHTML = '';
-        if (rideId) {
-            rideDetailsHTML += `<p style="margin-bottom: 0.5rem;"><strong>ID Vožnje:</strong> ${rideId}</p>`;
-        }
-        if (price) {
-            rideDetailsHTML += `<p style="margin-bottom: 0.5rem;"><strong>Cena:</strong> ${price}</p>`;
-        }
-        if (freeSeats !== undefined) {
-            rideDetailsHTML += `<p style="margin-bottom: 0.5rem;"><strong>Prosta mesta:</strong> ${freeSeats}</p>`;
-        }
-        if (vehicle) {
-            rideDetailsHTML += `<p style="margin-bottom: 0.5rem;"><strong>Avto:</strong> ${vehicle}</p>`;
-        }
+        // Build HTML for the ride-info-details div
+        let rideInfoDetailsHTML = '';
+        if (rideId) rideInfoDetailsHTML += `<p style="margin-bottom: 0.5rem;"><strong>ID Vožnje:</strong> ${rideId}</p>`;
+        if (price !== "N/A") rideInfoDetailsHTML += `<p style="margin-bottom: 0.5rem;"><strong>Cena:</strong> ${price}</p>`;
+        if (freeSeats !== "N/A") rideInfoDetailsHTML += `<p style="margin-bottom: 0.5rem;"><strong>Prosta mesta:</strong> ${freeSeats}</p>`;
+        if (vehicle !== "Ni navedeno") rideInfoDetailsHTML += `<p style="margin-bottom: 0.5rem;"><strong>Avto:</strong> ${vehicle}</p>`;
         if (driverRating !== undefined && driverRating !== null) {
-            rideDetailsHTML += `<p style="margin-bottom: 0.5rem;"><strong>Ocena voznika:</strong> ${Number(driverRating).toFixed(1)} ⭐</p>`;
+            rideInfoDetailsHTML += `<p style="margin-bottom: 0.5rem;"><strong>Ocena voznika:</strong> ${Number(driverRating).toFixed(1)} ⭐</p>`;
+        }
+
+        // Build HTML for the passenger list container
+        let passengerListContainerHTML = '';
+        if (ride.potniki && ride.potniki.length > 0) {
+          passengerListContainerHTML = `
+            <div class="passenger-list-container slide-up">
+              <h5>Registrirani potniki:</h5>
+              <ul>
+                ${ride.potniki.map(p => `<li>${p.Potnik_ime || ''} ${p.Potnik_priimek || ''}</li>`).join('')}
+              </ul>
+            </div>
+          `;
+        } else {
+          passengerListContainerHTML = `
+            <div class="passenger-list-container slide-up">
+              <p style="font-size:0.9em; color:rgba(255,255,255,0.7);">Ni registriranih potnikov za to vožnjo.</p>
+            </div>`;
         }
 
         card.innerHTML = `
@@ -326,22 +302,26 @@ document.addEventListener("DOMContentLoaded", () => {
               <div class="location">
                 <div class="location-name">${departureLocation}</div>
               </div>
-              <div class="route-line"></div>
+              <div class="route-line" style="background-color: #312D18;"></div>
               <div class="location">
                 <div class="location-name">${arrivalLocation}</div>
               </div>
             </div>
-            ${rideDetailsHTML ? `
-            <div class="ride-info-details slide-up" style="margin-top: 1.5rem; padding: 1rem; background: var(--dark-medium); border-radius: 8px; border: 1px solid rgba(255,215,0,0.1);">
-                ${rideDetailsHTML}
+            
+            ${rideInfoDetailsHTML ? `
+            <div class="ride-info-details slide-up">
+                ${rideInfoDetailsHTML}
             </div>
             ` : ''}
+
+            ${passengerListContainerHTML} 
+            
             <div class="admin-actions slide-up" style="margin-top: 1.5rem;">
-              <button class="btn" data-id="${rideId || ''}">
+              <button class="btn edit-btn" data-id="${rideId || ''}"> 
                 <i class="ri-edit-line"></i> Uredi
               </button>
-              <button class="btn btn-outline" data-id="${rideId || ''}" >
-                <i class="ri-delete-bin-line" style = "color:red;"></i> Izbriši
+              <button class="btn btn-outline delete-btn" data-id="${rideId || ''}"> 
+                <i class="ri-delete-bin-line"></i> Izbriši
               </button>
             </div>
           </div>
@@ -351,24 +331,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
       attachEventListeners();
     } catch (err) {
-      console.error("Error fetching or processing upcoming rides:", err);
+      console.error("Error fetching or processing rides:", err);
       if (ridesContainer) {
-        ridesContainer.innerHTML = `<p style="color: red; text-align: center; padding: 20px;">Napaka pri nalaganju prihajajočih voženj: ${err.message}</p>`;
+        ridesContainer.innerHTML = `<p style="color: red; text-align: center; padding: 20px;">Napaka pri nalaganju voženj: ${err.message}</p>`;
       }
     }
   }
 
-  function attachEventListeners() {
+  function attachEventListeners() { // Keep this function as it was
     ridesContainer.querySelectorAll('.edit-btn').forEach(button => {
       button.addEventListener('click', (e) => {
         const rideId = e.currentTarget.dataset.id;
-        alert(`Funkcija Uredi za vožnjo ID ${rideId} še ni implementirana.`);
+        if (rideId) {
+          window.location.href = `RelacijaDetail.html?id=${rideId}`;
+        } else {
+          alert("ID vožnje ni na voljo.");
+        }
       });
     });
 
     ridesContainer.querySelectorAll('.delete-btn').forEach(button => {
       button.addEventListener('click', async (e) => {
         const rideId = e.currentTarget.dataset.id;
+        if (!rideId) {
+            alert("ID vožnje za brisanje ni na voljo.");
+            return;
+        }
         if (confirm(`Ali ste prepričani, da želite izbrisati vožnjo z ID ${rideId}?`)) {
           try {
             const response = await fetch(`http://localhost:3000/api/prevozi/${rideId}`, {
@@ -382,7 +370,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 cardToRemove.remove();
               }
               if (ridesContainer.children.length === 0) {
-                ridesContainer.innerHTML = "<p style='text-align: center; padding: 20px; color: var(--white);'>Ni več prihajajočih voženj.</p>";
+                ridesContainer.innerHTML = "<p style='text-align: center; padding: 20px; color: var(--white);'>Ni več voženj za prikaz.</p>";
               }
             } else {
               alert(`Napaka pri brisanju vožnje: ${result.message || response.statusText}`);
