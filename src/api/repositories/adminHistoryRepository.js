@@ -1,16 +1,17 @@
-// repositories/adminHistoryRepository.js
+// In StudentskiPrevoz/src/api/repositories/adminHistoryRepository.js
 import pool from "../db/pool.js";
-
 export async function getAllRideHistories() {
-  // Pridobimo vse prevoze iz sistema
   const [rides] = await pool.execute(`
     SELECT
       p.idPrevoz AS IdPrevoz,
       p.Cas_odhoda,
       p.Cena,
+      p.Prosta_mesta,        -- <<<< MUST BE PRESENT
       p.TK_Voznik,
       u.Ime AS Voznik_ime,
       u.Priimek AS Voznik_priimek,
+      u.Ocena AS Voznik_ocena,   -- <<<< MUST BE PRESENT
+      u.Avto AS Voznik_avto,     -- <<<< MUST BE PRESENT
       l1.Ime AS Lokacija_odhoda,
       l2.Ime AS Lokacija_prihoda
     FROM Prevoz p
@@ -21,9 +22,8 @@ export async function getAllRideHistories() {
   `);
 
   const histories = [];
-
   for (const ride of rides) {
-    // Za vsak prevoz pridobimo seznam potnikov z obema ocenama in komentarji
+    // ... (passenger fetching logic remains the same)
     const [passengers] = await pool.execute(`
       SELECT
         r.idRezervacija AS idRezervacija,
@@ -46,10 +46,9 @@ export async function getAllRideHistories() {
     `, [ride.IdPrevoz]);
 
     histories.push({
-      ...ride,
+      ...ride, // This now correctly includes Prosta_mesta, Voznik_ocena, Voznik_avto
       potniki: passengers
     });
   }
-
   return histories;
 }

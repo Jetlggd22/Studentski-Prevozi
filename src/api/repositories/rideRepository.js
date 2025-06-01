@@ -1,7 +1,7 @@
 // src/api/repositories/rideRepository.js
 import pool from "../db/pool.js";
 
-// ... (existing functions: getAllPrevozi, findPrevozById, searchPrevoziByLocation)
+// ... (existing functions: getAllPrevozi, searchPrevoziByLocation, deletePrevozById)
 
 export async function getAllPrevozi(limit = null) {
   let query = `
@@ -44,7 +44,7 @@ export async function findPrevozById(id) {
         u.Username AS Voznik_Username,
         u.Telefon AS Voznik_Telefon,
         u.Ocena AS Voznik_Ocena,
-        u.Datum_registracije AS Voznik_Datum_registriranja,
+        u.Datum_registriranja AS Voznik_Datum_registriranja, -- Corrected column name here
         u.Avto AS Voznik_Avto
       FROM Prevoz p
       LEFT JOIN Lokacija lo ON p.TK_Lokacija_Odhod = lo.idLokacija

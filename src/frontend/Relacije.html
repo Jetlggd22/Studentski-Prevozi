@@ -32,7 +32,8 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="Relacije.html" class="nav-link active"> <i class="ri-map-pin-line nav-icon"></i> Relacije
+          <a href="Relacije.html" class="nav-link" style = "color:gold;">
+            <i class="ri-map-pin-line nav-icon"></i> Relacije
           </a>
         </li>
         <li class="nav-item">
@@ -41,20 +42,17 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="Storitve.html" class="nav-link">
-            <i class="ri-information-line nav-icon"></i> Storitve
-          </a>
-        </li>
-        <li class="nav-item">
           <a href="ONas.html" class="nav-link">
             <i class="ri-customer-service-2-line nav-icon"></i> O Nas
           </a>
         </li>
-         <li class="nav-item">
-          <a href="Login.html" class="nav-link">
+        
+        <li class="nav-item">
+          <a href="Login.html" class="nav-link"  id="login_profil">
             <i class="ri-login-circle-line nav-icon"></i> Prijava
           </a>
         </li>
+         
       </ul>
       
       <div class="hamburger" id="hamburger">
@@ -73,15 +71,15 @@
     </div>
   </section>
 
-  <section class="destinations" id="destinations" data-aos="fade-up" data-aos-delay="300" style="margin-top:20px">
-    <div class="container">
-      <div class="section-heading" data-aos="fade-up">
+ 
+    
+      <div class="section-heading" data-aos="fade-up" style = "margin-top: 20px;">
         <span class="section-subtitle">Najpogostejše Povezave</span>
         <h2 class="section-title">Povezujemo Slovenijo</h2>
         <p class="section-description">Odkrij najbolj priljubljene študentske poti – iz mest do fakultet po Sloveniji. Skupaj do faksa, brez prevelikih stroškov in z vesoljskim prihrankom časa.</p>
       </div>
     </div>
-  </section>
+  
 
   <section class="search-section">
     <div class="container">
@@ -175,5 +173,21 @@
   </div>
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-  <script src="script/relacije.js"></script> </body>
+  <script src="script/relacije.js"></script>
+  <script>
+     // Check if user is logged in and change the login button to profile
+    window.addEventListener('DOMContentLoaded', function() {
+    
+    if (sessionStorage.getItem('user')) {
+        
+        var login = document.getElementById('login_profil');
+        if (login) {
+            
+            login.innerHTML = '<i class ="ri-user-fill"></i> Profil';
+            login.href = 'Profil.html';
+        }
+    }
+});
+  </script>
+</body>
 </html>

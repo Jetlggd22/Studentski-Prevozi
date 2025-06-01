@@ -47,18 +47,12 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="Storitve.html" class="nav-link">
-            <i class="ri-information-line nav-icon"></i> Storitve
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="ONas.html" class="nav-link">
+          <a href="ONas.html" class="nav-link" >
             <i class="ri-customer-service-2-line nav-icon"></i> O Nas
           </a>
         </li>
-        
-        <li class="nav-item">
-          <a href="Login.html" class="nav-link">
+         <li class="nav-item">
+          <a href="Login.html" class="nav-link" id="login_profil">
             <i class="ri-login-circle-line nav-icon"></i> Prijava
           </a>
         </li>
@@ -179,7 +173,7 @@
       <div class="footer-col footer-links">
         <h4>Podpora</h4>
         <ul>
-          <li><a href="FAQ.html"><i class="ri-arrow-right-s-line"></i> Pogosta vprašanja</a></li>
+          <li><a href="FAQ.html" style = "color:gold;"><i class="ri-arrow-right-s-line"></i> Pogosta vprašanja</a></li>
          
           <li><a href="PolitikaZasebnosti.html"><i class="ri-arrow-right-s-line"></i> Politika zasebnosti</a></li>
           <li><a href="Pogoji Uporabe"><i class="ri-arrow-right-s-line"></i> Pogoji uporabe</a></li>
@@ -213,6 +207,18 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/10.0.4/swiper-bundle.min.js"></script>
   <script>
+    window.addEventListener('DOMContentLoaded', function() {
+    
+    if (sessionStorage.getItem('user')) {
+        
+        var login = document.getElementById('login_profil');
+        if (login) {
+            
+            login.innerHTML = '<i class ="ri-user-fill"></i> Profil';
+            login.href = 'Profil.html';
+        }
+    }
+});
     // Loader
     window.addEventListener('load', () => {
       setTimeout(() => {

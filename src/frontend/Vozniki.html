@@ -12,6 +12,18 @@
   <link rel="icon" href = "img/sp_favicon.png" type = "image/x-icon">
   <style>
     
+    .drivers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+  margin-left: 20px;
+}
+@media (min-width: 900px) {
+  .drivers-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
     
   </style>
 </head>
@@ -32,7 +44,7 @@
         <span class="logo-text">Študentski Prevozi<span>
       </a>
       
-      <ul class="nav-menu" id="nav-menu">
+          <ul class="nav-menu" id="nav-menu">
         <li class="nav-item">
           <a href="Index.html" class="nav-link">
             <i class="ri-home-4-line nav-icon"></i> Domov
@@ -44,7 +56,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="Vozniki.html" class="nav-link">
+          <a href="Vozniki.html" class="nav-link" style="color:gold;">
             <i class="ri-award-line nav-icon"></i> Vozniki
           </a>
         </li>
@@ -53,13 +65,15 @@
             <i class="ri-customer-service-2-line nav-icon"></i> O Nas
           </a>
         </li>
-         <li class="nav-item">
-          <a href="Login.html" class="nav-link">
+        
+        <li class="nav-item">
+          <a href="Login.html" class="nav-link"  id="login_profil">
             <i class="ri-login-circle-line nav-icon"></i> Prijava
           </a>
         </li>
          
       </ul>
+
       <div class="hamburger" id="hamburger">
         <span></span>
         <span></span>
@@ -81,114 +95,25 @@
   <!-- New Search Bar Section -->
   <div class="container">
     <div class="drivers-search" data-aos="fade-up">
-      <form class="search-container">
-        <input type="text" class="search-input" placeholder="Išči voznike (ime, lokacija...)">
-        <select class="search-select">
-          <option value="">Vse fakultete</option>
-          <option value="fri">UL FRI</option>
-          <option value="feri">UM FERI</option>
-          <option value="famnit">UP Famnit</option>
-          <option value="ef">UL EF</option>
-        </select>
-        <select class="search-select">
-          <option value="">Vse ocene</option>
-          <option value="5">⭐ 5+</option>
-          <option value="4.5">⭐ 4.5+</option>
-          <option value="4">⭐ 4+</option>
-        </select>
-        <button type="submit" class="search-btn">
-          <i class="ri-search-line"></i> Išči
-        </button>
-      </form>
+      <form class="search-container" id="drivers-search-form">
+  <input type="text" class="search-input" id="search-query" placeholder="Išči voznike (ime, lokacija...)">
+  <select class="search-select" id="search-rating">
+    <option value="">Vse ocene</option>
+    <option value="5">⭐ 5+</option>
+    <option value="4.5">⭐ 4.5+</option>
+    <option value="4">⭐ 4+</option>
+  </select>
+  <button type="submit" class="search-btn">
+    <i class="ri-search-line"></i> Išči
+  </button>
+</form>
     </div>
   </div>
 
-  <section class="features">
-    <div class="container">
-      <div class="drivers-grid">
-        <!-- Top Driver -->
-        <div class="driver-card top-driver" data-aos="fade-up">
-          <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Marko Novak" class="driver-avatar">
-          <h3 class="driver-name">Marko Novak</h3>
-          <div class="driver-university">
-            <i class="ri-building-2-line"></i> Univerza v Ljubljani, FRI
-          </div>
-          <div class="driver-rating">
-            <i class="ri-star-fill"></i> 4.98 (147 ocen)
-          </div>
-          <div class="driver-stats">
-            <div class="driver-stat">
-              <div class="driver-stat-value">872</div>
-              <div class="driver-stat-label">Voženj</div>
-            </div>
-            <div class="driver-stat">
-              <div class="driver-stat-value">100%</div>
-              <div class="driver-stat-label">Zanesljivost</div>
-            </div>
-          </div>
-          <p class="driver-bio">Vozim že 3 leta za Študentske Prevoze. Moj avto je udoben VW Golf z klimo. Ponujam vodo in priložnost za polnjenje telefona.</p>
-          <div class="driver-route">
-            <i class="ri-route-line"></i> Ljubljana ↔ Kamnik ↔ Kranj
-          </div>
-          
-        </div>
-        
-        <!-- Driver 2 -->
-        <div class="driver-card" data-aos="fade-up" data-aos-delay="100">
-          <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Ana Kovač" class="driver-avatar">
-          <h3 class="driver-name">Ana Kovač</h3>
-          <div class="driver-university">
-            <i class="ri-building-2-line"></i> Univerza v Mariboru, FERI
-          </div>
-          <div class="driver-rating">
-            <i class="ri-star-fill"></i> 4.95 (203 ocen)
-          </div>
-          <div class="driver-stats">
-            <div class="driver-stat">
-              <div class="driver-stat-value">1.2k</div>
-              <div class="driver-stat-label">Voženj</div>
-            </div>
-            <div class="driver-stat">
-              <div class="driver-stat-value">99%</div>
-              <div class="driver-stat-label">Zanesljivost</div>
-            </div>
-          </div>
-          <p class="driver-bio">Vozim vsak dan med Mariborom in Celjem. Moj avto je nov Hyundai i30 s prostornim prtljažnikom. Vedno točna in prijazna.</p>
-          <div class="driver-route">
-            <i class="ri-route-line"></i> Maribor ↔ Ptuj ↔ Celje
-          </div>
-          
-        </div>
-        
-        <!-- Driver 3 -->
-        <div class="driver-card" data-aos="fade-up" data-aos-delay="200">
-          <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Luka Horvat" class="driver-avatar">
-          <h3 class="driver-name">Luka Horvat</h3>
-          <div class="driver-university">
-            <i class="ri-building-2-line"></i> Univerza na Primorskem, Famnit
-          </div>
-          <div class="driver-rating">
-            <i class="ri-star-fill"></i> 4.93 (89 ocen)
-          </div>
-          <div class="driver-stats">
-            <div class="driver-stat">
-              <div class="driver-stat-value">421</div>
-              <div class="driver-stat-label">Voženj</div>
-            </div>
-            <div class="driver-stat">
-              <div class="driver-stat-value">98%</div>
-              <div class="driver-stat-label">Zanesljivost</div>
-            </div>
-          </div>
-          <p class="driver-bio">Redna linija Koper-Izola-Piran. Vozim udoben avto s klimatsko napravo. Vedno prilagodljiv urniku študentov.</p>
-          <div class="driver-route">
-            <i class="ri-route-line"></i> Koper ↔ Izola ↔ Piran
-          </div>
-         
-        </div>
-      </div>
-    </div>
-  </section>
+  <div class="drivers-grid" id="top-drivers-grid"></div>
+  <div id="drivers-loader" style="display:none; text-align:center; padding:2rem;">
+  <div class="loader-spinner" style="margin:auto;"></div>
+</div>
   
   <!-- Footer -->
    <footer class="footer" id="contact">
@@ -253,6 +178,21 @@
   <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
   <script>
+    window.addEventListener('DOMContentLoaded', function() {
+    
+    if (sessionStorage.getItem('user')) {
+        
+        var login = document.getElementById('login_profil');
+        if (login) {
+            
+            login.innerHTML = '<i class ="ri-user-fill"></i> Profil';
+            login.href = 'Profil.html';
+        }
+    }
+});
+
+
+
     // Loader
     window.addEventListener('load', () => {
       setTimeout(() => {
@@ -325,6 +265,124 @@
         behavior: 'smooth'
       });
     });
+
+  document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById('drivers-search-form');
+  const queryInput = document.getElementById('search-query');
+  const ratingSelect = document.getElementById('search-rating');
+  const grid = document.getElementById('top-drivers-grid');
+  const driversLoader = document.getElementById('drivers-loader');
+
+    function showDriversLoader() {
+  if (driversLoader) driversLoader.style.display = 'block';
+  if (grid) grid.style.display = 'none';
+}
+function hideDriversLoader() {
+  if (driversLoader) driversLoader.style.display = 'none';
+  if (grid) grid.style.display = '';
+}
+
+  function renderDrivers(drivers) {
+  if (!drivers.length) {
+    grid.innerHTML = '<div style="padding:2rem;">Ni voznikov za prikaz.</div>';
+    return;
+  }
+  grid.innerHTML = drivers.map((driver, idx) => `
+    <div class="driver-card${idx === 0 ? ' top-driver' : ''}" data-aos="fade-up"${idx > 0 ? ` data-aos-delay="${idx * 100}"` : ''} >
+      <img src="${driver.Spol === 'Ž' ? 
+        `https://randomuser.me/api/portraits/women/${(driver.imgIdx || (idx+20))%60}.jpg` : 
+        `https://randomuser.me/api/portraits/men/${(driver.imgIdx || (idx+20))%60}.jpg`}" 
+        alt="${driver.Ime || ''} ${driver.Priimek || ''}" class="driver-avatar">
+      <h3 class="driver-name">${driver.Ime || ''} ${driver.Priimek || ''}</h3>
+      <div class="driver-university">
+        <i class="ri-building-2-line"></i> ${driver.Univerza || ''}
+      </div>
+      <div class="driver-rating">
+        <i class="ri-star-fill"></i> ${driver.Ocena != null ? Number(driver.Ocena).toFixed(2) : '-'}
+        ${driver.SteviloOcen ? `(${driver.SteviloOcen} ocen)` : ''}
+      </div>
+      <div class="driver-stats">
+        <div class="driver-stat">
+          <div class="driver-stat-value">${driver.Vozenj || '-'}</div>
+          <div class="driver-stat-label">Voženj</div>
+        </div>
+        <div class="driver-stat">
+          <div class="driver-stat-value">${driver.Zanesljivost ? driver.Zanesljivost + '%' : '-'}</div>
+          <div class="driver-stat-label">Zanesljivost</div>
+        </div>
+      </div>
+      <p class="driver-bio">${driver.Bio || (driver.Avto ? 'Avto: ' + driver.Avto : '')}</p>
+      <div class="driver-route">
+        <i class="ri-route-line"></i> ${driver.Relacija || ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+  // Prikaz top vozača
+  async function fetchTopDrivers() {
+    grid.innerHTML = '<div style="padding:2rem;">Nalaganje...</div>';
+    try {
+      const res = await fetch("http://localhost:3000/api/top-drivers");
+      const json = await res.json();
+      hideDriversLoader();
+      if (!json.success || !Array.isArray(json.data)) throw new Error("Napaka pri nalaganju voznikov.");
+      renderDrivers(json.data);
+    } catch (err) {
+      hideDriversLoader();
+      grid.innerHTML = '<div style="padding:2rem;color:red;">Napaka pri nalaganju voznikov.</div>';
+    }
+  }
+
+  // Prikaz rezultata pretrage
+  async function fetchDrivers(query = '', rating = '') {
+    showDriversLoader();
+    grid.innerHTML = '<div style="padding:2rem;">Nalaganje...</div>';
+    try {
+      const params = new URLSearchParams();
+      if (query) params.append('q', query);
+      if (rating) params.append('rating', rating);
+      const res = await fetch(`http://localhost:3000/api/search-drivers?${params.toString()}`);
+      const json = await res.json();
+      hideDriversLoader();
+      if (!json.success || !Array.isArray(json.data)) throw new Error("Napaka pri nalaganju voznikov.");
+      renderDrivers(json.data);
+    } catch (err) {
+      hideDriversLoader();
+      grid.innerHTML = '<div style="padding:2rem;color:red;">Napaka pri nalaganju voznikov.</div>';
+    }
+  }
+
+  // Prikaz top vozača na početku
+  fetchTopDrivers();
+
+  // Pretraga na submit
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const query = queryInput.value.trim();
+    const rating = ratingSelect.value;
+    
+    if (!query && !rating) {
+      fetchTopDrivers();
+    } else {
+      fetchDrivers(query, rating);
+    }
+  });
+
+  // Reset na prazno polje
+  queryInput.addEventListener('input', () => {
+    if (!queryInput.value.trim() && !ratingSelect.value) {
+      fetchTopDrivers();
+    }
+  });
+  ratingSelect.addEventListener('change', () => {
+    if (!queryInput.value.trim() && !ratingSelect.value) {
+      fetchTopDrivers();
+    }
+  });
+});
+
+    
   </script>
 </body>
 </html>

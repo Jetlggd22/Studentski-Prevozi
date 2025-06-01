@@ -31,7 +31,7 @@
         <li class="nav-item"><a href="Index.html" class="nav-link"><i class="ri-home-4-line nav-icon"></i> Domov</a></li>
         <li class="nav-item"><a href="Relacije.html" class="nav-link"><i class="ri-map-pin-line nav-icon"></i> Relacije</a></li>
         <li class="nav-item"><a href="Vozniki.html" class="nav-link"><i class="ri-award-line nav-icon"></i> Vozniki</a></li>
-        <li class="nav-item"><a href="Storitve.html" class="nav-link"><i class="ri-information-line nav-icon"></i> Storitve</a></li>
+        
         <li class="nav-item"><a href="ONas.html" class="nav-link"><i class="ri-customer-service-2-line nav-icon"></i> O Nas</a></li>
       
       </ul>
@@ -64,17 +64,17 @@
           <div class="profile-card">
             <div class="profile-avatar">
               <div class="avatar-wrapper">
-                <img src="img/SP_Profile1.png" alt="Profilna slika" class="avatar-image">
+                <img src="" alt="Profilna slika" class="avatar-image">
                 <label class="avatar-edit" title="Spremeni sliko">
                   <i class="ri-camera-line"></i>
                   <input type="file" accept="image/*" style="display:none;">
                 </label>
               </div>
               <div class="profile-meta">
-                <h3 class="profile-name">Janez Novak</h3>
-                <p class="profile-email"><i class="ri-mail-line"></i> janez.novak@student.uni-lj.si</p>
-                <p class="profile-university"><i class="ri-graduation-cap-line"></i> Univerza v Ljubljani</p>
-              </div>
+  <h3 class="profile-name" id="sidebar-imepriimek">Janez Novak</h3>
+  <p class="profile-email"><i class="ri-mail-line"></i> <span id="sidebar-email">janez.novak@student.uni-lj.si</span></p>
+  <p class="profile-university"><i class="ri-graduation-cap-line"></i> <span id="sidebar-univerza">Univerza v Ljubljani</span></p>
+</div>
             </div>
             
             <div class="profile-stats">
@@ -119,151 +119,39 @@
               <h2><i class="ri-user-line"></i> Osebni podatki</h2>
               <a href="UrediProfil.html" class="edit-link">Uredi <i class="ri-edit-line"></i></a>
             </div>
-            
             <div class="info-grid">
-              <div class="info-item">
-                <label>Ime</label>
-                <p>Janez</p>
-              </div>
-              <div class="info-item">
-                <label>Priimek</label>
-                <p>Novak</p>
-              </div>
-              <div class="info-item">
-                <label>E-naslov</label>
-                <p>janez.novak@student.uni-lj.si</p>
-              </div>
-              <div class="info-item">
-                <label>Telefon</label>
-                <p>+386 40 123 456</p>
-              </div>
-              <div class="info-item">
-                <label>Univerza</label>
-                <p>Univerza v Ljubljani</p>
-              </div>
-              <div class="info-item">
-                <label>Član od</label>
-                <p>marec 2024</p>
-              </div>
-            </div>
+  <div class="info-item">
+    <label>Ime</label>
+    <p id="user-ime"></p>
+  </div>
+  <div class="info-item">
+    <label>Priimek</label>
+    <p id="user-priimek"></p>
+  </div>
+  <div class="info-item">
+    <label>E-naslov</label>
+    <p id="user-email"></p>
+  </div>
+  <div class="info-item">
+    <label>Telefon</label>
+    <p id="user-telefon"></p>
+  </div>
+
+  <div class="info-item">
+    <label>Član od</label>
+    <p id="user-clanod"></p>
+  </div>
+</div>
           </section>
           
           <!-- Ride History Section -->
           <section class="profile-section">
             <div class="section-header">
               <h2><i class="ri-history-line"></i> Nedavne vožnje</h2>
-              <a href="#" class="view-all">Prikaži vse <i class="ri-arrow-right-line"></i></a>
+              
             </div>
             
-            <div class="rides-grid">
-              <!-- Ride Card 1 -->
-              <div class="ride-card">
-                <div class="ride-header">
-                  <div class="ride-date">12. maj 2025</div>
-                  <div class="ride-status completed">Zaključeno</div>
-                </div>
-                <div class="ride-route">
-                  <div class="route-point">
-                    <div class="point-marker start"></div>
-                    <div class="point-details">
-                      <div class="point-city">Maribor</div>
-                      <div class="point-time">08:00</div>
-                    </div>
-                  </div>
-                  <div class="route-line"></div>
-                  <div class="route-point">
-                    <div class="point-marker end"></div>
-                    <div class="point-details">
-                      <div class="point-city">Ljubljana</div>
-                      <div class="point-time">10:30</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="ride-footer">
-                  <div class="ride-role">
-                    <i class="ri-steering-line"></i>
-                    <span>Voznik</span>
-                  </div>
-                  <div class="ride-rating">
-                    <i class="ri-star-fill"></i>
-                    <span>5.0</span>
-                  </div>
-                  <a href="#" class="ride-details">Podrobnosti <i class="ri-arrow-right-line"></i></a>
-                </div>
-              </div>
-              
-              <!-- Ride Card 2 -->
-              <div class="ride-card">
-                <div class="ride-header">
-                  <div class="ride-date">8. maj 2025</div>
-                  <div class="ride-status completed">Zaključeno</div>
-                </div>
-                <div class="ride-route">
-                  <div class="route-point">
-                    <div class="point-marker start"></div>
-                    <div class="point-details">
-                      <div class="point-city">Celje</div>
-                      <div class="point-time">07:30</div>
-                    </div>
-                  </div>
-                  <div class="route-line"></div>
-                  <div class="route-point">
-                    <div class="point-marker end"></div>
-                    <div class="point-details">
-                      <div class="point-city">Ljubljana</div>
-                      <div class="point-time">09:15</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="ride-footer">
-                  <div class="ride-role">
-                    <i class="ri-user-line"></i>
-                    <span>Sopotnik</span>
-                  </div>
-                  <div class="ride-rating">
-                    <i class="ri-star-fill"></i>
-                    <span>4.8</span>
-                  </div>
-                  <a href="#" class="ride-details">Podrobnosti <i class="ri-arrow-right-line"></i></a>
-                </div>
-              </div>
-              
-              <!-- Ride Card 3 -->
-              <div class="ride-card">
-                <div class="ride-header">
-                  <div class="ride-date">1. maj 2025</div>
-                  <div class="ride-status cancelled">Preklicano</div>
-                </div>
-                <div class="ride-route">
-                  <div class="route-point">
-                    <div class="point-marker start"></div>
-                    <div class="point-details">
-                      <div class="point-city">Ljubljana</div>
-                      <div class="point-time">14:00</div>
-                    </div>
-                  </div>
-                  <div class="route-line"></div>
-                  <div class="route-point">
-                    <div class="point-marker end"></div>
-                    <div class="point-details">
-                      <div class="point-city">Koper</div>
-                      <div class="point-time">16:30</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="ride-footer">
-                  <div class="ride-role">
-                    <i class="ri-steering-line"></i>
-                    <span>Voznik</span>
-                  </div>
-                  <div class="ride-rating">
-                    <i class="ri-star-fill"></i>
-                    <span>-</span>
-                  </div>
-                  <a href="#" class="ride-details">Podrobnosti <i class="ri-arrow-right-line"></i></a>
-                </div>
-              </div>
-            </div>
+             <div class="rides-grid" id="rides-grid"></div> 
           </section>
           
           <!-- Stats Section -->
@@ -372,6 +260,7 @@
 
   <!-- Scripts -->
   <script>
+    
     // Loader
     window.addEventListener('load', () => {
       setTimeout(() => {
@@ -420,6 +309,144 @@
         header.classList.remove('scrolled');
       }
     });
-  </script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+  let user = sessionStorage.getItem('user');
+  if (!user) return;
+  try {
+    user = JSON.parse(user);
+  } catch {
+    return;
+  }
+ 
+  if (user.data) user = user.data;
+
+  document.getElementById('user-ime').textContent = user.Ime || '';
+  document.getElementById('user-priimek').textContent = user.Priimek || '';
+  document.getElementById('user-email').textContent = user.email || user.Eposta || user.Username || '';
+  document.getElementById('user-telefon').textContent = user.Telefon || '';
+  document.getElementById('user-clanod').textContent =
+    user.Datum_registriranja
+      ? new Date(user.Datum_registriranja).toLocaleDateString('sl-SI', { month: 'long', year: 'numeric' })
+      : '';
+});
+
+document.addEventListener('DOMContentLoaded', async function() {
+  const ridesGrid = document.getElementById('rides-grid');
+  let user = sessionStorage.getItem('user');
+  if (!user) {
+    ridesGrid.innerHTML = '<p>Uporabnik ni prijavljen.</p>';
+    return;
+  }
+  try {
+    user = JSON.parse(user);
+  } catch {
+    ridesGrid.innerHTML = '<p>Napaka pri branju uporabnika.</p>';
+    return;
+  }
+  // Ispravno: korisnik je u user.data
+  if (user.data) user = user.data;
+
+  const userId = user.idUporabnik;
+  if (!userId) {
+    ridesGrid.innerHTML = '<p>Uporabniški ID ni najden.</p>';
+    return;
+  }
+
+  ridesGrid.innerHTML = '<p>Nalaganje voženj...</p>';
+  try {
+    const res = await fetch(`http://localhost:3000/api/zgodovina/uporabnik/${userId}`);
+    const json = await res.json();
+    if (json.success && Array.isArray(json.data) && json.data.length > 0) {
+      ridesGrid.innerHTML = json.data.map(ride => {
+        const dateObj = new Date(ride.Cas_odhoda);
+        const dateStr = dateObj.toLocaleDateString('sl-SI', { day: '2-digit', month: 'short', year: 'numeric' });
+        const timeStr = dateObj.toLocaleTimeString('sl-SI', { hour: '2-digit', minute: '2-digit' });
+        let statusClass = '';
+        if (ride.Status === 'Preklicano' || ride.Status === 'Preklican') statusClass = 'cancelled';
+        else if (ride.Status === 'Zaključeno' || ride.Status === 'Izveden') statusClass = 'completed';
+        else statusClass = 'pending';
+        const roleIcon = ride.Vloga === 'Voznik'
+          ? '<i class="ri-steering-line"></i>'
+          : '<i class="ri-user-line"></i>';
+        const rating = ride.Ocena !== null && ride.Ocena !== undefined ? ride.Ocena : '-';
+        return `
+          <div class="ride-card">
+            <div class="ride-header">
+              <div class="ride-date">${dateStr}</div>
+              <div class="ride-status ${statusClass}">${ride.Status}</div>
+            </div>
+            <div class="ride-route">
+              <div class="route-point">
+                <div class="point-marker start"></div>
+                <div class="point-details">
+                  <div class="point-city">${ride.Odhod}</div>
+                  <div class="point-time">${timeStr}</div>
+                </div>
+              </div>
+              <div class="route-line"></div>
+              <div class="route-point">
+                <div class="point-marker end"></div>
+                <div class="point-details">
+                  <div class="point-city">${ride.Prihod}</div>
+                </div>
+              </div>
+            </div>
+            <div class="ride-footer">
+              <div class="ride-role">
+                ${roleIcon}
+                <span>${ride.Vloga}</span>
+              </div>
+              <div class="ride-rating">
+                <i class="ri-star-fill"></i>
+                <span>${rating}</span>
+              </div>
+              <a href="#" class="ride-details">Podrobnosti <i class="ri-arrow-right-line"></i></a>
+            </div>
+          </div>
+        `;
+      }).join('');
+    } else {
+      ridesGrid.innerHTML = '<p>Ni voženj za prikaz.</p>';
+    }
+  } catch (err) {
+    ridesGrid.innerHTML = '<p>Napaka pri nalaganju voženj.</p>';
+  }
+});
+
+    // Back to top button
+    const backToTop = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTop.classList.add('active');
+      } else {
+        backToTop.classList.remove('active');
+      }
+    });
+
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+  let user = sessionStorage.getItem('user');
+  if (!user) return;
+  try {
+    user = JSON.parse(user);
+  } catch {
+    return;
+  }
+  if (user.data) user = user.data;
+
+  // Sidebar podaci
+  const sidebarIme = document.getElementById('sidebar-imepriimek');
+  const sidebarEmail = document.getElementById('sidebar-email');
+  const sidebarUniverza = document.getElementById('sidebar-univerza');
+  if (sidebarIme) sidebarIme.textContent = (user.Ime || '') + ' ' + (user.Priimek || '');
+  if (sidebarEmail) sidebarEmail.textContent = user.email || user.Eposta || user.Username || '';
+  if (sidebarUniverza) sidebarUniverza.textContent = user.Univerza || '';
+});
+
+</script>
 </body>
 </html>

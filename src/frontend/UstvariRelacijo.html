@@ -135,8 +135,8 @@
   <section class="profile-hero">
     <div class="container">
       <div class="profile-hero-content">
-        <h1>Uredi Profil</h1>
-        <p>Posodobite svoje osebne podatke in nastavitve računa</p>
+        <h1>Ustvari Relacijo</h1>
+        <p>Izpolnite podatke za novo studentsko voznjo</p>
       </div>
     </div>
   </section>
@@ -197,64 +197,47 @@
         
         <!-- Edit Profile Content -->
        <main class="container py-5">
-  <form id="editForm" class="form-container">
-    <!-- Personal Info Section -->
-    <section class="form-section">
-      <div class="section-header">
-        <h2><i class="ri-user-line me-2"></i>Osebni podatki</h2>
-      </div>
-
-      <div class="row g-3">
-        <div class="col-md-6">
-          <label for="first-name" class="form-label">Ime</label>
-          <input type="text" id="first-name" class="form-control" required>
-        </div>
-        <div class="col-md-6">
-          <label for="last-name" class="form-label">Priimek</label>
-          <input type="text" id="last-name" class="form-control"  required>
-        </div>
-        <div class="col-md-6">
-          <label for="email" class="form-label">E-naslov</label>
-          <input type="email" id="email" class="form-control"  required>
-        </div>
-        <div class="col-md-6">
-          <label for="phone" class="form-label">Telefon</label>
-          <input type="tel" id="phone" class="form-control"  required>
-        </div>
-        
-        <div class="col-md-6">
-          <label class="form-label">Član od</label>
-          <p class="read-only-field">marec 2024</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Password Section -->
-    <section class="form-section">
-      <div class="section-header">
-        <h2><i class="ri-lock-line me-2"></i>Sprememba gesla</h2>
-      </div>
-
-      <div class="row g-3">
-        <div class="col-md-4">
-          <label for="current-password" class="form-label">Trenutno geslo</label>
-          <input type="password" id="current-password" class="form-control">
-        </div>
-        <div class="col-md-4">
-          <label for="new-password" class="form-label">Novo geslo</label>
-          <input type="password" id="new-password" class="form-control">
-        </div>
-        <div class="col-md-4">
-          <label for="confirm-password" class="form-label">Potrdi novo geslo</label>
-          <input type="password" id="confirm-password" class="form-control">
-        </div>
-      </div>
-    </section>
-
-    <div class="text-end mt-4">
-      <button type="submit" class="btn btn-gold">Shrani spremembe</button>
-    </div>
-  </form>
+          <form id="relacijaForm" class="form-container">
+          <section class="form-section">
+            <div class="section-header">
+              <h2><i class="ri-road-map-line me-2"></i>Podatki o relaciji</h2>
+            </div>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="from" class="form-label">Odhodna lokacija</label>
+                <input type="text" id="from" class="form-control" required >
+              </div>
+              <div class="col-md-6">
+                <label for="to" class="form-label">Ciljna lokacija</label>
+                <input type="text" id="to" class="form-control" required >
+              </div>
+              <div class="col-md-6" style="position:relative;">
+  <label for="date" class="form-label">Datum in ura odhoda</label>
+  <input type="datetime-local" id="date" class="form-control date-input" required>
+  
+</div>
+              <div class="col-md-6">
+                <label for="seats" class="form-label">Število prostih mest</label>
+                <input type="text" id="seats" class="form-control" min="1" max="8" required >
+              </div>
+              <div class="col-md-6">
+                <label for="price" class="form-label">Cena (v €)</label>
+                <input type="text" id="price" class="form-control" min="0" step="0.5" required >
+              </div>
+              <div class="col-md-6">
+                <label for="car" class="form-label">Avto (znamka/model)</label>
+                <input type="text" id="car" class="form-control" required >
+              </div>
+              <div class="col-md-12">
+                <label for="note" class="form-label">Opomba (neobvezno)</label>
+                <textarea id="note" class="form-control" rows="2" ></textarea>
+              </div>
+            </div>
+          </section>
+          <div class="text-end mt-4">
+            <button type="submit" class="btn-gold">Ustvari relacijo</button>
+          </div>
+        </form>
 </main>
 
   </section>
@@ -321,6 +304,57 @@
 </body>
   <!-- Scripts -->
   <script>
+    document.getElementById('relacijaForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  // Provera korisnika iz sessionStorage
+  let user = sessionStorage.getItem('user');
+  if (!user) {
+    showModal('Morate biti prijavljeni da bi ste kreirali relaciju.');
+    return;
+  }
+  try {
+    user = JSON.parse(user);
+    if (user.data) user = user.data;
+  } catch {
+    showModal('Greška pri čitanju korisnika.');
+    return;
+  }
+  const voznikId = user.idUporabnik;
+  if (!voznikId) {
+    showModal('Greška: korisnički ID nije pronađen.');
+    return;
+  }
+
+  // Prikupi podatke iz forme
+  const data = {
+    from: document.getElementById('from').value,
+    to: document.getElementById('to').value,
+    date: document.getElementById('date').value,
+    seats: document.getElementById('seats').value,
+    price: document.getElementById('price').value,
+    car: document.getElementById('car').value,
+    note: document.getElementById('note').value,
+    voznikId
+  };
+
+  try {
+    const res = await fetch('http://localhost:3000/api/prevozi', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    const result = await res.json();
+    if (result.success) {
+      showModal('Relacija uspešno ustvarjena!', true);
+      this.reset();
+    } else {
+      showModal('Napaka: ' + (result.message || 'Relacija ni bila ustvarjena.'));
+    }
+  } catch (err) {
+    showModal('Napaka pri povezavi s strežnikom.');
+  }
+});
     // Loader
     window.addEventListener('load', () => {
       setTimeout(() => {
@@ -426,52 +460,7 @@
     }
   };
 }
-//フォームデータの編集
-document.getElementById('editForm').addEventListener('submit', async function(e) {
-  e.preventDefault();
 
-  let user = sessionStorage.getItem('user');
-  if (!user) return;
-  try {
-    user = JSON.parse(user);
-  } catch {
-    showModal('Napaka pri branju uporabnika.');
-    return;
-  }
-  if (user.data) user = user.data;
-
-  const userId = user.idUporabnik;
-  if (!userId) {
-    showModal('Uporabniški ID ni najden.');
-    return;
-  }
-
-  const updatedData = {
-    Ime: document.getElementById('first-name').value,
-    Priimek: document.getElementById('last-name').value,
-    Username: document.getElementById('email').value,
-    Telefon: document.getElementById('phone').value,
-  };
-
-  try {
-    const res = await fetch(`http://localhost:3000/api/uporabnik/${userId}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(updatedData)
-    });
-    const result = await res.json();
-    if (result.success) {
-      sessionStorage.setItem('user', JSON.stringify({ success: true, data: { ...user, ...updatedData } }));
-      showModal('Spremembe so bile uspešno shranjene!', true);
-    } else {
-      showModal('Napaka pri shranjevanju: ' + (result.message || ''));
-    }
-  } catch (err) {
-    showModal('Napaka pri povezavi s strežnikom.');
-  }
-
-  
-});
 
 document.addEventListener('DOMContentLoaded', function() {
   let user = sessionStorage.getItem('user');
