@@ -37,12 +37,18 @@ document.querySelector('.login-form').addEventListener('submit', async function 
     const data = await response.json();
 
     if (data.success) {
-      sessionStorage.setItem('user', JSON.stringify(data));
-      // Redirect or reload as needed
-      window.location.href = "Index.html";
-    } else {
-      showErrorModal('Prijava ni uspela: ' + (data.message || 'Napačni podatki.'));
-    }
+  sessionStorage.setItem('user', JSON.stringify(data));
+  // Proveri email iz backend odgovora, ne iz inputa
+  const userEmail = (data.user && data.user.email) ? data.user.email.trim().toLowerCase() : email.trim().toLowerCase();
+  console.log("Ulogovani email:", userEmail);
+  if (userEmail === "admin@admin.admin") {
+    window.location.href = "Admin_Dashboard.html";
+  } else {
+    window.location.href = "Index.html";
+  }
+} else {
+  showErrorModal('Prijava ni uspela: ' + (data.message || 'Napačni podatki.'));
+}
   } catch (error) {
     console.error('Napaka pri prijavi:', error);
     showErrorModal('Napaka pri povezavi s strežnikom.');
