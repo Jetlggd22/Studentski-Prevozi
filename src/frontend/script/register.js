@@ -27,7 +27,6 @@ form.addEventListener('submit', async (e) => {
   const email = form.email.value.trim();
   const geslo = form.password.value;
   const confirmPassword = form.confirmPassword.value;
-
   if (geslo !== confirmPassword) {
     showRegisterModal('Napaka', 'Gesli se ne ujemata!');
     return;
@@ -52,7 +51,7 @@ form.addEventListener('submit', async (e) => {
     const result = await response.json();
 
     if (result.success) {
-      showRegisterModal('Uspeh', 'Uporabnik je bil uspešno ustvarjen!');
+      showRegisterModal('Uspeh', 'Uporabnik je bil uspešno ustvarjen! Preverite svojo e-pošto za potrditev računa');
     } else {
       showRegisterModal('Napaka', result.message || 'Registracija ni uspela.');
     }
