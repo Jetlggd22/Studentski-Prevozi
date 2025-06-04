@@ -76,3 +76,31 @@ export async function getTopDrivers(limit = 5) {
   );
   return rows;
 }
+
+
+export async function getDriversWithCarsAndRides(limit = null) {
+  let query = `
+    SELECT
+      u.idUporabnik,
+      u.Ime,
+      u.Priimek,
+      u.Username,
+      u.Telefon,
+      u.Ocena,
+      u.Datum_registriranja,
+      u.Avto,
+      COUNT(DISTINCT p.idPrevoz) AS SteviloVozenj, // Uporabljen DISTINCT
+      (SELECT COUNT(*) FROM Ocena o_check WHERE o_check.TK_Prevoz IS NOT NULL AND o_check.TK_Prevoz IN (SELECT IdPrevoz FROM Prevoz pr_check WHERE pr_check.TK_Voznik = u.idUporabnik)) AS SteviloOcenVoznika
+    FROM Uporabnik u
+    LEFT JOIN Prevoz p ON u.idUporabnik = p.TK_Voznik
+    WHERE u.Avto IS NOT NULL AND u.Avto != ''
+    GROUP BY u.idUporabnik, u.Ime, u.Priimek, u.Username, u.Telefon, u.Ocena, u.Datum_registriranja, u.Avto // Ekspliciten GROUP BY za vsa neagregirana polja
+    HAVING COUNT(DISTINCT p.idPrevoz) > 0 // Uporabljen DISTINCT
+    ORDER BY COALESCE(u.Ocena, 0) DESC, SteviloVozenj DESC // Bolj robusten ORDER BY
+  `;
+  if (limit) {
+    query += ` LIMIT ${parseInt(limit)}`;
+  }
+  const [rows] = await pool.execute(query);
+  return rows;
+}

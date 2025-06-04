@@ -166,7 +166,7 @@
                   <i class="ri-roadster-line"></i>
                 </div>
                 <div class="stat-info">
-                  <div class="stat-value">12</div>
+                  <div class="stat-value"></div>
                   <div class="stat-label">Kot voznik</div>
                 </div>
               </div>
@@ -176,7 +176,7 @@
                   <i class="ri-user-line"></i>
                 </div>
                 <div class="stat-info">
-                  <div class="stat-value">12</div>
+                  <div class="stat-value"></div>
                   <div class="stat-label">Kot sopotnik</div>
                 </div>
               </div>
@@ -186,19 +186,12 @@
                   <i class="ri-map-pin-line"></i>
                 </div>
                 <div class="stat-info">
-                  <div class="stat-value">5</div>
+                  <div class="stat-value"></div>
                   <div class="stat-label">Različnih relacij</div>
                 </div>
               </div>
               
-              <div class="stat-card">
-                <div class="stat-icon">
-                  <i class="ri-leaf-line"></i>
-                </div>
-                <div class="stat-info">
-                  <div class="stat-value">480 km</div>
-                  <div class="stat-label">Prihranjeni CO₂</div>
-                </div>
+              
               </div>
             </div>
           </section>
@@ -347,6 +340,13 @@ document.addEventListener('DOMContentLoaded', async function() {
   // Ispravno: korisnik je u user.data
   if (user.data) user = user.data;
 
+  const avatarImg = document.querySelector('.avatar-image');
+  if (avatarImg && user.Slika) {
+    avatarImg.src = user.Slika; 
+  } else if (avatarImg) {
+    avatarImg.src = 'img/default-avatar.png'; // fallback slika ako nema
+  }
+
   const userId = user.idUporabnik;
   if (!userId) {
     ridesGrid.innerHTML = '<p>Uporabniški ID ni najden.</p>';
@@ -447,6 +447,96 @@ document.addEventListener('DOMContentLoaded', async function() {
   if (sidebarUniverza) sidebarUniverza.textContent = user.Univerza || '';
 });
 
+
+document.addEventListener('DOMContentLoaded', async function() {
+    let user = sessionStorage.getItem('user');
+    if (!user) return;
+    try { user = JSON.parse(user); } catch { return; }
+    if (user.data) user = user.data;
+    const userId = user.idUporabnik;
+    if (!userId) return;
+
+    // Statistika API poziv
+    try {
+      const res = await fetch(`http://localhost:3000/api/stats/uporabnik/${userId}`);
+      const json = await res.json();
+      if (!json.success || !json.data) return;
+
+      // Sidebar statistika
+      const sidebarStats = document.querySelectorAll('.profile-stats .stat-item');
+      if (sidebarStats.length >= 3) {
+        sidebarStats[0].querySelector('.stat-value').textContent = 
+          (json.data.asDriver + json.data.asPassenger) || 0; // Ukupno vožnji
+        sidebarStats[1].querySelector('.stat-value').textContent = 
+          json.data.avgRating !== null ? Number(json.data.avgRating).toFixed(1) : '-'; // Ocena
+        sidebarStats[2].querySelector('.stat-value').textContent = 
+          json.data.relations || 0; // Različnih relacija (možeš promeniti labelu ako želiš)
+      }
+
+      // Glavna statistika
+      const statCards = document.querySelectorAll('.stats-grid .stat-card');
+      if (statCards.length >= 4) {
+        statCards[0].querySelector('.stat-value').textContent = json.data.asDriver || 0; // Kao vozač
+        statCards[1].querySelector('.stat-value').textContent = json.data.asPassenger || 0; // Kao putnik
+        statCards[2].querySelector('.stat-value').textContent = json.data.relations || 0; // Različnih relacija
+        // statCards[3] je CO2, ostavi statički ili izračunaj po želji
+      }
+    } catch (e) {
+      // Možeš prikazati grešku ako želiš
+    }
+  });
+
+  // ...existing code...
+document.addEventListener('DOMContentLoaded', function() {
+  const logoutBtn = document.querySelector('.btn-logout');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', function(e) {
+      sessionStorage.clear();
+      // Nema potrebe za preventDefault jer vodi na Login.html
+      // Ako želiš AJAX logout, možeš dodati e.preventDefault();
+    });
+  }
+});
+
+// ...existing code...
+document.addEventListener('DOMContentLoaded', async function() {
+    let user = sessionStorage.getItem('user');
+    if (!user) return;
+    try { user = JSON.parse(user); } catch { return; }
+    if (user.data) user = user.data;
+    const userId = user.idUporabnik;
+    if (!userId) return;
+
+    // Statistika API poziv
+    try {
+      const res = await fetch(`http://localhost:3000/api/stats/uporabnik/${userId}`);
+      const json = await res.json();
+      if (!json.success || !json.data) return;
+
+      // Sidebar statistika
+      const sidebarStats = document.querySelectorAll('.profile-stats .stat-item');
+      if (sidebarStats.length >= 3) {
+        sidebarStats[0].querySelector('.stat-value').textContent = 
+          (json.data.asDriver + json.data.asPassenger) || 0; // Ukupno vožnji
+        sidebarStats[1].querySelector('.stat-value').textContent = 
+          json.data.avgRating !== null ? Number(json.data.avgRating).toFixed(1) : '-'; // Ocena
+        sidebarStats[2].querySelector('.stat-value').textContent = 
+          json.data.asPassenger || 0; // Broj kao putnik (ili promeni labelu po želji)
+      }
+
+      // Glavna statistika
+      const statCards = document.querySelectorAll('.stats-grid .stat-card');
+      if (statCards.length >= 3) {
+        statCards[0].querySelector('.stat-value').textContent = json.data.asDriver || 0; // Kao vozač
+        statCards[1].querySelector('.stat-value').textContent = json.data.asPassenger || 0; // Kao putnik
+        statCards[2].querySelector('.stat-value').textContent = json.data.relations || 0; // Različnih relacija
+      }
+    } catch (e) {
+      // Možeš prikazati grešku ako želiš
+    }
+});
+// ...existing code...
+// ...existing code...
 </script>
 </body>
 </html>

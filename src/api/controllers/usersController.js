@@ -33,3 +33,14 @@ export async function getTopDrivers(req, res) {
   const drivers = await usersService.getTopDrivers(limit);
   res.json({ success: true, data: drivers });
 }
+
+export async function getActiveDrivers(req, res) {
+  try {
+    const limit = req.query.limit; // Lahko dodaš limit, če želiš npr. samo top 5
+    const drivers = await usersService.getActiveDriversWithCarsAndRides(limit);
+    res.json({ success: true, data: drivers });
+  } catch (err) {
+    console.error('Error fetching active drivers:', err);
+    res.status(500).json({ success: false, message: 'Napaka pri pridobivanju aktivnih voznikov.' });
+  }
+}
