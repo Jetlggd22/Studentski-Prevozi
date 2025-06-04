@@ -3,77 +3,204 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Študentski Prevozi - Administracija Relacij</title>
+    <title>Študentski Prevozi - Administracija Uporabnikov</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel = "stylesheet" href = "Styles/Style.css">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/10.0.4/swiper-bundle.css" />
   <link rel="icon" href = "img/admin_icon.png" type = "image/x-icon">
   <style>
-    .admin-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 15px;
-    }
-    
-    .admin-btn {
-      padding: 8px 15px;
-      border-radius: 4px;
-      border: none;
-      cursor: pointer;
-      font-weight: 600;
-      transition: all 0.2s;
-      display: flex;
+    /* Admin_Vozniki.html - CSS za modal in toast */
+    .modal {
+      display: none; 
+      position: fixed;
+      z-index: 1050; 
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.7); 
+      display: flex; 
       align-items: center;
-      gap: 5px;
+      justify-content: center;
     }
-    
-    .edit-btn {
-      background-color: #312D18;
-      color: white;
+
+    .modal-content {
+      background-color: var(--dark-light); 
+      margin: auto;
+      padding: 30px;
+      border: 1px solid var(--gold-light); 
+      border-radius: 15px; 
+      width: 90%;
+      max-width: 500px; 
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+      color: var(--white); 
+      text-align: left; 
+      animation: fadeInModal 0.3s ease-out;
     }
-    
-    .delete-btn {
-      background-color: #5c1a1a;
-      color: white;
+
+    @keyframes fadeInModal {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    
-    .add-relacija-btn {
-      background-color: #312D18;
-      color: white;
-      padding: 12px 20px;
-      border-radius: 4px;
-      border: none;
-      cursor: pointer;
-      font-weight: 600;
+
+    .modal-content h2 {
+      color: var(--gold); 
+      margin-top: 0;
       margin-bottom: 20px;
+      font-size: 1.5rem;
+      border-bottom: 1px solid var(--gold-light);
+      padding-bottom: 15px;
+    }
+
+    .modal-content p {
+      margin-bottom: 25px;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      position: absolute;
+      top: 15px;
+      right: 20px;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: var(--gold); 
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    #modalActions {
+      display: none; /* Privzeto skrito, pokaže se le za potrditve */
+      justify-content: flex-end; 
+      gap: 15px; 
+      margin-top: 20px;
+    }
+
+    #modalActions .btn,
+    #modalActions .delete-btn { 
+      padding: 10px 20px;
+      font-size: 0.95rem;
+      border-radius: 8px;
+      min-width: 100px;
+      border: none; 
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    
+    #modalActions .btn { /* Stil za "Prekliči" */
+      background-color: var(--dark-medium);
+      color: var(--white);
+      border: 1px solid var(--gold-light);
+    }
+    #modalActions .btn:hover {
+      background-color: var(--gold);
+      color: var(--dark);
+      border-color: var(--gold);
+      transform: translateY(-1px);
+    }
+
+    #modalActions .delete-btn { /* Stil za "Izbriši" v modalu */
+      background-color: #a33a3a; 
+      color: white;
+    }
+
+    #modalActions .delete-btn:hover {
+      background-color: #c82333; 
+      transform: translateY(-1px);
+    }
+
+    #toast {
+      display: none;
+      position: fixed;
+      bottom: 20px; 
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--dark-medium); 
+      color: var(--gold); 
+      padding: 15px 30px;
+      border-radius: 8px;
+      z-index: 1060; 
+      font-weight: 600;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+      border: 1px solid var(--gold-light);
+      transition: opacity 0.3s ease-in-out, bottom 0.3s ease-in-out;
+      opacity: 0; 
+    }
+
+    .admin-actions .btn.edit-btn {
+      background-color: var(--gold);
+      color: var(--dark);
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      border: none;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 5px;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+    .admin-actions .btn.edit-btn:hover {
+      background-color: #e6c300; 
+      transform: translateY(-1px);
+    }
+
+    .admin-actions .btn.delete-btn {
+      background-color: #a33a3a; 
+      color: white;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+    .admin-actions .btn.delete-btn:hover { 
+      background-color: #c82333; 
+      transform: translateY(-1px);
+    }
+
+    .drivers-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px; /* Malo večji razmik med karticami */
     }
     
-    .add-relacija-btn:hover, .edit-btn:hover, .delete-btn:hover {
-      opacity: 0.9;
-      transform: translateY(-2px);
+    #main-content > .container > .section-heading { /* Bolj specifičen selektor */
+        padding-top: 80px;  /* Večji odmik zgoraj za naslov sekcije */
+        margin-bottom: 40px; 
     }
+
+    .driver-card:hover { /* Dodan hover efekt za kartice */
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
   </style>
 </head>
 <body>
-  <!-- Loader -->
-<div class="loader" id="loader">
+  <div class="loader" id="loader">
     <div class="loader-content">
       <div class="loader-spinner"></div>
       <div class="loader-logo">Študentski Prevozi - Admin</div>
     </div>
   </div>
   
-  <!-- Header -->
-   <header class="header" id="header">
+  <header class="header" id="header">
     <div class="container header-container">
-      <a href="#" class="logo">
+      <a href="Admin_Dashboard.html" class="logo">
         <i class="ri-spy-line logo-icon"></i>
         <span class="logo-text">Študentski Prevozi - Admin<span>
       </a>
@@ -90,14 +217,14 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="Admin_Vozniki.html" class="nav-link">
-            <i class="ri-award-line nav-icon"></i> Uporabniki
+          <a href="Admin_Vozniki.html" class="nav-link" style="color:var(--gold);">
+            <i class="ri-group-line nav-icon"></i> Uporabniki
           </a>
         </li>
         
          <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="ri-login-circle-line nav-icon"></i> Odjava
+          <a href="Admin_Login.html" class="nav-link" onclick="sessionStorage.removeItem('user'); sessionStorage.removeItem('adminUser');">
+            <i class="ri-logout-box-r-line nav-icon"></i> Odjava
           </a>
         </li>
          
@@ -112,261 +239,45 @@
   </header>
   
   <div class="overlay" id="overlay"></div>
-
-
   
-  <!-- Admin Content -->
-  <section class="destinations" id="destinations" data-aos="fade-up" data-aos-delay="300" style="margin-top:20px">
+  <section class="profile-main" id="main-content" style="padding-bottom: 60px;">
     <div class="container">
       <div class="section-heading" data-aos="fade-up">
         <span class="section-subtitle">Admin Portal</span>
-        <h2 class="section-title">Vsi vozniki</h2>
-        <p class="section-description">Tukaj lahko upravljate vse voznike. Dodajate, urejate ali brišete voznike po potrebi.</p>
+        <h2 class="section-title">Vsi Uporabniki</h2>
+        <p class="section-description">Tukaj lahko upravljate vse registrirane uporabnike platforme.</p>
       </div>
 
-       <section class="features">
-    <div class="container">
-      <div class="drivers-grid" id = "drivers-grid">
-        
-          
-          
-        </div>
-        
-        
-       
-  </section>
+       <section class="features" style="padding-top:0;">
+          <div class="drivers-grid" id = "drivers-grid">
+            </div>
+      </section>
     </div>
+  </section>
 
    <footer class="footer">
         <div class="container footer-container">
         <div class="footer-bottom">
-            <p>© 2025 Studentskki Prevozi, Republika Slovenija, EU. Vse pravice pridržane. | Admin nadzorna plošča</p>
+            <p>© 2025 Študentski Prevozi, Republika Slovenija, EU. Vse pravice pridržane. | Admin nadzorna plošča</p>
         </div>
     </footer>
     
-<div id="errorModal" class="modal" style="display:none;">
+<div id="errorModal" class="modal"> 
   <div class="modal-content">
     <span class="close" id="closeModal">&times;</span>
-    <h2 id="modalTitle">Napaka pri prijavi</h2>
-    <p id="modalMessage"></p>
-    <div id="modalActions" style="margin-top:1.5rem; display:none; gap:1rem; justify-content:center;">
+    <h2 id="modalTitle"></h2> <p id="modalMessage"></p>
+    <div id="modalActions"> 
+      <button id="cancelDelete" class="btn">Prekliči</button> 
       <button id="confirmDelete" class="delete-btn">Izbriši</button>
-      <button id="cancelDelete" class="btn">Prekliči</button>
     </div>
   </div>
 </div>
 
-<div id="toast" style="display:none;position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:black;color:gold;padding:16px 32px;border-radius:8px;z-index:9999;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,0.15);transition:opacity 0.3s;">
-  Uporabnik je uspešno izbrisan.
+<div id="toast">
+  Sporočilo toasta.
 </div>
-
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-  <script>
-    // Loader
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        document.getElementById('loader').style.opacity = '0';
-        setTimeout(() => {
-          document.getElementById('loader').style.display = 'none';
-        }, 500);
-      }, 1000);
-    });
-    
-    // Init AOS
-    AOS.init({
-      duration: 800,
-      easing: 'ease-in-out',
-      once: true
-    });
-    
-    // Mobile Navigation
-    const hamburger = document.getElementById('hamburger');
-    const navMenu = document.getElementById('nav-menu');
-    const overlay = document.getElementById('overlay');
-    const navLinks = document.querySelectorAll('.nav-link');
-    
-    hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('active');
-      navMenu.classList.toggle('active');
-      overlay.classList.toggle('active');
-      document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : 'auto';
-    });
-    
-    overlay.addEventListener('click', () => {
-      hamburger.classList.remove('active');
-      navMenu.classList.remove('active');
-      overlay.classList.remove('active');
-      document.body.style.overflow = 'auto';
-    });
-    
-    navLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
-        overlay.classList.remove('active');
-        document.body.style.overflow = 'auto';
-      });
-    });
-    
-    // Header scroll effect
-    const header = document.getElementById('header');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 50) {
-        header.classList.add('scrolled');
-      } else {
-        header.classList.remove('scrolled');
-      }
-    });
-    
-  
-    
-    // Smooth scrolling
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        const targetId = this.getAttribute('href');
-        if (targetId === '#') return;
-        
-        const targetElement = document.querySelector(targetId);
-        if (targetElement) {
-          const headerHeight = document.getElementById('header').offsetHeight;
-          const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
-          
-          window.scrollTo({
-            top: targetPosition,
-            behavior: 'smooth'
-          });
-        }
-      });
-    });
-
-    document.addEventListener('DOMContentLoaded', function () {
-  const grid = document.getElementById('drivers-grid');
-
-  // Učitaj sve voznike
-  async function loadDrivers() {
-    grid.innerHTML = '<div style="padding:2rem;">Nalaganje...</div>';
-    try {
-      const res = await fetch('http://localhost:3000/api/users');
-      const json = await res.json();
-      if (!json.success) throw new Error('Napaka pri nalaganju voznikov.');
-      if (!Array.isArray(json.data) || json.data.length === 0) {
-        grid.innerHTML = '<div style="padding:2rem;">Ni voznikov za prikaz.</div>';
-        return;
-      }
-      grid.innerHTML = json.data.map(driver => `
-  <div class="driver-card" data-id="${driver.idUporabnik}" 
-    style="border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.08);padding:24px 24px 16px 24px;margin:0 auto;width:100%;max-width:520px;min-width:320px;display:flex;flex-direction:column;align-items:center;">
-    <img src="https://randomuser.me/api/portraits/men/${Math.floor(Math.random()*60)}.jpg" alt="${driver.Ime || ''} ${driver.Priimek || ''}" class="driver-avatar" style="width:90px;height:90px;border-radius:50%;object-fit:cover;margin-bottom:12px;">
-    <h3 class="driver-name" style="margin:0 0 8px 0;font-size:1.3rem;">${driver.Ime || ''} ${driver.Priimek || ''}</h3>
-    <div class="driver-rating" style="margin-bottom:8px;">
-      <i class="ri-star-fill"></i> ${driver.Ocena != null ? Number(driver.Ocena).toFixed(1) : '-'}
-    </div>
-    <div class="driver-stats" style="margin-bottom:8px;">
-      <div class="driver-stat">
-        <div class="driver-stat-value" style="font-weight:700;">${driver.Vozenj || '-'}</div>
-        <div class="driver-stat-label" style="font-size:0.95em;">Voženj</div>
-      </div>
-    </div>
-    <p class="driver-bio" style="margin-bottom:10px;">${driver.Avto ? 'Avto: ' + driver.Avto : ''}</p>
-    <div class="admin-actions slide-up" style="display:flex;gap:16px;width:100%;justify-content:center;flex-wrap:wrap;">
-      <button class="btn edit-btn" style="width:48%;min-width:120px;max-width:200px;margin-bottom:0;background:#312D18;color:#fff;padding:8px 0;border-radius:4px;font-weight:600;"><i class="ri-edit-line"></i> Uredi</button>
-      <button class="btn delete-btn" style="width:48%;min-width:120px;max-width:200px;margin-bottom:0;background:#5c1a1a;color:#fff;padding:8px 0;border-radius:4px;font-weight:600;"><i class="ri-delete-bin-line"></i> Izbriši</button>
-    </div>
-  </div>
-`).join('');
-    } catch (err) {
-      grid.innerHTML = '<div style="padding:2rem;color:red;">Napaka pri nalaganju voznikov.</div>';
-    }
-  }
-
-  // Brisanje voznika
-  let deleteDriverId = null;
-let deleteCard = null;
-
-const errorModal = document.getElementById('errorModal');
-const modalTitle = document.getElementById('modalTitle');
-const modalMessage = document.getElementById('modalMessage');
-const modalActions = document.getElementById('modalActions');
-const confirmDeleteBtn = document.getElementById('confirmDelete');
-const cancelDeleteBtn = document.getElementById('cancelDelete');
-const closeModalBtn = document.getElementById('closeModal');
-
-grid.addEventListener('click', function (e) {
-  if (e.target.closest('.delete-btn')) {
-    deleteCard = e.target.closest('.driver-card');
-    deleteDriverId = deleteCard.getAttribute('data-id');
-    // Prikaži modal za potvrdu brisanja
-    modalTitle.textContent = 'Potrditev brisanja';
-    modalMessage.textContent = 'Ali ste prepričani, da želite izbrisati voznika?';
-    modalActions.style.display = 'flex';
-    errorModal.style.display = 'flex';
-  }
-  if (e.target.closest('.edit-btn')) {
-    const card = e.target.closest('.driver-card');
-    const id = card.getAttribute('data-id');
-    alert('Uredi voznika: ' + id);
-  }
-});
-
-confirmDeleteBtn.onclick = async function () {
-  try {
-    const res = await fetch(`http://localhost:3000/api/users/${deleteDriverId}`, { method: 'DELETE' });
-    const json = await res.json();
-    if (json.success) {
-  deleteCard.remove();
-  errorModal.style.display = 'none';
-  showToast('Uporabnik je uspešno izbrisan.');
-} else {
-  modalTitle.textContent = 'Napaka';
-  modalMessage.textContent = 'Napaka pri brisanju.';
-  modalActions.style.display = 'none';
-}
-  } catch {
-    modalTitle.textContent = 'Napaka';
-    modalMessage.textContent = 'Napaka pri povezavi s strežnikom.';
-    modalActions.style.display = 'none';
-  }
-  deleteDriverId = null;
-  deleteCard = null;
-};
-
-cancelDeleteBtn.onclick = function () {
-  errorModal.style.display = 'none';
-  deleteDriverId = null;
-  deleteCard = null;
-};
-
-closeModalBtn.onclick = function () {
-  errorModal.style.display = 'none';
-  deleteDriverId = null;
-  deleteCard = null;
-};
-
-// Zatvori modal klikom van prozora
-window.onclick = function(event) {
-  if (event.target === errorModal) {
-    errorModal.style.display = 'none';
-    deleteDriverId = null;
-    deleteCard = null;
-  }
-};
-
-  loadDrivers();
-});
-
-function showToast(message) {
-  const toast = document.getElementById('toast');
-  toast.textContent = message;
-  toast.style.display = 'block';
-  toast.style.opacity = '1';
-  setTimeout(() => {
-    toast.style.opacity = '0';
-    setTimeout(() => { toast.style.display = 'none'; }, 300);
-  }, 2000);
-}
-  </script>
+  <script src="script/admin_vozniki.js"> </script>
 </body>
 </html>

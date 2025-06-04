@@ -68,7 +68,7 @@ CREATE TABLE Ocena (
 -- INSERT primeri podatkov
 
 INSERT INTO Uporabnik VALUES
-("1", 'Maja', 'Zupančič', 'maja.zupancic', '040123456', 4.7, '2023-11-15 08:00:00', NULL),
+("auth0|6835c8d19fabba1e6694e0e8", 'Maja', 'Zupančič', 'maja.zupancic', '040123456', 4.7, '2023-11-15 08:00:00', NULL),
 ("2", 'Tilen', 'Kralj', 'tilen.kralj', '040234567', 3.9, '2024-01-03 13:45:00', 'Volkswagen Golf'),
 ("3", 'Nina', 'Horvat', 'nina.horvat', '040345678', 4.5, '2023-09-21 16:30:00', NULL),
 ("4", 'Andraž', 'Mlakar', 'andraz.mlakar', '040456789', 2.8, '2023-12-10 11:10:00', NULL),
@@ -154,7 +154,7 @@ INSERT INTO Rezervacija VALUES
 (15, 'odpovedano', '2024-01-19 01:18:28', 18, "20"),
 (16, 'potrjeno', '2025-11-26 09:56:19', 16, "20"),
 (17, 'čaka', '2024-09-08 15:38:03', 20, "18"),
-(18, 'potrjeno', '2024-09-03 03:28:28', 14, "1"),
+(18, 'potrjeno', '2024-09-03 03:28:28', 14, "auth0|6835c8d19fabba1e6694e0e8"),
 (19, 'potrjeno', '2025-03-17 12:47:44', 3, "12"),
 (20, 'čaka', '2025-11-14 19:13:47', 14, "12");
 
@@ -181,3 +181,4 @@ INSERT INTO Ocena (idOcena, Ocena, Komentar, TK_Rezervacija, TK_Prevoz) VALUES
 (19, 3, 'Malo zamude, a sicer v redu.',        NULL, 19),
 (20, 4, 'Sopotnik je bil miren in spoštljiv.',    15, NULL);
 
+select * from uporabnik;

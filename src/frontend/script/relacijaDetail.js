@@ -152,7 +152,6 @@
             <div class="booking-header">
               <h2 class="booking-title">
                 <i class="ri-road-map-line"></i> Vožnja iz ${prevozData.Odhod_Ime || 'Neznano'} v ${prevozData.Prihod_Ime || 'Neznano'}
-                <span style="float: right; font-size: 0.8em; color: var(--gold);">ID: ${prevozData.IdPrevoz}</span>
               </h2>
             </div>
             <div class="booking-body">
