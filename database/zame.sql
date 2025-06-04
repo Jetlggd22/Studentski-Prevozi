@@ -22,7 +22,7 @@ CREATE TABLE Uporabnik (
 
 -- Tabela: Lokacija
 CREATE TABLE Lokacija (
-    idLokacija INT PRIMARY KEY,
+    idLokacija INT AUTO_INCREMENT PRIMARY KEY, -- easier for generating new locatoins
     Ime VARCHAR(45),
     Longitude VARCHAR(45),
     Latitude VARCHAR(45)
