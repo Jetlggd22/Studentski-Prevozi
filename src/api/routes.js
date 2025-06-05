@@ -5,8 +5,8 @@ import jwksRsa from 'jwks-rsa';
 import authController from './controllers/authController.js';
 import catchAsync from './utils/catchAsync.js';
 import { getUserHistory, getRideDetails } from "./controllers/historyController.js";
-import { getAllHistories } from './controllers/adminHistoryController.js';
-// Import deletePrevoz from rideController
+import { getAllHistories } from './controllers/adminHistoryController.js';// ... other imports
+import { searchLokacije } from './controllers/lokacijaController.js'; // Create this controller
 import { getAllPrevozi, getPrevoz, deletePrevoz } from './controllers/rideController.js'; 
 import * as userController from './controllers/editProfileController.js';
 import * as usersController from './controllers/usersController.js';
@@ -53,6 +53,5 @@ router.patch('/rezervacije/:idRezervacija/preklici', catchAsync(rezervacijaContr
 router.get('/rezervacije/uporabnik/:idUporabnik/prevoz/:idPrevoz', catchAsync(rezervacijaController.getUserRezervacijaForPrevoz));
 // Add the new DELETE route
 router.delete('/prevozi/:id', catchAsync(deletePrevoz)); // We can protect this with admin middleware later
-
-
+router.get('/lokacije/search', searchLokacije);
 export default router;
