@@ -16,12 +16,14 @@ export async function updateUser(req, res) {
   }
 }
 
+
+
 export async function getUserById(req, res) {
   try {
     const user = await userService.getUserById(req.params.id);
     if (user) res.json({ success: true, data: user });
     else res.status(404).json({ success: false, message: 'Uporabnik ni najden.' });
   } catch (err) {
-    res.status(500).json({ success: false, message: 'Napaka pri branju uporabnika.' });
+    res.status(500).json({ success: false, message: err.message || 'Napaka pri branju uporabnika.' });
   }
 }

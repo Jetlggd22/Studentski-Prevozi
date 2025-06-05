@@ -9,7 +9,7 @@ const AUTH0_DOMAIN = process.env.AUTH0_DOMAIN;
 const AUTH0_AUDIENCE = process.env.AUTH0_AUDIENCE
 const AUTH0_CLIENT_ID = process.env.AUTH0_CLIENT_ID;
 const AUTH0_CLIENT_SECRET = process.env.AUTH0_CLIENT_SECRET;
-const AUTH0_CONNECTION = 'Username-Password-Authentication';
+const AUTH0_CONNECTION = 'Username-Password-Authentication'; 
 console.log('[ENV LOADED]', {
   AUTH0_DOMAIN: process.env.AUTH0_DOMAIN,
   AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
@@ -24,7 +24,6 @@ export function httpsRequest(options, data = null) {
       let body = '';
       res.on('data', chunk => (body += chunk));
       res.on('end', () => {
-        console.log('[Raw Auth0 Response]:', body);
         try {
           const parsed = JSON.parse(body);
           if (res.statusCode >= 400) return reject(parsed);
@@ -41,7 +40,7 @@ export function httpsRequest(options, data = null) {
   });
 }
 
-async function getAuth0Token() {
+export async function getAuth0Token() {
   const postData = JSON.stringify({
     grant_type: 'client_credentials',
     client_id: AUTH0_CLIENT_ID,
@@ -115,7 +114,7 @@ async function getUserProfile(userId, managementToken) {
 }
 
 
-const login = async ({ email, geslo }) => {
+export const login = async ({ email, geslo }) => {
   const postData = JSON.stringify({
     grant_type: 'password',
     username: email,
@@ -139,15 +138,15 @@ const login = async ({ email, geslo }) => {
 
   const managementToken = await getAuth0Token();
   const response = await httpsRequest(options, postData);
-  const decoded = jwt.decode(response.access_token)
-  const dbResponse = await authRepository.getUserById(decoded.sub)
-  const userProfile = await getUserProfile(decoded.sub, managementToken);
-  console.log(dbResponse)
+  const decodedAccessToken = jwt.decode(response.access_token)
+  const decodedIdToken = jwt.decode(response.id_token)
+  const dbResponse = await authRepository.getUserById(decodedAccessToken.sub)
+  const userProfile = await getUserProfile(decodedAccessToken.sub, managementToken);
 
-  return {...response, ...dbResponse, emailIsVerified:userProfile.email_verified}; 
+  return {...response, ...dbResponse, emailIsVerified:userProfile.email_verified, email: decodedIdToken.email}; 
 }
 
-const sendVerificationEmail = async (auth0UserId, token) => {
+export const sendVerificationEmail = async (auth0UserId, token) => {
   const payload = JSON.stringify({
     user_id: auth0UserId,
     client_id: AUTH0_CLIENT_ID 

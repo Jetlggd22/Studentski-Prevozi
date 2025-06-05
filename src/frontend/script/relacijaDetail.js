@@ -1,6 +1,7 @@
   // Global variable to store fetched prevoz details
+    let durationFormatted
+    let distanceFormatted
     let fetchedPrevozDetails = null; 
-
     window.addEventListener('load', () => {
       setTimeout(() => {
         const loader = document.getElementById('loader');
@@ -131,16 +132,92 @@
               return;
           }
 
-          renderPrevozDetails(fetchedPrevozDetails);
+          renderPrevozDetails(fetchedPrevozDetails, durationFormatted, distanceFormatted);
           await initializeButtonState(prevozId, fetchedPrevozDetails);
 
         } catch (error) {
           console.error('Napaka pri pridobivanju podrobnosti prevoza:', error);
           prevozDetailsContainer.innerHTML = `<p class="text-center py-5" style="color:red;">Napaka pri nalaganju podrobnosti prevoza: ${error.message}.</p>`;
         }
+      
+
+        const start = [fetchedPrevozDetails.Odhod_Longitude, fetchedPrevozDetails.Odhod_Latitude]; // Point A
+        const end = [fetchedPrevozDetails.Prihod_Longitude, fetchedPrevozDetails.Prihod_Latitude];        // Point B
+        const center = [
+          (start[0] + end[0]) / 2,
+          (start[1] + end[1]) / 2,
+        ];
+
+        mapboxgl.accessToken = 'pk.eyJ1IjoicGFzc2lvbmUtbWFwYSIsImEiOiJjbWF6OXF3YmUwanlsMmpzNm1idzMzbmpqIn0.20SdgBfp-AN4Z10h36vmbw'; 
+        const map = new mapboxgl.Map({
+          container: 'map',
+          style: 'mapbox://styles/passione-mapa/cmazadoca00b501sc6svwc6o7',
+          center: center, 
+          zoom:7 
+        });
+
+
+        map.on('load', async () => {
+          const url = `https://api.mapbox.com/directions/v5/mapbox/driving/${start.join(',')};${end.join(',')}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`;
+    
+        const response = await fetch(url);
+        const json = await response.json();
+        const data = json.routes[0];
+
+        const route = data.geometry;
+
+        map.addSource('route', {
+          type: 'geojson',
+            data: {
+            type: 'Feature',
+            properties: {},
+            geometry: route
+          }
+        });
+
+        map.addLayer({
+          id: 'route',
+          type: 'line',
+          source: 'route',
+          layout: {
+            'line-join': 'round',
+            'line-cap': 'round'
+          },
+          paint: {
+            'line-color': '#1db7dd',
+            'line-width': 6
+          }
+        });
+
+    // Add markers
+        new mapboxgl.Marker().setLngLat(start).addTo(map);
+        new mapboxgl.Marker().setLngLat(end).addTo(map);
+      });
+
+      const distanceCalculatorUrl= `https://api.mapbox.com/directions/v5/mapbox/driving/${start.join(',')};${end.join(',')}?geometries=geojson&overview=full&access_token=${mapboxgl.accessToken}`;
+      const distanceResponse = await fetch(distanceCalculatorUrl);
+      const json = await distanceResponse.json();
+      const route = json.routes[0];
+
+      const durationSeconds = route.duration;
+      durationFormatted = formatDurationHM(durationSeconds)
+      distanceFormatted = `${(route.distance / 1000).toFixed(0)} km`
+      console.log(durationFormatted)
+      console.log(distanceFormatted)
+      document.getElementById("duration").innerHTML = durationFormatted + " ure"
+      document.getElementById("distance").innerHTML = distanceFormatted
+
+
     });
 
-    function renderPrevozDetails(prevozData) {
+    function formatDurationHM(seconds) {
+      const totalMinutes = Math.round(seconds / 60);
+      const hours = Math.floor(totalMinutes / 60);
+      const minutes = totalMinutes % 60;
+
+      return `${hours}:${minutes.toString().padStart(2, '0')}`;
+    }
+    function renderPrevozDetails(prevozData, durationFormatted, distanceFormatted) {
         const datumObj = new Date(prevozData.Cas_odhoda);
         const datum = datumObj.toLocaleDateString('sl-SI', {
             weekday: 'short', year: 'numeric', month: 'short', day: 'numeric'
@@ -172,6 +249,8 @@
                 <div class="detail-card"><div class="detail-label">Prosta mesta</div><div class="detail-value" id="detail-prosta-mesta">${prevozData.Prosta_mesta != null ? prevozData.Prosta_mesta : 'N/A'}</div></div>
                 <div class="detail-card"><div class="detail-label">Ponavljanje</div><div class="detail-value">${prevozData.Ponavljanje || 'Ne ponavlja se'}</div></div>
                 <div class="detail-card"><div class="detail-label">Avto</div><div class="detail-value">${prevozData.Voznik_Avto || 'Ni navedeno'}</div></div>
+                <div class="detail-card"><div class="detail-label">Čas potovanja</div><div id="duration" class="detail-value"></div></div>
+                <div class="detail-card"><div class="detail-label">Distanca</div><div id="distance" class="detail-value"></div></div>
               </div>
               <div class="booking-details section-header" style="margin-top:2rem; margin-bottom:1rem; padding-bottom:0.5rem;">
                  <h2 style="font-size:1.3rem; color:var(--gold);"><i class="ri-user-star-line"></i> Podatki o vozniku</h2>
@@ -183,8 +262,7 @@
                 <div class="detail-card"><div class="detail-label">Ocena voznika</div><div class="detail-value">${prevozData.Voznik_Ocena != null ? parseFloat(prevozData.Voznik_Ocena).toFixed(1) + ' ⭐' : 'Brez ocene'}</div></div>
                 <div class="detail-card"><div class="detail-label">Datum registracije voznika</div><div class="detail-value">${prevozData.Voznik_Datum_registriranja ? new Date(prevozData.Voznik_Datum_registriranja).toLocaleDateString('sl-SI') : 'N/A'}</div></div>
               </div>
-              <div class="map-placeholder" style="height: 300px; background-color: #2a2a2a; border-radius: 10px; margin: 30px 0; display:flex; align-items:center; justify-content:center;">
-                <p style="color: #aaa; text-align: center; margin: 0;">Zemljevid poti bo prikazan tukaj (integracija v prihodnosti).</p>
+              <div id="map" class="map-placeholder" style="height: 300px; background-color: #2a2a2a; border-radius: 10px; margin: 30px 0; display:flex; align-items:center; justify-content:center;">
               </div>
               <div class="price-section slide-up">
                 <div class="price-info">

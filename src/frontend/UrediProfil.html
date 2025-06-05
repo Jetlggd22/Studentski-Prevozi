@@ -87,8 +87,7 @@
   .btn-gold:hover {
     background-color: #d4af37;
     color: #fff;
-    transform: translateY(-2px);
-  }
+    transform: translateY(-2px); }
 
   .read-only-field {
     padding: 14px 18px;
@@ -446,11 +445,22 @@ document.getElementById('editForm').addEventListener('submit', async function(e)
     return;
   }
 
+  const newPassword = document.getElementById('new-password').value
+  const confirmPassword = document.getElementById('confirm-password').value
+
+  if(newPassword != confirmPassword) {
+    showModal('Gesli se ne ujemata')
+    return
+  }
+
   const updatedData = {
     Ime: document.getElementById('first-name').value,
     Priimek: document.getElementById('last-name').value,
-    Username: document.getElementById('email').value,
+    Email: document.getElementById('email').value,
     Telefon: document.getElementById('phone').value,
+    oldEmail: user.email,
+    oldPassword: document.getElementById('current-password').value || '',
+    newPassword: newPassword
   };
 
   try {

@@ -24,8 +24,8 @@ CREATE TABLE Uporabnik (
 CREATE TABLE Lokacija (
     idLokacija INT AUTO_INCREMENT PRIMARY KEY, -- easier for generating new locatoins
     Ime VARCHAR(45),
-    Longitude VARCHAR(45),
-    Latitude VARCHAR(45)
+    Longitude FLOAT(10,6),
+    Latitude FLOAT(10,6) 
 );
 
 -- Tabela: Prevoz
@@ -91,26 +91,26 @@ INSERT INTO Uporabnik VALUES
 
 
 INSERT INTO Lokacija VALUES
-(1, 'ŠD Rožna dolina', '14.681823', '46.231084'),
-(2, 'ŠD Bežigrad', '15.233842', '46.318788'),
-(3, 'ŠD Litostroj', '14.656290', '45.979368'),
-(4, 'ŠD Vič', '14.852969', '46.246526'),
-(5, 'ŠD Mestni log', '14.387758', '45.661345'),
-(6, 'ŠD Savsko naselje', '13.959159', '45.500606'),
-(7, 'ŠD Akademski kolegij', '15.791407', '45.732360'),
-(8, 'ŠD Šiška', '15.711788', '45.724938'),
-(9, 'ŠD Rudnik', '14.910185', '46.384156'),
-(10, 'ŠD Poljane', '13.608622', '45.797195'),
-(11, 'FERI Maribor', '14.971287', '46.027750'),
-(12, 'Fakulteta za računalništvo', '14.508190', '46.338086'),
-(13, 'EF Ljubljana', '14.965945', '45.775037'),
-(14, 'FMF', '15.715697', '45.954285'),
-(15, 'Fakulteta za šport', '13.801722', '45.672790'),
-(16, 'Fakulteta za kemijo', '14.646814', '46.477462'),
-(17, 'Fakulteta za arhitekturo', '15.740502', '46.386546'),
-(18, 'Fakulteta za strojništvo', '14.396660', '46.299313'),
-(19, 'Fakulteta za elektrotehniko', '14.260026', '46.014839'),
-(20, 'Fakulteta za gradbeništvo', '15.242099', '46.219239');
+(1, 'ŠD Rožna dolina', 14.681823, 46.231084),
+(2, 'ŠD Bežigrad', 15.233842, 46.318788),
+(3, 'ŠD Litostroj', 14.656290, 45.979368),
+(4, 'ŠD Vič', 14.852969, 46.246526),
+(5, 'ŠD Mestni log', 14.387758, 45.661345),
+(6, 'ŠD Savsko naselje', 13.959159, 45.500606),
+(7, 'ŠD Akademski kolegij', 15.791407, 45.732360),
+(8, 'ŠD Šiška', 15.711788, 45.724938),
+(9, 'ŠD Rudnik', 14.910185, 46.384156),
+(10, 'ŠD Poljane', 13.608622, 45.797195),
+(11, 'FERI Maribor', 14.971287, 46.027750),
+(12, 'Fakulteta za računalništvo', 14.508190, 46.338086),
+(13, 'EF Ljubljana', 14.965945, 45.775037),
+(14, 'FMF', 15.715697, 45.954285),
+(15, 'Fakulteta za šport', 13.801722, 45.672790),
+(16, 'Fakulteta za kemijo', 14.646814, 46.477462),
+(17, 'Fakulteta za arhitekturo', 15.740502, 46.386546),
+(18, 'Fakulteta za strojništvo', 14.396660, 46.299313),
+(19, 'Fakulteta za elektrotehniko', 14.260026, 46.014839),
+(20, 'Fakulteta za gradbeništvo', 15.242099, 46.219239);
 
 
 INSERT INTO Prevoz VALUES
