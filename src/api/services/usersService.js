@@ -23,3 +23,7 @@ export async function deleteUser(id) {
 export async function getTopDrivers(limit = 5) {
   return await usersRepository.getTopDrivers(limit);
 }
+
+export async function getActiveDriversWithCarsAndRides(limit) {
+  return await usersRepository.getDriversWithCarsAndRides(limit);
+}
