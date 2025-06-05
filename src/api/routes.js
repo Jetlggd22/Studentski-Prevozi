@@ -7,7 +7,7 @@ import catchAsync from './utils/catchAsync.js';
 import { getUserHistory, getRideDetails } from "./controllers/historyController.js";
 import { getAllHistories } from './controllers/adminHistoryController.js';// ... other imports
 import { searchLokacije } from './controllers/lokacijaController.js'; // Create this controller
-import { getAllPrevozi, getPrevoz, deletePrevoz } from './controllers/rideController.js'; 
+import { getAllPrevozi, getPrevoz, deletePrevoz , updatePrevoz} from './controllers/rideController.js'; 
 import * as userController from './controllers/editProfileController.js';
 import * as usersController from './controllers/usersController.js';
 import { getAdminStats } from './controllers/adminStatsController.js';
@@ -32,6 +32,7 @@ const router = Router();
 router.post('/users', catchAsync(authController.createUser));
 router.get('/zgodovina/uporabnik/:id', getUserHistory);
 router.get('/zgodovina/prevoz/:id', getRideDetails);
+router.put('/prevozi/:id', catchAsync(updatePrevoz)); //
 router.get('/prevozi', getAllPrevozi); 
 router.get('/admin/history', getAllHistories);
 router.post('/login', catchAsync(authController.loginUser));
@@ -51,7 +52,7 @@ router.post('/prevozi', createPrevozController.createPrevoz);
 router.post('/rezervacije', catchAsync(rezervacijaController.createRezervacija));
 router.patch('/rezervacije/:idRezervacija/preklici', catchAsync(rezervacijaController.prekliciRezervacija));
 router.get('/rezervacije/uporabnik/:idUporabnik/prevoz/:idPrevoz', catchAsync(rezervacijaController.getUserRezervacijaForPrevoz));
-// Add the new DELETE route
+
 router.delete('/prevozi/:id', catchAsync(deletePrevoz)); // We can protect this with admin middleware later
 router.get('/lokacije/search', searchLokacije);
 export default router;

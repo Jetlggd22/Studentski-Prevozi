@@ -54,3 +54,19 @@ export async function deletePrevoz(req, res, next) {
     next(error); 
   }
 }
+
+export async function updatePrevoz(req, res, next) {
+  const rideId = req.params.id;
+  const rideData = req.body; // Contains all updated fields from the admin form
+  try {
+    // Add validation for rideData here if necessary
+    const updatedRide = await prevozService.updatePrevozById(rideId, rideData);
+    if (!updatedRide) {
+      return res.status(404).json({ success: false, message: 'Prevoz za posodobitev ni bil najden.' });
+    }
+    res.json({ success: true, message: 'Prevoz uspešno posodobljen.', data: updatedRide });
+  } catch (error) {
+    console.error(`Error updating prevoz with ID ${rideId}:`, error);
+    next(error); // Pass to generic error handler
+  }
+}
