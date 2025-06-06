@@ -61,7 +61,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             priimekInput.value = user.Priimek || '';
             usernameInput.value = user.Username || '';
             telefonInput.value = user.Telefon || '';
-            ocenaInput.value = user.Ocena ? parseFloat(user.Ocena).toFixed(1) : 'Brez ocene';
+            // Display 'Brez ocene' if rating is null/undefined, otherwise format it
+            ocenaInput.value = user.Ocena !== null && user.Ocena !== undefined ? parseFloat(user.Ocena).toFixed(1) : 'Brez ocene';
             avtoInput.value = user.Avto || '';
         } else {
             throw new Error(json.message || 'Podatkov o uporabniku ni mogoče naložiti.');
@@ -75,12 +76,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
+        // Ensure ocena value is parsed correctly, handle 'Brez ocene' or empty string as null
+        const ocenaValue = ocenaInput.value.trim();
+        const parsedOcena = (ocenaValue === '' || ocenaValue === 'Brez ocene') ? null : parseFloat(ocenaValue);
+
         const updatedData = {
             Ime: imeInput.value.trim(),
             Priimek: priimekInput.value.trim(),
             Username: usernameInput.value.trim(),
             Telefon: telefonInput.value.trim(),
-            Avto: avtoInput.value.trim()
+            Avto: avtoInput.value.trim(),
+            Ocena: parsedOcena // Add the parsed rating here
         };
 
         if (!updatedData.Ime || !updatedData.Priimek || !updatedData.Username) {

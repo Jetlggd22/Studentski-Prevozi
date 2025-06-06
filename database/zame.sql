@@ -202,3 +202,4 @@ SET u.Ocena = (
 );
 
 SELECT idUporabnik, Ime, Priimek, Ocena FROM Uporabnik ORDER BY Ocena DESC;
+
