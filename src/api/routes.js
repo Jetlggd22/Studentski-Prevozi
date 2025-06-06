@@ -52,7 +52,8 @@ router.post('/prevozi', createPrevozController.createPrevoz);
 router.post('/rezervacije', catchAsync(rezervacijaController.createRezervacija));
 router.patch('/rezervacije/:idRezervacija/preklici', catchAsync(rezervacijaController.prekliciRezervacija));
 router.get('/rezervacije/uporabnik/:idUporabnik/prevoz/:idPrevoz', catchAsync(rezervacijaController.getUserRezervacijaForPrevoz));
-
+router.get('/active-drivers', usersController.getActiveDrivers);
+// Add the new DELETE route
 router.delete('/prevozi/:id', catchAsync(deletePrevoz)); // We can protect this with admin middleware later
 router.get('/lokacije/search', searchLokacije);
 export default router;
