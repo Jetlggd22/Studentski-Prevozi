@@ -22,7 +22,7 @@ CREATE TABLE Uporabnik (
 
 -- Tabela: Lokacija
 CREATE TABLE Lokacija (
-    idLokacija INT PRIMARY KEY,
+    idLokacija INT PRIMARY KEY AUTO_INCREMENT,
     Ime VARCHAR(45),
     Longitude VARCHAR(45),
     Latitude VARCHAR(45)
@@ -30,7 +30,7 @@ CREATE TABLE Lokacija (
 
 -- Tabela: Prevoz
 CREATE TABLE Prevoz (
-    idPrevoz INT PRIMARY KEY,
+    idPrevoz INT PRIMARY KEY AUTO_INCREMENT,
     Cas_odhoda DATETIME,
     Cena INT,
     Prosta_mesta VARCHAR(45),
@@ -45,7 +45,7 @@ CREATE TABLE Prevoz (
 
 -- Tabela: Rezervacija
 CREATE TABLE Rezervacija (
-    idRezervacija INT PRIMARY KEY,
+    idRezervacija INT PRIMARY KEY AUTO_INCREMENT,
     Status VARCHAR(45),
     Ustvarjeno DATETIME,
     TK_Prevoz INT,
@@ -56,7 +56,7 @@ CREATE TABLE Rezervacija (
 
 -- Tabela: Ocena
 CREATE TABLE Ocena (
-    idOcena INT PRIMARY KEY,
+    idOcena INT PRIMARY KEY AUTO_INCREMENT,
     Ocena INT,
     Komentar VARCHAR(45),
     TK_Rezervacija INT,
@@ -87,8 +87,8 @@ INSERT INTO Uporabnik VALUES
 ("17", 'Klara', 'Blažič', 'klara.blazic', '040889900', 4.8, '2024-01-26 14:40:00', 'Mazda 2'),
 ("18", 'Jan', 'Pirc', 'jan.pirc', '040990011', 2.3, '2023-11-03 13:20:00', NULL),
 ("19", 'Ela', 'Kovač', 'ela.kovac', '041101112', 4.4, '2023-08-08 16:10:00', NULL),
-("20", 'David', 'Šušteršič', 'david.sustersic', '041212223', 3.6, '2024-03-01 10:30:00', NULL);
-
+("20", 'David', 'Šušteršič', 'david.sustersic', '041212223', 3.6, '2024-03-01 10:30:00', NULL),
+("auth0|683ca514129d84db01ca86c2", 'Admin', 'Admin', 'Admin.Admin', '000000000', 5, '1000-01-01 00:00:00', NULL);
 
 INSERT INTO Lokacija VALUES
 (1, 'ŠD Rožna dolina', '14.681823', '46.231084'),
@@ -182,3 +182,24 @@ INSERT INTO Ocena (idOcena, Ocena, Komentar, TK_Rezervacija, TK_Prevoz) VALUES
 (20, 4, 'Sopotnik je bil miren in spoštljiv.',    15, NULL);
 
 select * from uporabnik;
+
+UPDATE Uporabnik u
+SET u.Ocena = (
+    SELECT ROUND(AVG(VseOcene.Ocena), 2)
+    FROM (
+        SELECT o.Ocena
+        FROM Ocena o
+        JOIN Prevoz p ON o.TK_Prevoz = p.idPrevoz
+        WHERE p.TK_Voznik = u.idUporabnik AND o.TK_Rezervacija IS NULL
+
+        UNION ALL
+
+        SELECT o.Ocena
+        FROM Ocena o
+        JOIN Rezervacija r ON o.TK_Rezervacija = r.idRezervacija
+        WHERE r.TK_Potnik = u.idUporabnik AND o.TK_Prevoz IS NULL
+    ) AS VseOcene
+);
+
+SELECT idUporabnik, Ime, Priimek, Ocena FROM Uporabnik ORDER BY Ocena DESC;
+

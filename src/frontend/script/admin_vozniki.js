@@ -120,7 +120,8 @@
           if (targetEditBtn) {
             const card = targetEditBtn.closest('.driver-card');
             const id = card.getAttribute('data-id');
-            alert('Urejanje uporabnika z ID: ' + id + ' (funkcionalnost še ni implementirana).');
+            // Preusmeritev na novo stran za urejanje
+            window.location.href = `Admin_UrediUporabnika.html?id=${id}`;
           }
         });
       }
