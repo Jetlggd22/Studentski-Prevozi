@@ -523,10 +523,25 @@
     }
 });
     
-    const userInfo = JSON.parse(sessionStorage.getItem("user")) //malo amaterski ali vrsi poso, treba malo da se stajlira bolje
-    if(!userInfo.data.emailIsVerified){
-      alert("Prosimo, preverite e-pošto uporabnika")
+     const userString = sessionStorage.getItem("user");
+  let userInfo = null;
+
+  if (userString) {
+    try {
+      userInfo = JSON.parse(userString);
+    } catch (e) {
+      console.error("Error parsing user info from sessionStorage:", e);
+      // Optionally, clear the invalid item: sessionStorage.removeItem("user");
     }
+  }
+
+  // Now, safely check userInfo AND userInfo.data
+  if (userInfo && userInfo.data && !userInfo.data.emailIsVerified) {
+    alert("Prosimo, preverite e-pošto uporabnika");
+  } else if (!userInfo) {
+    console.log("User is not logged in or user info not found in sessionStorage.");
+    // You might want to handle this case, e.g., redirect to login or show a guest view
+  }
 
     // Loader
     window.addEventListener('load', () => {
@@ -640,7 +655,7 @@
 
 /* Floating Icons */
     document.addEventListener('DOMContentLoaded', function() {
-      const floatingIcons = document.querySelector('.floating-icons');
+      const floatingIcons = document.querySelector('.hero-floating-icons'); // Corrected class name
       const icons = ['fa-passport', 'fa-camera', 'fa-mountain', 'fa-umbrella-beach', 'fa-map', 'fa-train', 'fa-bicycle', 'fa-music'];
       
       for (let i = 0; i < 12; i++) {

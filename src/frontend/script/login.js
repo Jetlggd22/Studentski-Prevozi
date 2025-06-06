@@ -1,56 +1,101 @@
+
 function showErrorModal(message) {
   const modal = document.getElementById('errorModal');
   const msg = document.getElementById('modalMessage');
-  msg.textContent = message;
-  modal.style.display = 'flex';
+  if (modal && msg) {
+    msg.textContent = message;
+    modal.style.display = 'flex';
+  } else {
+    alert(message); // Fallback if modal elements are not found
+  }
 }
 
 function closeModalAndReset() {
-  document.getElementById('errorModal').style.display = 'none';
-  window.location.reload(); // Reset the page
+  const modal = document.getElementById('errorModal');
+  if (modal) {
+    modal.style.display = 'none';
+  }
+  // It's generally not a good idea to reload the page on a simple modal close
+  // unless specifically intended for resetting the form after an error.
+  // window.location.reload(); 
 }
 
-document.getElementById('closeModal').onclick = closeModalAndReset;
+const closeModalButton = document.getElementById('closeModal');
+if (closeModalButton) {
+  closeModalButton.onclick = closeModalAndReset;
+}
+
 window.onclick = function(event) {
   const modal = document.getElementById('errorModal');
-  if (event.target === modal) closeModalAndReset();
+  if (modal && event.target === modal) {
+    closeModalAndReset();
+  }
 };
 
-document.querySelector('.login-form').addEventListener('submit', async function (e) {
-  e.preventDefault();
+const loginForm = document.querySelector('.login-form');
 
-  const email = document.getElementById("email").value.trim();
-  const geslo = document.getElementById("password").value.trim();
+if (loginForm) {
+  loginForm.addEventListener('submit', async function (e) {
+    e.preventDefault();
 
-  if (!email || !geslo) {
-    showErrorModal('Prosimo, izpolnite vsa polja.');
-    return;
-  }
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
 
-  try {
-    const response = await fetch('http://localhost:3000/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, geslo }),
-    });
+    if (!emailInput || !passwordInput) {
+      showErrorModal('Napaka: Vnosna polja niso bila najdena.');
+      return;
+    }
 
-    const data = await response.json();
+    const email = emailInput.value.trim();
+    const geslo = passwordInput.value.trim();
 
-    if (data.success) {
-  sessionStorage.setItem('user', JSON.stringify(data));
-  // Proveri email iz backend odgovora, ne iz inputa
-  const userEmail = (data.user && data.user.email) ? data.user.email.trim().toLowerCase() : email.trim().toLowerCase();
-  console.log("Ulogovani email:", userEmail);
-  if (userEmail === "admin@admin.admin") {
-    window.location.href = "Admin_Dashboard.html";
-  } else {
-    window.location.href = "Index.html";
-  }
+    if (!email || !geslo) {
+      showErrorModal('Prosimo, izpolnite vsa polja.');
+      return;
+    }
+
+    // Optional: Show some loading indicator here
+    const submitButton = loginForm.querySelector('button[type="submit"]');
+    if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<i class="ri-loader-4-line ri-spin"></i> Prijavljam...';
+    }
+
+    try {
+      const response = await fetch('http://localhost:3000/api/login', { // Assuming backend is on port 3000
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, geslo }),
+      });
+
+      const data = await response.json();
+
+      if (data.success && data.data) { // Ensure data.data exists
+        sessionStorage.setItem('user', JSON.stringify(data)); // Store the whole response which includes tokens and user data
+        
+        // The backend authService includes the Auth0 user_id as 'idUporabnik' 
+        // in the 'data' part of the response (from dbResponse).
+        const userId = data.data.idUporabnik; 
+        const adminUserId = "auth0|683ca514129d84db01ca86c2";
+
+        if (userId === adminUserId) {
+          window.location.href = "Admin_Dashboard.html";
+        } else {
+          window.location.href = "Index.html";
+        }
+      } else {
+        showErrorModal('Prijava ni uspela: ' + (data.message || 'Napačni podatki ali nepreverjen email.'));
+      }
+    } catch (error) {
+      console.error('Napaka pri prijavi:', error);
+      showErrorModal('Napaka pri povezavi s strežnikom. Poskusite kasneje.');
+    } finally {
+      if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.innerHTML = '<i class="ri-login-box-line"></i> Prijavi se';
+      }
+    }
+  });
 } else {
-  showErrorModal('Prijava ni uspela: ' + (data.message || 'Napačni podatki.'));
+  console.error("Login form element (.login-form) not found.");
 }
-  } catch (error) {
-    console.error('Napaka pri prijavi:', error);
-    showErrorModal('Napaka pri povezavi s strežnikom.');
-  }
-});

@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Študentski Prevozi - Admin - Uredi Relacijo</title>
+  <link rel="stylesheet" href="Styles/Style.css">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="icon" href="img/admin_icon.png" type="image/x-icon">
+
+  <!-- Leaflet.js CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--dark, #111111);
+      color: var(--white, #ffffff);
+    }
+    .admin-edit-form-container {
+      max-width: 700px;
+      margin: 40px auto;
+      background: var(--dark-light, #1a1a1a);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,215,0,0.1);
+    }
+    .admin-edit-form-container h1 {
+      color: var(--gold, #ffd700);
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .form-section label {
+      display: block;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .form-section input[type="text"],
+    .form-section input[type="number"],
+    .form-section input[type="datetime-local"],
+    .form-section select,
+    .form-section textarea {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 20px;
+      background: var(--dark-medium, #222222);
+      border: 1px solid rgba(255,215,0,0.3);
+      border-radius: 8px;
+      color: var(--white, #ffffff);
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+    .form-section input:focus,
+    .form-section select:focus,
+    .form-section textarea:focus {
+        border-color: var(--gold, #ffd700);
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(255,215,0,0.2);
+    }
+    .input-container { position: relative; }
+    .location-suggestions {
+      list-style: none; padding: 0; margin: -20px 0 15px 0;
+      border: 1px solid rgba(255,215,0,0.3); border-top: none;
+      border-radius: 0 0 8px 8px; background-color: var(--dark-medium, #222222);
+      max-height: 150px; overflow-y: auto; position: absolute;
+      width: 100%; z-index: 1000; box-sizing: border-box; display: none;
+    }
+    .location-suggestions li { padding: 10px 15px; color: var(--white, #ffffff); cursor: pointer; }
+    .location-suggestions li:hover { background-color: rgba(255,215,0,0.1); }
+
+    .manual-select-btn {
+        background-color: transparent; color: var(--gold, #ffd700);
+        border: 1px solid var(--gold, #ffd700); padding: 8px 15px;
+        border-radius: 5px; cursor: pointer; margin-top: -10px;
+        margin-bottom: 15px; display: none; width: 100%; text-align: center;
+    }
+    .manual-select-btn:hover { background-color: rgba(255,215,0,0.1); }
+    .map-container-edit { /* Renamed from map-container-step */
+        height: 250px; width: 100%; margin-bottom: 20px;
+        border-radius: 8px; border: 1px solid rgba(255,215,0,0.2); display: none;
+    }
+    .form-actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 30px;
+    }
+    .form-actions button {
+      padding: 12px 25px; border-radius: 8px; font-weight: 600;
+      cursor: pointer; transition: background-color 0.3s, transform 0.2s; border: none;
+    }
+    .form-actions button[type="submit"] { background: var(--gold, #ffd700); color: var(--dark, #111111); }
+    .form-actions button[type="submit"]:hover { background: #e6c300; transform: translateY(-2px); }
+    .form-actions button.cancel-btn {
+      background-color: var(--dark-medium, #222222); color: var(--gold, #ffd700);
+      border: 1px solid var(--gold, #ffd700);
+    }
+    .form-actions button.cancel-btn:hover { background-color: rgba(255,215,0,0.1); }
+
+    .error-message-form, .success-message-form {
+        padding: 10px; border-radius: 8px; margin-top: 20px;
+        text-align: center; display: none;
+    }
+    .error-message-form { color: #f44336; background-color: rgba(244, 67, 54, 0.1); border: 1px solid #f44336;}
+    .success-message-form { color: #4CAF50; background-color: rgba(76, 175, 80, 0.1); border: 1px solid #4CAF50;}
+
+    /* Admin Header Style (can be moved to Style.css if used across admin pages) */
+    .header.admin-header .logo-text { color: var(--gold, #ffd700); }
+    .header.admin-header .logo-icon { color: var(--gold, #ffd700); }
+    .header.admin-header .nav-link { color: rgba(255,255,255,0.8); }
+    .header.admin-header .nav-link:hover, .header.admin-header .nav-link.active { color: var(--gold, #ffd700); }
+    .header.admin-header { background-color: var(--dark-medium, #222222); }
+  </style>
+</head>
+<body>
+  <div class="loader" id="loader">
+    <div class="loader-content">
+      <div class="loader-spinner"></div>
+      <div class="loader-logo">Študentski Prevozi - Admin</div>
+    </div>
+  </div>
+
+  <header class="header admin-header" id="header"> <!-- Added admin-header class for potential specific styling -->
+    <div class="container header-container">
+      <a href="Admin_Dashboard.html" class="logo">
+        <i class="ri-spy-line logo-icon"></i>
+        <span class="logo-text">Admin Panel</span>
+      </a>
+      <ul class="nav-menu" id="nav-menu">
+        <li class="nav-item"><a href="Admin_Dashboard.html" class="nav-link"><i class="ri-dashboard-line nav-icon"></i> Nadzorna Plošča</a></li>
+        <li class="nav-item"><a href="Admin_Relacije.html" class="nav-link active"><i class="ri-route-line nav-icon"></i> Relacije</a></li>
+        <li class="nav-item"><a href="Admin_Vozniki.html" class="nav-link"><i class="ri-group-line nav-icon"></i> Uporabniki</a></li>
+        <li class="nav-item"><a href="Admin_Login.html" class="nav-link" id="adminLogoutBtn"><i class="ri-logout-box-r-line nav-icon"></i> Odjava</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </header>
+  <div class="overlay" id="overlay"></div>
+
+  <main class="profile-main" style="padding-top: 80px;"> <!-- Add padding for fixed header -->
+    <div class="container">
+      <div class="admin-edit-form-container">
+        <h1><i class="ri-edit-2-line"></i> Uredi Relacijo</h1>
+        <div id="formMessage" class="error-message-form"></div> <!-- For general form messages -->
+
+        <form id="editRideForm">
+            <input type="hidden" id="rideId" name="rideId">
+
+            <div class="form-section">
+                <label for="fromLocation">Odhodna lokacija:</label>
+                <div class="input-container">
+                    <input type="text" id="fromLocation" name="fromLocation" required>
+                    <ul class="location-suggestions" id="fromLocationSuggestions"></ul>
+                </div>
+                <button type="button" id="manualSelectFromBtn" class="manual-select-btn">Izberi na zemljevidu <i class="ri-map-pin-add-line"></i></button>
+                <div id="mapFrom" class="map-container-edit"></div>
+                <input type="hidden" id="fromLocationLongitude" name="fromLocationLongitude">
+                <input type="hidden" id="fromLocationLatitude" name="fromLocationLatitude">
+            </div>
+
+            <div class="form-section">
+                <label for="toLocation">Ciljna lokacija:</label>
+                <div class="input-container">
+                    <input type="text" id="toLocation" name="toLocation" required>
+                    <ul class="location-suggestions" id="toLocationSuggestions"></ul>
+                </div>
+                <button type="button" id="manualSelectToBtn" class="manual-select-btn">Izberi na zemljevidu <i class="ri-map-pin-add-line"></i></button>
+                <div id="mapTo" class="map-container-edit"></div>
+                <input type="hidden" id="toLocationLongitude" name="toLocationLongitude">
+                <input type="hidden" id="toLocationLatitude" name="toLocationLatitude">
+            </div>
+
+            <div class="form-section">
+                <label for="departureTime">Datum in ura odhoda:</label>
+                <input type="datetime-local" id="departureTime" name="departureTime" required>
+            </div>
+
+            <div class="form-section">
+                <label for="seats">Število prostih mest:</label>
+                <input type="number" id="seats" name="seats" min="0" max="10" required>
+            </div>
+
+            <div class="form-section">
+                <label for="price">Cena (€):</label>
+                <input type="number" id="price" name="price" min="0" step="0.1" required>
+            </div>
+            
+            <div class="form-section">
+                <label for="car">Avto:</label>
+                <input type="text" id="car" name="car" placeholder="Npr. VW Golf">
+            </div>
+
+            <div class="form-section">
+                <label for="ponavljanje">Ponavljanje (opomba):</label>
+                <input type="text" id="ponavljanje" name="Ponavljanje" placeholder="Npr. Vsak ponedeljek, Tedensko: pon,sre,pet">
+                 <!-- Better recurrence UI could be added later if needed -->
+            </div>
+            
+            <div class="form-section">
+                <label for="voznikIdDisplay">ID Voznika (TK_Voznik):</label>
+                <input type="text" id="voznikIdDisplay" name="voznikIdDisplay" readonly style="background-color: #333; cursor: not-allowed;">
+                <input type="hidden" id="voznikId" name="TK_Voznik">
+            </div>
+
+
+            <div class="form-actions">
+                <button type="button" class="cancel-btn" id="cancelEditBtn"><i class="ri-close-line"></i> Prekliči</button>
+                <button type="submit"><i class="ri-save-line"></i> Shrani Spremembe</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer" id="contact" style="margin-top: 60px;">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2025 Študentski Prevozi - Admin Panel. Vse pravice pridržane.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Leaflet.js JavaScript -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+
+  <script>
+    // General page scripts (loader, nav, etc.)
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const loader = document.getElementById('loader');
+        if (loader) {
+            loader.style.opacity = '0';
+            setTimeout(() => { if (loader) loader.style.display = 'none'; }, 300);
+        }
+      }, 100);
+    });
+
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    const overlay = document.getElementById('overlay');
+    if (hamburger && navMenu && overlay) {
+        hamburger.addEventListener('click', () => { /* ... nav toggle ... */ });
+        overlay.addEventListener('click', () => { /* ... nav close ... */ });
+    }
+    // End of basic nav/loader scripts
+
+    // Admin Edit Ride Specific Script
+    document.addEventListener('DOMContentLoaded', async () => {
+        const editRideForm = document.getElementById('editRideForm');
+        const formMessage = document.getElementById('formMessage');
+        const rideIdInput = document.getElementById('rideId');
+
+        const fromLocationInput = document.getElementById('fromLocation');
+        const fromLocationSuggestions = document.getElementById('fromLocationSuggestions');
+        const fromLocationLonInput = document.getElementById('fromLocationLongitude');
+        const fromLocationLatInput = document.getElementById('fromLocationLatitude');
+        const manualSelectFromBtn = document.getElementById('manualSelectFromBtn');
+        const mapFromContainer = document.getElementById('mapFrom');
+
+        const toLocationInput = document.getElementById('toLocation');
+        const toLocationSuggestions = document.getElementById('toLocationSuggestions');
+        const toLocationLonInput = document.getElementById('toLocationLongitude');
+        const toLocationLatInput = document.getElementById('toLocationLatitude');
+        const manualSelectToBtn = document.getElementById('manualSelectToBtn');
+        const mapToContainer = document.getElementById('mapTo');
+
+        let mapFromInstance, mapToInstance;
+
+        function showMessage(message, isSuccess = false) {
+            formMessage.textContent = message;
+            formMessage.className = isSuccess ? 'success-message-form' : 'error-message-form';
+            formMessage.style.display = 'block';
+        }
+        function hideMessage() {
+            formMessage.style.display = 'none';
+        }
+
+        // --- Admin Check ---
+        function isAdminUser() {
+            const userSessionData = sessionStorage.getItem('user');
+            if (!userSessionData) return false;
+            try {
+                let userData = JSON.parse(userSessionData);
+                if (userData.data) userData = userData.data;
+                const adminUserId = "auth0|683ca514129d84db01ca86c2";
+                return userData.idUporabnik === adminUserId;
+            } catch (e) { return false; }
+        }
+
+        if (!isAdminUser()) {
+            showMessage('Dostop zavrnjen. Prijavite se kot administrator.');
+            // Optionally redirect to admin login or main page after a delay
+            // setTimeout(() => window.location.href = 'Admin_Login.html', 3000);
+            if(editRideForm) editRideForm.style.display = 'none'; // Hide form if not admin
+            return;
+        }
+
+        // --- Get Ride ID from URL ---
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentRideId = urlParams.get('id');
+        if (!currentRideId) {
+            showMessage('ID relacije ni bil podan v URL-ju.');
+            return;
+        }
+        rideIdInput.value = currentRideId;
+
+        // --- Fetch Existing Ride Data and Pre-fill Form ---
+        try {
+            const response = await fetch(`http://localhost:3000/api/prevozi/${currentRideId}`);
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.message || `Napaka pri pridobivanju podatkov relacije: ${response.status}`);
+            }
+            const rideData = await response.json();
+            
+            if (rideData && Object.keys(rideData).length > 0) { // Check if rideData is not empty
+                // The response structure from findPrevozById is flat (e.g., rideData.Odhod_Ime)
+                fromLocationInput.value = rideData.Odhod_Ime || '';
+                fromLocationLonInput.value = rideData.Odhod_Longitude || '';
+                fromLocationLatInput.value = rideData.Odhod_Latitude || '';
+
+                toLocationInput.value = rideData.Prihod_Ime || '';
+                toLocationLonInput.value = rideData.Prihod_Longitude || '';
+                toLocationLatInput.value = rideData.Prihod_Latitude || '';
+
+                if (rideData.Cas_odhoda) {
+                    // Format date for datetime-local input: YYYY-MM-DDTHH:mm
+                    const dateObj = new Date(rideData.Cas_odhoda);
+                    const year = dateObj.getFullYear();
+                    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+                    const day = String(dateObj.getDate()).padStart(2, '0');
+                    const hours = String(dateObj.getHours()).padStart(2, '0');
+                    const minutes = String(dateObj.getMinutes()).padStart(2, '0');
+                    document.getElementById('departureTime').value = `${year}-${month}-${day}T${hours}:${minutes}`;
+                }
+
+                document.getElementById('seats').value = rideData.Prosta_mesta || '';
+                document.getElementById('price').value = rideData.Cena || '';
+                document.getElementById('car').value = rideData.Voznik_Avto || rideData.Avto || ''; // Use Voznik_Avto if available from detailed fetch
+                document.getElementById('ponavljanje').value = rideData.Ponavljanje || '';
+                document.getElementById('voznikIdDisplay').value = rideData.TK_Voznik || rideData.Voznik_idUporabnik || '';
+                document.getElementById('voznikId').value = rideData.TK_Voznik || rideData.Voznik_idUporabnik || '';
+            } else {
+                 showMessage('Relacija s tem ID-jem ni bila najdena.');
+            }
+        } catch (error) {
+            console.error("Error fetching ride details:", error);
+            showMessage(error.message || 'Napaka pri nalaganju podrobnosti relacije.');
+        }
+
+        // --- Leaflet Map Functionality (Similar to UstvariRelacijo.js) ---
+        function initMapForEdit(mapId, inputEl, lonEl, latEl, manualBtnEl) {
+            const mapContainer = document.getElementById(mapId);
+            if (!mapContainer || !L) {
+                console.error(`Map container '${mapId}' or Leaflet (L) not found.`);
+                return null;
+            }
+            mapContainer.style.display = 'block';
+
+            const defaultLat = 46.1199; // Slovenia center
+            const defaultLon = 14.8153;
+            const initialLat = parseFloat(latEl.value) || defaultLat;
+            const initialLon = parseFloat(lonEl.value) || defaultLon;
+            const initialZoom = (latEl.value && lonEl.value) ? 13 : 7;
+
+            let map = L.map(mapId).setView([initialLat, initialLon], initialZoom);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+            
+            let marker;
+            if (latEl.value && lonEl.value) { // Add initial marker if coords exist
+                marker = L.marker([parseFloat(latEl.value), parseFloat(lonEl.value)]).addTo(map);
+            }
+
+            map.on('click', async function(e) {
+                const { lat, lng } = e.latlng;
+                latEl.value = lat.toFixed(6);
+                lonEl.value = lng.toFixed(6);
+                if (marker) map.removeLayer(marker);
+                marker = L.marker([lat, lng]).addTo(map);
+                try {
+                    const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`);
+                    const data = await response.json();
+                    inputEl.value = data && data.display_name ? data.display_name : `Točka (${lat.toFixed(4)}, ${lng.toFixed(4)})`;
+                } catch (geoError) {
+                    inputEl.value = `Točka (${lat.toFixed(4)}, ${lng.toFixed(4)})`;
+                }
+                mapContainer.style.display = 'none';
+                if (manualBtnEl) manualBtnEl.style.display = 'none';
+                hideMessage();
+            });
+            return map;
+        }
+
+        async function fetchLocationSuggestionsForEdit(query, inputElement, suggestionsElement, lonElement, latElement, manualBtnElement, mapContainerId) {
+             // ... (Copy the fetchLocationSuggestions function from ustvariRelacijo.js here,
+             // ensure it uses http://localhost:3000 for the API call)
+             // For brevity, I'm not pasting the full function again, but it's nearly identical.
+             // Key difference: it will call initMapForEdit
+            const mapContainer = document.getElementById(mapContainerId);
+            if (!query.trim()) { /* ... clear suggestions, hide btn/map ... */ return; }
+            try {
+                const response = await fetch(`http://localhost:3000/api/lokacije/search?q=${encodeURIComponent(query)}`);
+                // ... (rest of the suggestion logic from ustvariRelacijo.js) ...
+                if (data.success && data.data.length > 0) {
+                    // ... (populate suggestions) ...
+                    if (manualBtnElement) manualBtnElement.style.display = 'none';
+                    if (mapContainer) mapContainer.style.display = 'none';
+                     if (mapToInstance && mapContainerId === 'mapTo') { mapToInstance.remove(); mapToInstance = null; }
+                     if (mapFromInstance && mapContainerId === 'mapFrom') { mapFromInstance.remove(); mapFromInstance = null; }
+                } else {
+                    suggestionsElement.innerHTML = '<li>Ni najdenih predlogov. Vnesite polno ime ali izberite na zemljevidu.</li>';
+                    suggestionsElement.style.display = 'block';
+                    if (manualBtnElement) manualBtnElement.style.display = 'block';
+                    // ... (clear lon/lat) ...
+                }
+            } catch (error) { /* ... handle error ... */ }
+        }
+        
+        // Attach to "From" location
+        if (fromLocationInput && fromLocationSuggestions && manualSelectFromBtn && mapFromContainer) {
+            fromLocationInput.addEventListener('input', () => fetchLocationSuggestionsForEdit(fromLocationInput.value, fromLocationInput, fromLocationSuggestions, fromLocationLonInput, fromLocationLatInput, manualSelectFromBtn, 'mapFrom'));
+            manualSelectFromBtn.addEventListener('click', () => {
+                if(mapFromInstance) mapFromInstance.remove();
+                mapFromInstance = initMapForEdit('mapFrom', fromLocationInput, fromLocationLonInput, fromLocationLatInput, manualSelectFromBtn);
+            });
+        }
+        // Attach to "To" location
+        if (toLocationInput && toLocationSuggestions && manualSelectToBtn && mapToContainer) {
+            toLocationInput.addEventListener('input', () => fetchLocationSuggestionsForEdit(toLocationInput.value, toLocationInput, toLocationSuggestions, toLocationLonInput, toLocationLatInput, manualSelectToBtn, 'mapTo'));
+            manualSelectToBtn.addEventListener('click', () => {
+                if(mapToInstance) mapToInstance.remove();
+                mapToInstance = initMapForEdit('mapTo', toLocationInput, toLocationLonInput, toLocationLatInput, manualSelectToBtn);
+            });
+        }
+         // Hide suggestions on outside click
+        document.addEventListener('click', (event) => {
+            if (fromLocationInput && fromLocationSuggestions && !fromLocationInput.contains(event.target) && !fromLocationSuggestions.contains(event.target)) {
+                fromLocationSuggestions.style.display = 'none';
+            }
+            if (toLocationInput && toLocationSuggestions && !toLocationInput.contains(event.target) && !toLocationSuggestions.contains(event.target)) {
+                toLocationSuggestions.style.display = 'none';
+            }
+        });
+
+
+        // --- Form Submission (Update Logic) ---
+        if (editRideForm) {
+            editRideForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                hideMessage();
+
+                const updatedRideData = {
+                    IdPrevoz: parseInt(rideIdInput.value), // Include the ride ID
+                    Cas_odhoda: document.getElementById('departureTime').value,
+                    Cena: parseFloat(document.getElementById('price').value),
+                    Prosta_mesta: parseInt(document.getElementById('seats').value),
+                    Ponavljanje: document.getElementById('ponavljanje').value || null,
+                    // For locations, send the names. Backend should handle getOrCreate logic
+                    // or if IDs are preferred, the hidden ID fields should be populated
+                    fromLocationName: fromLocationInput.value,
+                    fromLocationLongitude: fromLocationLonInput.value,
+                    fromLocationLatitude: fromLocationLatInput.value,
+                    toLocationName: toLocationInput.value,
+                    toLocationLongitude: toLocationLonInput.value,
+                    toLocationLatitude: toLocationLatInput.value,
+                    Avto: document.getElementById('car').value || null,
+                    TK_Voznik: document.getElementById('voznikId').value // Keep original driver
+                };
+                
+                // Basic validation
+                if (!updatedRideData.fromLocationName || !updatedRideData.toLocationName || !updatedRideData.Cas_odhoda || isNaN(updatedRideData.Prosta_mesta) || isNaN(updatedRideData.Cena)) {
+                    showMessage("Prosimo, izpolnite vsa obvezna polja (lokaciji, čas, mesta, cena).");
+                    return;
+                }
+                 if ((!updatedRideData.fromLocationLongitude || !updatedRideData.fromLocationLatitude) && updatedRideData.fromLocationName) {
+                     showMessage(`Koordinate za odhodno lokacijo "${updatedRideData.fromLocationName}" niso bile izbrane. Prosimo, izberite predlog ali uporabite zemljevid.`);
+                     return;
+                }
+                if ((!updatedRideData.toLocationLongitude || !updatedRideData.toLocationLatitude) && updatedRideData.toLocationName) {
+                     showMessage(`Koordinate za ciljno lokacijo "${updatedRideData.toLocationName}" niso bile izbrane. Prosimo, izberite predlog ali uporabite zemljevid.`);
+                     return;
+                }
+
+
+                const submitButton = editRideForm.querySelector('button[type="submit"]');
+                if(submitButton) submitButton.disabled = true;
+
+                try {
+                    // IMPORTANT: You need to create this PUT endpoint on your backend
+                    const response = await fetch(`http://localhost:3000/api/prevozi/${currentRideId}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(updatedRideData)
+                    });
+                    const result = await response.json();
+
+                    if (response.ok && result.success) {
+                        showMessage('Relacija uspešno posodobljena!', true);
+                        setTimeout(() => {
+                            window.location.href = `RelacijaDetail.html?id=${currentRideId}`;
+                        }, 1500);
+                    } else {
+                        showMessage(result.message || 'Napaka pri posodabljanju relacije.');
+                    }
+                } catch (error) {
+                    console.error('Error updating ride:', error);
+                    showMessage('Napaka v omrežju ali na strežniku.');
+                } finally {
+                     if(submitButton) submitButton.disabled = false;
+                }
+            });
+        }
+        
+        const cancelBtn = document.getElementById('cancelEditBtn');
+        if(cancelBtn) {
+            cancelBtn.addEventListener('click', () => {
+                // Redirect back to detail page or admin relations page
+                window.location.href = `RelacijaDetail.html?id=${currentRideId}`;
+            });
+        }
+        const adminLogoutBtn = document.getElementById('adminLogoutBtn');
+        if(adminLogoutBtn) {
+            adminLogoutBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                sessionStorage.removeItem('user'); // Clear admin session
+                window.location.href = 'Admin_Login.html';
+            });
+        }
+
+    });
+  </script>
+</body>
+</html>

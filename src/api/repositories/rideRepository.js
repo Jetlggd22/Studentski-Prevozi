@@ -112,3 +112,34 @@ export async function deletePrevozById(id) {
     connection.release();
   }
 }
+
+export async function updatePrevozInDB(rideId, dataToUpdate) {
+  // Construct the SET part of the SQL query dynamically
+  const fields = [];
+  const values = [];
+  for (const [key, value] of Object.entries(dataToUpdate)) {
+    // Ensure keys match your database column names
+    // e.g., if frontend sends 'Ponavljanje' but DB is 'ponavljanje'
+    fields.push(`${key} = ?`);
+    values.push(value);
+  }
+
+  if (fields.length === 0) {
+    console.log("No fields to update for rideId:", rideId);
+    return 0; // Or handle as an error/no-op
+  }
+
+  values.push(rideId); // Add rideId for the WHERE clause
+
+  const sql = `UPDATE Prevoz SET ${fields.join(', ')} WHERE IdPrevoz = ?`;
+
+  try {
+    const [result] = await pool.execute(sql, values);
+    return result.affectedRows;
+  } catch (error) {
+    console.error("Error updating Prevoz in DB:", error);
+    throw error;
+  }
+}
+// Expose pool if needed by services directly (though better to keep queries in repo)
+export { pool };
