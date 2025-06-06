@@ -14,6 +14,7 @@ import { getAdminStats } from './controllers/adminStatsController.js';
 import * as searchUserController from './controllers/searchUserController.js';
 import * as createPrevozController from './controllers/createPrevozController.js';
 import * as rezervacijaController from './controllers/rezervacijaController.js'; 
+import { getUserStats } from './controllers/userStatsController.js';
 
 const checkJwt = expressjwt({
   secret: jwksRsa.expressJwtSecret({
@@ -53,6 +54,8 @@ router.post('/rezervacije', catchAsync(rezervacijaController.createRezervacija))
 router.patch('/rezervacije/:idRezervacija/preklici', catchAsync(rezervacijaController.prekliciRezervacija));
 router.get('/rezervacije/uporabnik/:idUporabnik/prevoz/:idPrevoz', catchAsync(rezervacijaController.getUserRezervacijaForPrevoz));
 router.get('/active-drivers', usersController.getActiveDrivers);
+router.get('/stats/uporabnik/:id', getUserStats);
+
 // Add the new DELETE route
 router.delete('/prevozi/:id', catchAsync(deletePrevoz)); // We can protect this with admin middleware later
 router.get('/lokacije/search', searchLokacije);

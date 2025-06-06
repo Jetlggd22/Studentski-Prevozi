@@ -1,3 +1,5 @@
+// datoteka: StudentskiPrevoz/src/api/repositories/usersRepository.js
+
 import pool from '../db/pool.js';
 
 export async function getAllUsers() {
@@ -21,10 +23,12 @@ export async function createUser(user) {
 }
 
 export async function updateUser(id, user) {
-  const { Ime, Priimek, Username, Telefon, Ocena, Avto } = user;
+  // Odstranimo 'Ocena' iz posodobitve, saj se na tej strani ne ureja in
+  // preprečimo napako "Bind parameters must not contain undefined".
+  const { Ime, Priimek, Username, Telefon, Avto } = user;
   const [result] = await pool.execute(
-    `UPDATE Uporabnik SET Ime=?, Priimek=?, Username=?, Telefon=?, Ocena=?, Avto=? WHERE idUporabnik=?`,
-    [Ime, Priimek, Username, Telefon, Ocena, Avto, id]
+    `UPDATE Uporabnik SET Ime=?, Priimek=?, Username=?, Telefon=?, Avto=? WHERE idUporabnik=?`,
+    [Ime, Priimek, Username, Telefon, Avto, id]
   );
   return result.affectedRows === 1;
 }
