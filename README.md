@@ -1,5 +1,5 @@
 # Studentski-Prevozi
-Studentski Prevozi was a multiple joint effort in which we created a car pooling website that incorporated different fields. This was a final college project between my three friends and me. It was a giant project that incorporated multiple external inserts and programming languages.
+Studentski Prevozi was a multiple joint effort in which we created a car pooling website that incorporated different fields. This was a final college project between my three friends and me. It was a giant project that incorporated multiple external inserts and programming languages. Our assigment was not only to make a world class project but to try to "sell" the project to our professor. 
 
 Design and Concept
 
@@ -16,7 +16,7 @@ Administrators have the complete control over users, their personal information,
 Technical Bits
 
 This project was done in Node, Express, SQL, Javascript, HTML, CSS, Bootstrap. We utilized Auth0 as an external help for web token and email confirmation. Geolocation API was used for mapping of rides. All of our files were made in the Model-View-Controller architecture, allowing us to see our errors more easily and make the debugging process faster and more efficient. 
-The project runs on a local http-server as we had no requirement to host it online and a server file. 
+The project runs on a local http-server as we had no requirement to host it online and a server file. During our development all of the changes and our advancements were uploaded to GitLab through commits. 
 
 
 
